@@ -9,4 +9,5 @@ export const api = {
   product_GET: baseURL + "/product",
   amphere_GET: baseURL + "/amphere",
   battery_GET: baseURL + "/battery-type",
+  user_Login: baseURL + "/admin/login",
 };

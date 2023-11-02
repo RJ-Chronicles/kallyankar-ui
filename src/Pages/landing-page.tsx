@@ -1,5 +1,7 @@
+import LoginForm from "../components/Forms/LoginForm";
+
 const LandingPage = () => {
-  return <div>Hello</div>;
+  return <div></div>;
 };
 
 export default LandingPage;

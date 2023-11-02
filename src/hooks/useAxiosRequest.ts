@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import { useContext } from "react";
 import AppContext from "../store/AppContext";
-import { Headers } from "../store/type";
-type Request = "GET" | "POST" | "DELETE" | "PATCH";
+import { Headers, Request } from "../store/type";
+
 interface requestConfig {
   url: string;
   LOADING_TYPE: string;
@@ -12,7 +12,7 @@ interface requestConfig {
 }
 const useAxiosRequest = () => {
   const { dispatch } = useContext(AppContext);
-  const axiosFetchRequest = async ({
+  const axiosRequest = async ({
     url,
     LOADING_TYPE,
     body,
@@ -24,7 +24,8 @@ const useAxiosRequest = () => {
       let response: AxiosResponse<any, any>;
       switch (request) {
         case "POST" || "PATCH":
-          response = await axios.post(url, body, headers);
+          console.log("POST request");
+          response = await axios.post(url, body);
           break;
         case "GET" || "DELETE":
           response = await axios.get(url, headers);
@@ -37,6 +38,7 @@ const useAxiosRequest = () => {
       return data;
     } catch (err) {
       // dispatch({ type: "SET_LOADING", payload: false });
+      console.log(err);
       dispatch({
         type: "SET_ERROR",
         payload: {
@@ -50,7 +52,7 @@ const useAxiosRequest = () => {
   };
 
   return {
-    axiosFetchRequest,
+    axiosRequest,
   };
 };
 

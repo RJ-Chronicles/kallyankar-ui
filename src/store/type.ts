@@ -7,10 +7,16 @@ export interface User {
   createdBy: string;
   deleted: boolean;
 }
+
+export interface Login {
+  email: string;
+  password: string;
+}
 export interface UserLoggedIn {
   user: User;
   token: string;
   expiration: string | any;
+  isLoggedIn: boolean;
 }
 export interface FormProps {
   initial_data: {};
@@ -80,10 +86,10 @@ export interface State {
   error: { hasError: boolean; message: string };
   isLoading: boolean;
   customer: Customer[] | [];
+  snackbar: { isOpen: boolean; message: string; severity: Severity };
 }
 
 export const initialUser: User = {
-  _id: "",
   name: "",
   last_name: "",
   email: "",
@@ -143,6 +149,7 @@ export const initialUserLoggedIn: UserLoggedIn = {
   user: initialUser,
   token: "",
   expiration: "",
+  isLoggedIn: false,
 };
 
 export const customer: Customer = {
@@ -158,4 +165,23 @@ export interface Headers {
   headers: {
     Authorization: string;
   };
+}
+
+export const user: Login = {
+  email: "",
+  password: "",
+};
+
+export type UserFormData = Customer | User | Login;
+
+export type Request = "GET" | "POST" | "DELETE" | "PATCH";
+
+export type Severity = "success" | "error" | "warning" | "info";
+
+export interface RequestConfig {
+  method: Request;
+  url: string;
+  headers?: Headers;
+  success: string;
+  error: string;
 }

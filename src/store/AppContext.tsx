@@ -29,6 +29,11 @@ const initialState: State = {
   isLoading: false,
   loggedIn: initialUserLoggedIn,
   customer: [],
+  snackbar: {
+    isOpen: false,
+    message: "",
+    severity: "error",
+  },
 };
 
 const AppContext = createContext<{

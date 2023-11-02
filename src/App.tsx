@@ -13,15 +13,16 @@ import { Route, Routes } from "react-router-dom";
 import ErrorModal from "./components/UI/ErrorModal";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
 import DeleteModal from "./components/UI/DeleteModal";
+import CustomizedSnackbar from "./components/UI/Snackbar";
 
 function App() {
-  const { axiosFetchRequest } = useAxiosRequest();
+  const { axiosRequest } = useAxiosRequest();
   const { state, dispatch } = useContext(AppContext);
   const { isDeleteModalVisible, deleteModalFormProps, isLoading, error } =
     state;
   React.useEffect(() => {
     const initialState = async () => {
-      const data: Customer[] = await axiosFetchRequest({
+      const data: Customer[] = await axiosRequest({
         url: api.customer_GET,
         request: "GET",
         LOADING_TYPE: "Customer",
@@ -34,16 +35,25 @@ function App() {
 
   console.log(state);
   return (
-    <div className="p-4 text-center flex justify-center flex-col items-center">
+    <div className="p-4 text-center flex justify-center flex-col font-sans items-center">
       <LoadingSpinner open={isLoading} color="#FFFFFF">
-        <ErrorModal open={error.hasError} errorMessage={error.message}>
-          <DeleteModal open={isDeleteModalVisible} data={deleteModalFormProps}>
-            <Routes>
-              <Route path="/" element={<LandingPage />}></Route>
-              <Route path="/admin-login" element={<LoginPage />} />
-              <Route path="/*" element={<LoginPage />} />
-            </Routes>
-          </DeleteModal>
+        <ErrorModal open={false} errorMessage={error.message}>
+          <CustomizedSnackbar
+            open={state.snackbar.isOpen}
+            message={state.snackbar.message}
+            severty={state.snackbar.severity}
+          >
+            <DeleteModal
+              open={isDeleteModalVisible}
+              data={deleteModalFormProps}
+            >
+              <Routes>
+                <Route path="/" element={<LandingPage />}></Route>
+                <Route path="/admin-login" element={<LoginPage />} />
+                <Route path="/*" element={<LoginPage />} />
+              </Routes>
+            </DeleteModal>
+          </CustomizedSnackbar>
         </ErrorModal>
       </LoadingSpinner>
     </div>

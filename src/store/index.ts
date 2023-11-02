@@ -9,6 +9,7 @@ import {
   FormProps,
   UserLoggedIn,
   Customer,
+  Severity,
 } from "./type";
 
 export type Action =
@@ -27,7 +28,11 @@ export type Action =
   | { type: "SET_ERROR"; payload: { hasError: boolean; message: string } }
   | { type: "SET_LOADING"; payload: boolean }
   | { type: "USER_LOG_IN"; payload: UserLoggedIn }
-  | { type: "ADD_CUSTOMER_DATA"; payload: Customer[] };
+  | { type: "ADD_CUSTOMER_DATA"; payload: Customer[] }
+  | {
+      type: "TOGGLE_SNACKBAR";
+      payload: { isOpen: boolean; message: string; severity: Severity };
+    };
 
 export type Dispatch = (action: Action) => void;
 
@@ -116,6 +121,15 @@ const AppReducer = (state: State, action: Action) => {
       return {
         ...state,
         customer: action.payload,
+      };
+    case "TOGGLE_SNACKBAR":
+      return {
+        ...state,
+        snackbar: {
+          isOpen: action.payload.isOpen,
+          message: action.payload.message,
+          severity: action.payload.severity,
+        },
       };
     default:
       return state;

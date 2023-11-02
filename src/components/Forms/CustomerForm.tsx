@@ -6,18 +6,16 @@ import Overlay from "../UI/Overlay";
 import Form from "../UI/Form";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import Heading from "../UI/Heading";
+import useHandleFormSubmit from "../../hooks/useHandleFormSubmit";
+import useHandlevalueChange from "../../hooks/useHandleValueChange";
+
 interface Props {
   customer: Customer;
 }
 const CustomerForm: React.FC<Props> = ({ customer }) => {
-  const [user, setUser] = useState<Customer>({ ...customer });
+  const { setValue, data } = useHandlevalueChange(customer);
+  const { handleSubmit } = useHandleFormSubmit(data);
 
-  const handleSetUser = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
   return (
     <Overlay open={true} handleClose={() => {}}>
       <Heading heading="Customer Registration Form" />
@@ -30,7 +28,7 @@ const CustomerForm: React.FC<Props> = ({ customer }) => {
             type={field.type}
             width={field.width}
             margin={field.margin}
-            setValue={handleSetUser}
+            setValue={setValue}
             required={field.required}
           />
         ))}
@@ -41,3 +39,12 @@ const CustomerForm: React.FC<Props> = ({ customer }) => {
 };
 
 export default CustomerForm;
+
+// const [user, setUser] = useState<Customer>({ ...customer });
+
+// const handleSetUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+//   setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+// };
+// const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+//   event.preventDefault();
+// };
