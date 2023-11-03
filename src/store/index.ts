@@ -13,8 +13,6 @@ import {
 } from "./type";
 
 export type Action =
-  | { type: "ADD_TOKEN"; payload: string | undefined }
-  | { type: "ADD_USER"; payload: User }
   | { type: "ADD_GST_VALUES"; payload: GSTValues[] }
   | { type: "ADD_AMPHERE_VALUES"; payload: AmphareSize[] }
   | { type: "ADD_BATTERY_NAMES"; payload: BatteryNameValues[] }
@@ -22,7 +20,6 @@ export type Action =
   | { type: "ADD_DELETE_FORM_PROPS"; payload: DeleteModalFormProps }
   | { type: "ADD_FORM_PROPS"; payload: FormProps }
   | { type: "REFRESH_EFFECT"; payload: boolean }
-  | { type: "SET_LOGGED_IN"; payload: boolean }
   | { type: "SET_MODAL_VISIBLE"; payload: boolean }
   | { type: "SET_DELETE_MODAL_VISIBLE"; payload: boolean }
   | { type: "SET_ERROR"; payload: { hasError: boolean; message: string } }
@@ -38,16 +35,6 @@ export type Dispatch = (action: Action) => void;
 
 const AppReducer = (state: State, action: Action) => {
   switch (action.type) {
-    case "ADD_TOKEN":
-      return {
-        ...state,
-        token: action.payload,
-      };
-    case "ADD_USER":
-      return {
-        ...state,
-        user: action.payload,
-      };
     case "ADD_GST_VALUES":
       return {
         ...state,
@@ -82,11 +69,6 @@ const AppReducer = (state: State, action: Action) => {
       return {
         ...state,
         refreshEffect: action.payload,
-      };
-    case "SET_LOGGED_IN":
-      return {
-        ...state,
-        isLoggedIn: action.payload,
       };
     case "SET_MODAL_VISIBLE":
       return {

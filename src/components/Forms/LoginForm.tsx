@@ -3,8 +3,11 @@ import Form from "../UI/Form";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import { api } from "../../api";
-import { user, RequestConfig } from "../../store/type";
+import { user, RequestConfig, UserLoggedIn } from "../../store/type";
 import useHandleFormSubmit from "../../hooks/useHandleFormSubmit";
+import AppContext from "../../store/AppContext";
+import { useContext } from "react";
+
 const LoginForm = () => {
   const requestMeta: RequestConfig = {
     method: "POST",
@@ -17,46 +20,42 @@ const LoginForm = () => {
     success: "Login successful",
     error: "Error while logging",
   };
+
   const { setValue, data } = useHandlevalueChange(user);
-  const { handleSubmit } = useHandleFormSubmit(data, requestMeta);
+  const { handleSubmit } = useHandleFormSubmit();
+  const { dispatch } = useContext(AppContext);
 
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response: UserLoggedIn = await handleSubmit(data, requestMeta);
+    const { token, user, expiresIn } = response;
+    const payload = {
+      user,
+      token,
+      expiresIn,
+      isLoggedIn: true,
+    };
+    dispatch({ type: "USER_LOG_IN", payload: payload });
+    console.log(user, expiresIn, token);
+  };
   return (
-    <section className="h-screen mx-0 md:mx-auto">
-      <div className="h-full">
-        <div className="g-6 flex  h-full flex-wrap items-center justify-center ">
-          <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12 hidden md:block">
-            <img
-              src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-              className="w-full"
-              alt="Sample image"
-            />
-          </div>
-
-          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 shadow-md bg-gray-50 py-4 flex-col justify-center items-center">
-            <h1 className="text-2xl font-semibold text-slate-700 ">
-              Kallyankar Batteries
-            </h1>
-            <Form handleSubmit={handleSubmit} maxWidth="720px">
-              <InputBox
-                label="Email Address"
-                type="email"
-                id="email"
-                setValue={setValue}
-              />
-              <InputBox
-                label="Password Address"
-                type="password"
-                id="password"
-                setValue={setValue}
-              />
-              <div className="flex justify-center items-end w-full px-2">
-                <ButtonLarge title="Login" addNewItem={() => {}} />
-              </div>
-            </Form>
-          </div>
-        </div>
+    <Form handleSubmit={handleFormSubmit} maxWidth="720px">
+      <InputBox
+        label="Email Address"
+        type="email"
+        id="email"
+        setValue={setValue}
+      />
+      <InputBox
+        label="Password Address"
+        type="password"
+        id="password"
+        setValue={setValue}
+      />
+      <div className="flex justify-center items-end w-full px-2">
+        <ButtonLarge title="Login" addNewItem={() => {}} />
       </div>
-    </section>
+    </Form>
   );
 };
 

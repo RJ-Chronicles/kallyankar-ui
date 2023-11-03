@@ -15,7 +15,7 @@ export interface Login {
 export interface UserLoggedIn {
   user: User;
   token: string;
-  expiration: string | any;
+  expiresIn: string | any;
   isLoggedIn: boolean;
 }
 export interface FormProps {
@@ -70,8 +70,9 @@ export interface Customer {
 }
 
 export interface State {
-  token: string | undefined;
-  user: User;
+  // token: string | undefined;
+  // user: User;
+  // isLoggedIn: boolean;
   loggedIn: UserLoggedIn;
   GST: GSTValues[];
   batteryNames: BatteryNameValues[];
@@ -80,7 +81,6 @@ export interface State {
   deleteModalFormProps: DeleteModalFormProps;
   formProps: FormProps;
   refreshEffect: boolean;
-  isLoggedIn: boolean;
   isModalVisible: boolean;
   isDeleteModalVisible: boolean;
   error: { hasError: boolean; message: string };
@@ -148,7 +148,7 @@ export const initialGST: GSTValues[] = [
 export const initialUserLoggedIn: UserLoggedIn = {
   user: initialUser,
   token: "",
-  expiration: "",
+  expiresIn: "",
   isLoggedIn: false,
 };
 

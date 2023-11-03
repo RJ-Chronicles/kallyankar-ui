@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { useContext } from "react";
 import AppContext from "../store/AppContext";
 import { Headers, Request } from "../store/type";
@@ -14,7 +14,6 @@ const useAxiosRequest = () => {
   const { dispatch } = useContext(AppContext);
   const axiosRequest = async ({
     url,
-    LOADING_TYPE,
     body,
     headers,
     request,
@@ -24,8 +23,7 @@ const useAxiosRequest = () => {
       let response: AxiosResponse<any, any>;
       switch (request) {
         case "POST" || "PATCH":
-          console.log("POST request");
-          response = await axios.post(url, body);
+          response = await axios.post(url, body, headers);
           break;
         case "GET" || "DELETE":
           response = await axios.get(url, headers);
@@ -33,17 +31,21 @@ const useAxiosRequest = () => {
         default:
           throw new Error("Invalid request type");
       }
-      const data = await response.data;
-      // dispatch({ type: "SET_LOADING", payload: false });
-      return data;
-    } catch (err) {
-      // dispatch({ type: "SET_LOADING", payload: false });
+
+      return response.data;
+    } catch (err: any) {
       console.log(err);
+      const errorMsg = err.response?.data?.message
+        ? err?.response?.data?.message
+        : err.code === "ERR_NETWORK"
+        ? "Check you Network connection and try again"
+        : "Something went wrong! Please try again later";
       dispatch({
-        type: "SET_ERROR",
+        type: "TOGGLE_SNACKBAR",
         payload: {
-          hasError: true,
-          message: `Error occured while loading ${LOADING_TYPE}`,
+          isOpen: true,
+          message: errorMsg,
+          severity: "error",
         },
       });
     } finally {

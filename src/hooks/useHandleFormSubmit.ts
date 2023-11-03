@@ -4,10 +4,7 @@ import useAxiosRequest from "./useAxiosRequest";
 import AppContext from "../store/AppContext";
 import { useContext, useEffect } from "react";
 
-const useHandleFormSubmit = (
-  data: UserFormData,
-  requestMeta: RequestConfig
-) => {
+const useHandleFormSubmit = () => {
   const { error, validator, setError } = useResponseValidator();
   const { axiosRequest } = useAxiosRequest();
   const { dispatch } = useContext(AppContext);
@@ -18,7 +15,7 @@ const useHandleFormSubmit = (
         type: "TOGGLE_SNACKBAR",
         payload: {
           isOpen: true,
-          message: requestMeta.error,
+          message: "Enter all required fields",
           severity: "error",
         },
       });
@@ -26,22 +23,25 @@ const useHandleFormSubmit = (
     }
   }, [error]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (
+    data: UserFormData,
+    requestMeta: RequestConfig
+  ) => {
     const hasError = validator(data);
 
     if (hasError) {
-      console.log("you can not submit");
       return;
     }
-    console.log("You can submit");
+
     const res = await axiosRequest({
       url: requestMeta.url,
       request: requestMeta.method,
       LOADING_TYPE: "Login",
       body: data,
     });
-
+    if (res === undefined) {
+      throw new Error("Could not complete the request");
+    }
     dispatch({
       type: "TOGGLE_SNACKBAR",
       payload: {
@@ -50,7 +50,7 @@ const useHandleFormSubmit = (
         severity: "success",
       },
     });
-    console.log(res);
+    return res;
   };
 
   return { handleSubmit };
