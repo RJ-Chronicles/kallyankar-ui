@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./SideNav.module.css";
-import { NavLinkProps } from "./NavLinkProps";
+import { NavLinkProps, ToggleClose, ToggleOpen } from "./NavLinkProps";
 import AvatarImage from "../../assets/images/avatar.png";
+
 const MyNavLink = () => {
   return (
     <ul>
@@ -27,15 +29,36 @@ const MyNavLink = () => {
 };
 
 function Sidebar() {
+  const [toggleNav, setToggleNav] = useState(false);
   return (
-    <div className="bg-slate-500 text-slate-100 w-60 min-h-screen shadow-lg">
-      <div className={styles.sidebar + " shadow-lg rounded-sm"}>
-        <div className={styles.profile}>
-          <img src={AvatarImage} alt="profile_picture" />
-          <h3>Sidhesh Kallyankar</h3>
-          <p>Product Owner</p>
-        </div>
-        <MyNavLink />
+    <div
+      className={`bg-white text-white min-h-screen shadow-lg ${
+        toggleNav ? "w-6" : "w-60"
+      }`}
+    >
+      <div
+        className={`${styles.sidebar} shadow-lg rounded-sm ${
+          toggleNav ? "w-6" : "w-60"
+        }`}
+      >
+        <button
+          className="flex justify-end translate-x-2 w-full  text-slate-200"
+          onClick={(e) => setToggleNav((prev) => !prev)}
+        >
+          <div className="bg-[#054468] rounded-full  text-white">
+            {toggleNav ? <ToggleOpen /> : <ToggleClose />}
+          </div>
+        </button>
+        {!toggleNav && (
+          <>
+            <div className={styles.profile}>
+              <img src={AvatarImage} alt="profile_picture" />
+              <h3>Sidhesh Kallyankar</h3>
+              <p>Product Owner</p>
+            </div>
+            <MyNavLink />
+          </>
+        )}
       </div>
     </div>
   );
