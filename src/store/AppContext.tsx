@@ -13,8 +13,6 @@ import {
 import React, { createContext, useReducer } from "react";
 
 const initialState: State = {
-  token: "",
-  user: initialUser,
   GST: initialGST,
   batteryNames: initialBatteryNames,
   amphere: initialAmphere,
@@ -22,7 +20,6 @@ const initialState: State = {
   deleteModalFormProps: initialDeleteFormProps,
   formProps: initialFormProps,
   refreshEffect: false,
-  isLoggedIn: false,
   isModalVisible: false,
   isDeleteModalVisible: false,
   error: { hasError: false, message: "" },
