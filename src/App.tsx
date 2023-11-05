@@ -16,24 +16,22 @@ function App() {
   const { isLoggedIn } = state.loggedIn;
   return (
     <Layout>
-      <div className="p-4 text-center flex justify-center flex-col font-sans items-center">
-        <LoadingSpinner open={isLoading} color="#FFFFFF">
-          <ErrorModal open={false} errorMessage={error.message}>
-            <CustomizedSnackbar
-              open={state.snackbar.isOpen}
-              message={state.snackbar.message}
-              severty={state.snackbar.severity}
+      <LoadingSpinner open={isLoading} color="#FFFFFF">
+        <ErrorModal open={false} errorMessage={error.message}>
+          <CustomizedSnackbar
+            open={state.snackbar.isOpen}
+            message={state.snackbar.message}
+            severty={state.snackbar.severity}
+          >
+            <DeleteModal
+              open={isDeleteModalVisible}
+              data={deleteModalFormProps}
             >
-              <DeleteModal
-                open={isDeleteModalVisible}
-                data={deleteModalFormProps}
-              >
-                <KallyankarRoute isLoggedIn={true} />
-              </DeleteModal>
-            </CustomizedSnackbar>
-          </ErrorModal>
-        </LoadingSpinner>
-      </div>
+              <KallyankarRoute isLoggedIn={true} />
+            </DeleteModal>
+          </CustomizedSnackbar>
+        </ErrorModal>
+      </LoadingSpinner>
     </Layout>
   );
 }
