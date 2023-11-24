@@ -178,10 +178,12 @@ export type Request = "GET" | "POST" | "DELETE" | "PATCH";
 
 export type Severity = "success" | "error" | "warning" | "info";
 
+export type Operation = "ALL" | "GST" | "BATTERY_LIST" | "AMPHERE";
+
 export interface RequestConfig {
   method: Request;
   url: string;
-  headers?: Headers;
+  headers: Headers;
   success: string;
   error: string;
 }

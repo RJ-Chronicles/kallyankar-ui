@@ -17,21 +17,30 @@ import BillStatusPage from "../../Pages/bill.status.page";
 import PaymentPage from "../../Pages/payment.page";
 import SettingsPage from "../../Pages/setting";
 import StockItemPage from "../../Pages/stock.items";
-import StockPage from "../../Pages/stock";
-import React from "react";
-
-const KallyankarRoute: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+import StockPage from "../../Pages/stock-page";
+import React, { useContext } from "react";
+import AppContext from "../../store/AppContext";
+import CustomerPage from "../../Pages/customer-page";
+import CustomerBatteryPage from "../../Pages/customer-battery-page";
+const KallyankarRoute: React.FC = () => {
+  const { state } = useContext(AppContext);
+  // const { isLoggedIn } = state.loggedIn;
+  const isLoggedIn = true;
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />}></Route>
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route
         path={DASHBOARD}
         element={isLoggedIn ? <Dashboard /> : <LoginPage />}
       />
       <Route
+        path={CUSTOMERS + "/:customerId"}
+        element={isLoggedIn ? <CustomerBatteryPage /> : <LoginPage />}
+      />
+      <Route
         path={CUSTOMERS}
-        element={isLoggedIn ? <SettingsPage /> : <LoginPage />}
+        element={isLoggedIn ? <CustomerPage /> : <LoginPage />}
       />
       <Route
         path={BATTERIES}
@@ -54,7 +63,7 @@ const KallyankarRoute: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
         element={isLoggedIn ? <StockPage /> : <LoginPage />}
       />
       <Route
-        path={STOCK + "/:stock"}
+        path={STOCK + "/:stock_id"}
         element={isLoggedIn ? <StockItemPage /> : <LoginPage />}
       />
 

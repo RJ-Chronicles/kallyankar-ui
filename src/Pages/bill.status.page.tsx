@@ -1,5 +1,12 @@
+import BillingStatusTable from "../components/UI/Table/BillingStatusTable";
+
 const BillStatusPage = () => {
-  return <div>BillStatusPage</div>;
+  return (
+    <div>
+      <p>BillStatusPage Paid Unpaid records</p>
+      <BillingStatusTable />
+    </div>
+  );
 };
 
 export default BillStatusPage;

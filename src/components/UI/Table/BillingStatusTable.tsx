@@ -1,10 +1,10 @@
-import Table from "./Table";
-import { CUSTOMER_TABLE_COLUMN } from "./columns";
-import usePagination from "../../../hooks/usePagination";
-import { Pagination } from "@mui/material";
 import { useState } from "react";
+import usePagination from "../../../hooks/usePagination";
+import { BILLING_STATUS_COLUMN } from "./columns";
+import Table from "./Table";
+import { Pagination } from "@mui/material";
 import data from "./Mock_data.json";
-const CustomerTable = () => {
+const BillingStatusTable = () => {
   let [page, setPage] = useState(1);
   const PER_PAGE = 10;
 
@@ -15,11 +15,9 @@ const CustomerTable = () => {
     setPage(p);
     _DATA.jump(p);
   };
-
   return (
-    <div>
-      <h1 className="text-center">Customer Table</h1>
-      <Table column={CUSTOMER_TABLE_COLUMN}>
+    <div className="flex items-center justify-center flex-col w-full">
+      <Table column={BILLING_STATUS_COLUMN}>
         {_DATA.currentData().map((element, index) => (
           <tr
             key={index}
@@ -31,8 +29,8 @@ const CustomerTable = () => {
             <td className="px-3 py-4">{element.email}</td>
             <td className="px-3 py-4">{element.contact}</td>
             <td className="px-3 py-4">{element.gst}</td>
-            <td className="px-3 py-4">{element.reg_data}</td>
-            <td className="px-3 py-4">{element.action}</td>
+            <td className="px-3 py-4">{element.add}</td>
+            <td className="px-3 py-4">{element.email}</td>
           </tr>
         ))}
       </Table>
@@ -50,4 +48,4 @@ const CustomerTable = () => {
   );
 };
 
-export default CustomerTable;
+export default BillingStatusTable;

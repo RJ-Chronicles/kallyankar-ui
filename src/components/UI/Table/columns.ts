@@ -27,4 +27,30 @@ const USER_TABLE_COLUMN = [
   "ACTION",
 ];
 
-export { CUSTOMER_TABLE_COLUMN, BATTERY_TABLE_COLUMN, USER_TABLE_COLUMN };
+const STOCK_TABLE_COLUMN = [
+  "Add Entry",
+  "Battery Name",
+  "Product Code",
+  "Amphere Size",
+  "Available",
+  "Action",
+];
+
+const BILLING_STATUS_COLUMN = [
+  "Name",
+  "Contact",
+  "Email",
+  "Address",
+  "GST Amount",
+  "Total Amount",
+  "Unpaid Amount",
+  "Action",
+];
+
+export {
+  CUSTOMER_TABLE_COLUMN,
+  BATTERY_TABLE_COLUMN,
+  USER_TABLE_COLUMN,
+  STOCK_TABLE_COLUMN,
+  BILLING_STATUS_COLUMN,
+};

@@ -6,7 +6,6 @@ import {
   initialFormProps,
   initialGST,
   initialStoredCartItems,
-  initialUser,
   initialUserLoggedIn,
   State,
 } from "./type";

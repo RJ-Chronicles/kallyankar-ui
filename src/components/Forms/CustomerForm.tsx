@@ -14,12 +14,12 @@ interface Props {
 }
 const CustomerForm: React.FC<Props> = ({ customer }) => {
   const { setValue, data } = useHandlevalueChange(customer);
-  const { handleSubmit } = useHandleFormSubmit(data);
+  //const { handleSubmit } = useHandleFormSubmit(data);
 
   return (
-    <Overlay open={true} handleClose={() => {}}>
+    <Overlay open={true} handleClose={() => {}} showButton={true}>
       <Heading heading="Customer Registration Form" />
-      <Form handleSubmit={handleSubmit} maxWidth="w-[600px]">
+      <Form handleSubmit={() => {}} maxWidth="w-[600px]">
         {customer_fields.map((field, index) => (
           <InputBox
             key={index}

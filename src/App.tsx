@@ -10,10 +10,11 @@ import DeleteModal from "./components/UI/DeleteModal";
 import CustomizedSnackbar from "./components/UI/Snackbar";
 
 function App() {
-  const { state, dispatch } = useContext(AppContext);
+  const { state } = useContext(AppContext);
   const { isDeleteModalVisible, deleteModalFormProps, isLoading, error } =
     state;
-  const { isLoggedIn } = state.loggedIn;
+
+  console.log(state);
   return (
     <Layout>
       <LoadingSpinner open={isLoading} color="#FFFFFF">
@@ -27,7 +28,7 @@ function App() {
               open={isDeleteModalVisible}
               data={deleteModalFormProps}
             >
-              <KallyankarRoute isLoggedIn={true} />
+              <KallyankarRoute />
             </DeleteModal>
           </CustomizedSnackbar>
         </ErrorModal>

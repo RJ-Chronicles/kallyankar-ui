@@ -1,4 +1,3 @@
-import ContactForm from "../Forms/ContactForm";
 import { WhatsAppIcon } from "../../assets/images/SVGIcons";
 import Shop from "../../assets/images/shop.jpg";
 const Contact = () => {

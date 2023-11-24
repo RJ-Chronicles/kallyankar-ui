@@ -36,7 +36,6 @@ const useHandleFormSubmit = () => {
     const res = await axiosRequest({
       url: requestMeta.url,
       request: requestMeta.method,
-      LOADING_TYPE: "Login",
       body: data,
     });
     if (res === undefined) {

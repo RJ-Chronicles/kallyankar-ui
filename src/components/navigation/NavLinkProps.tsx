@@ -133,13 +133,13 @@ export function IconStock() {
 }
 
 export const NavLinkProps = [
-  { path: DASHBOARD, label: "Dashboar", icon: <IconDashboard /> },
-  { path: BILLINGS, label: "Billings", icon: <IconCurrency /> },
-  { path: SETTINGS, label: "Settings", icon: <IconSettings /> },
-  { path: BATTERIES, label: "Batteris", icon: <IconBatteries /> },
+  { path: DASHBOARD, label: "Home", icon: <IconDashboard /> },
   { path: CUSTOMERS, label: "Customers", icon: <IconCustomer /> },
-  { path: PAYMENTS, label: "Payments", icon: <IconSecurePaymentFill /> },
+  { path: BILLINGS, label: "Billings", icon: <IconCurrency /> },
   { path: STOCK, label: "Stocks", icon: <IconStock /> },
+  { path: BATTERIES, label: "Batteris", icon: <IconBatteries /> },
+  { path: PAYMENTS, label: "Users", icon: <IconSecurePaymentFill /> },
+  { path: SETTINGS, label: "Settings", icon: <IconSettings /> },
 ];
 
 export const ToggleOpen = () => {

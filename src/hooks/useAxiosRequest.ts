@@ -1,12 +1,11 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useContext } from "react";
 import AppContext from "../store/AppContext";
-import { Headers, Request } from "../store/type";
+import { Headers, Request, UserFormData } from "../store/type";
 
 interface requestConfig {
   url: string;
-  LOADING_TYPE: string;
-  body?: any;
+  body?: UserFormData;
   headers?: Headers;
   request: Request;
 }
@@ -23,10 +22,12 @@ const useAxiosRequest = () => {
       let response: AxiosResponse<any, any>;
       switch (request) {
         case "POST" || "PATCH":
+          console.log(url, body, headers);
           response = await axios.post(url, body, headers);
           break;
         case "GET" || "DELETE":
           response = await axios.get(url, headers);
+          console.log(response);
           break;
         default:
           throw new Error("Invalid request type");
