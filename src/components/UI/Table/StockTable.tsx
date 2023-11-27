@@ -4,6 +4,7 @@ import { STOCK_TABLE_COLUMN } from "./columns";
 import Table from "./Table";
 import { Pagination } from "@mui/material";
 import data from "./Mock_data.json";
+import { Pencil, Trash2, Edit3 } from "lucide-react";
 const StockTable = () => {
   let [page, setPage] = useState(1);
   const PER_PAGE = 10;
@@ -28,7 +29,22 @@ const StockTable = () => {
             <td className="px-3 py-4">{element.add}</td>
             <td className="px-3 py-4">{element.email}</td>
             <td className="px-3 py-4">{element.contact}</td>
-            <td className="px-3 py-4">{element.gst}</td>
+            <td className="flex items-center px-3 py-4 space-x-3">
+              <button
+                // onClick={handleAddUpdateFormVisibility}
+                // name={customer._id}
+                className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+              >
+                <Trash2 color="red" />
+              </button>
+              <button
+                // onClick={handleDeleteModalVisibility}
+                // name={customer._id}
+                className="font-medium text-red-600 dark:text-red-500 hover:underline"
+              >
+                <Pencil />
+              </button>
+            </td>
           </tr>
         ))}
       </Table>
