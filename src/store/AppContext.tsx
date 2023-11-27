@@ -2,7 +2,7 @@ import AppReducer, { Dispatch } from "./index";
 import {
   initialAmphere,
   initialBatteryNames,
-  initialDeleteFormProps,
+  initialDeleteModalProps,
   initialFormProps,
   initialGST,
   initialStoredCartItems,
@@ -15,7 +15,7 @@ const initialState: State = {
   batteryNames: initialBatteryNames,
   amphere: initialAmphere,
   storedCartItems: initialStoredCartItems,
-  deleteModalFormProps: initialDeleteFormProps,
+  deleteModalProps: initialDeleteModalProps,
   formProps: initialFormProps,
   refreshEffect: false,
   isModalVisible: false,
