@@ -1,7 +1,7 @@
 import { api } from ".";
 import { RequestConfig } from "../store/type";
 
-export const amphereAllRequest: RequestConfig = {
+const amphereAllRequest: RequestConfig = {
   method: "GET",
   url: api.amphere_GET,
   headers: {
@@ -13,7 +13,7 @@ export const amphereAllRequest: RequestConfig = {
   error: "Error while fetching all records!",
 };
 
-export const amphereSaveRequest: RequestConfig = {
+const amphereSaveRequest: RequestConfig = {
   method: "POST",
   url: api.amphere_POST,
   headers: {
@@ -25,7 +25,7 @@ export const amphereSaveRequest: RequestConfig = {
   error: "Error while saving record!",
 };
 
-export const amphereDeleteRequest: RequestConfig = {
+const amphereDeleteRequest: RequestConfig = {
   method: "DELETE",
   url: api.amphere_DELETE,
   headers: {
@@ -37,7 +37,7 @@ export const amphereDeleteRequest: RequestConfig = {
   error: "Error while deleting record!",
 };
 
-export const amphereUpdateRequest: RequestConfig = {
+const amphereUpdateRequest: RequestConfig = {
   method: "PATCH",
   url: api.amphere_PATCH,
   headers: {
@@ -47,4 +47,11 @@ export const amphereUpdateRequest: RequestConfig = {
   },
   success: "Records has been successfuly UPDATED!",
   error: "Error while updating record!",
+};
+
+export {
+  amphereAllRequest,
+  amphereSaveRequest,
+  amphereDeleteRequest,
+  amphereUpdateRequest,
 };

@@ -1,7 +1,7 @@
 import { api } from ".";
 import { RequestConfig } from "../store/type";
 
-export const userLoginRequest: RequestConfig = {
+const userLoginRequest: RequestConfig = {
   method: "POST",
   url: api.user_Login,
   headers: {
@@ -13,7 +13,7 @@ export const userLoginRequest: RequestConfig = {
   error: "Error while fetching all records!",
 };
 
-export const userSaveRequest: RequestConfig = {
+const userSaveRequest: RequestConfig = {
   method: "POST",
   url: api.user_POST,
   headers: {
@@ -25,7 +25,7 @@ export const userSaveRequest: RequestConfig = {
   error: "Error while saving record!",
 };
 
-export const userDeleteRequest: RequestConfig = {
+const userDeleteRequest: RequestConfig = {
   method: "DELETE",
   url: api.user_DELETE,
   headers: {
@@ -37,7 +37,7 @@ export const userDeleteRequest: RequestConfig = {
   error: "Error while deleting record!",
 };
 
-export const userUpdateRequest: RequestConfig = {
+const userUpdateRequest: RequestConfig = {
   method: "PATCH",
   url: api.user_PATCH,
   headers: {
@@ -47,4 +47,11 @@ export const userUpdateRequest: RequestConfig = {
   },
   success: "Records has been successfuly UPDATED!",
   error: "Error while updating record!",
+};
+
+export {
+  userLoginRequest,
+  userSaveRequest,
+  userDeleteRequest,
+  userUpdateRequest,
 };
