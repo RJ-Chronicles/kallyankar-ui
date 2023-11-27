@@ -6,7 +6,6 @@ import {
   initialFormProps,
   initialGST,
   initialStoredCartItems,
-  initialUserLoggedIn,
   State,
 } from "./type";
 import React, { createContext, useReducer } from "react";
@@ -23,7 +22,6 @@ const initialState: State = {
   isDeleteModalVisible: false,
   error: { hasError: false, message: "" },
   isLoading: false,
-  loggedIn: initialUserLoggedIn,
   customer: [],
   snackbar: {
     isOpen: false,

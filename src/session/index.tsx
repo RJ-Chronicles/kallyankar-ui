@@ -1,12 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { UserLoggedIn } from "../store/type";
 
-interface User {
-  username: string;
-  token: string;
-  tokenExpiry: number;
-}
-
 interface SessionContextValue {
   user: UserLoggedIn | null;
   login: (user: UserLoggedIn) => void;

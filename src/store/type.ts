@@ -73,7 +73,6 @@ export interface State {
   // token: string | undefined;
   // user: User;
   // isLoggedIn: boolean;
-  loggedIn: UserLoggedIn;
   GST: GSTValues[];
   batteryNames: BatteryNameValues[];
   amphere: AmphareSize[];
@@ -144,13 +143,6 @@ export const initialGST: GSTValues[] = [
     createdAt: "",
   },
 ];
-
-export const initialUserLoggedIn: UserLoggedIn = {
-  user: initialUser,
-  token: "",
-  expiresIn: "",
-  isLoggedIn: false,
-};
 
 export const customer: Customer = {
   name: "",
