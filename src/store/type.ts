@@ -24,9 +24,9 @@ export interface FormProps {
   title: string;
 }
 
-export interface DeleteModalFormProps {
+export interface DeleteModalProps {
   id: string;
-  mode: string;
+  mode?: DELETE_MODE;
   title: string;
 }
 
@@ -70,14 +70,11 @@ export interface Customer {
 }
 
 export interface State {
-  // token: string | undefined;
-  // user: User;
-  // isLoggedIn: boolean;
   GST: GSTValues[];
   batteryNames: BatteryNameValues[];
   amphere: AmphareSize[];
   storedCartItems: StoredCartItemsProps;
-  deleteModalFormProps: DeleteModalFormProps;
+  deleteModalProps: DeleteModalProps;
   formProps: FormProps;
   refreshEffect: boolean;
   isModalVisible: boolean;
@@ -103,9 +100,9 @@ export const initialFormProps: FormProps = {
   title: "",
 };
 
-export const initialDeleteFormProps: DeleteModalFormProps = {
+export const initialDeleteModalProps: DeleteModalProps = {
   id: "",
-  mode: "",
+  mode: undefined,
   title: "",
 };
 
@@ -171,6 +168,14 @@ export type Request = "GET" | "POST" | "DELETE" | "PATCH";
 export type Severity = "success" | "error" | "warning" | "info";
 
 export type Operation = "ALL" | "GST" | "BATTERY_LIST" | "AMPHERE";
+
+export type DELETE_MODE =
+  | "AMPHERE"
+  | "BATTERY_NAME"
+  | "GST"
+  | "CUSTOMER"
+  | "STOCK"
+  | "STOCK_ITEM";
 
 export interface RequestConfig {
   method: Request;
