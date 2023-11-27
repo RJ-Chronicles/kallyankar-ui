@@ -24,7 +24,7 @@ export type Action =
   | { type: "SET_DELETE_MODAL_VISIBLE"; payload: boolean }
   | { type: "SET_ERROR"; payload: { hasError: boolean; message: string } }
   | { type: "SET_LOADING"; payload: boolean }
-  | { type: "USER_LOG_IN"; payload: UserLoggedIn }
+  // | { type: "USER_LOG_IN"; payload: UserLoggedIn }
   | { type: "ADD_CUSTOMER_DATA"; payload: Customer[] }
   | {
       type: "TOGGLE_SNACKBAR";
@@ -94,11 +94,11 @@ const AppReducer = (state: State, action: Action) => {
         ...state,
         isLoading: action.payload,
       };
-    case "USER_LOG_IN":
-      return {
-        ...state,
-        loggedIn: action.payload,
-      };
+    // case "USER_LOG_IN":
+    //   return {
+    //     ...state,
+    //     loggedIn: action.payload,
+    //   };
     case "ADD_CUSTOMER_DATA":
       return {
         ...state,
