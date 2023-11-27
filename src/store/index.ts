@@ -94,11 +94,6 @@ const AppReducer = (state: State, action: Action) => {
         ...state,
         isLoading: action.payload,
       };
-    // case "USER_LOG_IN":
-    //   return {
-    //     ...state,
-    //     loggedIn: action.payload,
-    //   };
     case "ADD_CUSTOMER_DATA":
       return {
         ...state,
