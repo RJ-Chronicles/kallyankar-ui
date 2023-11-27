@@ -11,8 +11,7 @@ import CustomizedSnackbar from "./components/UI/Snackbar";
 
 function App() {
   const { state } = useContext(AppContext);
-  const { isDeleteModalVisible, deleteModalFormProps, isLoading, error } =
-    state;
+  const { isDeleteModalVisible, isLoading, error } = state;
 
   console.log(state);
   return (
@@ -24,10 +23,7 @@ function App() {
             message={state.snackbar.message}
             severty={state.snackbar.severity}
           >
-            <DeleteModal
-              open={isDeleteModalVisible}
-              data={deleteModalFormProps}
-            >
+            <DeleteModal open={isDeleteModalVisible}>
               <KallyankarRoute />
             </DeleteModal>
           </CustomizedSnackbar>

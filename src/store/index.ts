@@ -58,7 +58,7 @@ const AppReducer = (state: State, action: Action) => {
     case "ADD_DELETE_MODAL_PROPS":
       return {
         ...state,
-        deleteModalFormProps: action.payload,
+        deleteModalProps: action.payload,
       };
     case "ADD_FORM_PROPS":
       return {

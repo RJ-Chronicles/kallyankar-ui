@@ -180,7 +180,8 @@ export type DELETE_MODE =
 export interface RequestConfig {
   method: Request;
   url: string;
-  headers: Headers;
-  success: string;
-  error: string;
+  headers?: Headers;
+  body?: UserFormData;
+  success?: string;
+  error?: string;
 }
