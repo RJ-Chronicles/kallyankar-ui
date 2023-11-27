@@ -1,4 +1,6 @@
-import { batteryRequest, amphereRequest, GSTRequest } from "../api";
+import { amphereAllRequest } from "../api/amphere";
+import { GSTAllRequest } from "../api/gst";
+import { batteryAllRequest } from "../api/battery";
 import useAxiosRequest from "./useAxiosRequest";
 import {
   AmphareSize,
@@ -14,29 +16,29 @@ const useInitalFetch = () => {
   const { dispatch } = useContext(AppContext);
 
   const fetchOnetimeItems = (token: string, operation: Operation) => {
-    batteryRequest.headers.headers.Authorization = token;
-    amphereRequest.headers.headers.Authorization = token;
-    GSTRequest.headers.headers.Authorization = token;
+    batteryAllRequest.headers.headers.Authorization = token;
+    amphereAllRequest.headers.headers.Authorization = token;
+    GSTAllRequest.headers.headers.Authorization = token;
     switch (operation) {
       case "ALL":
         {
-          amphereFetch(amphereRequest, axiosRequest, dispatch);
-          batteryListeFetch(batteryRequest, axiosRequest, dispatch);
-          gstListFetch(GSTRequest, axiosRequest, dispatch);
+          amphereFetch(amphereAllRequest, axiosRequest, dispatch);
+          batteryListeFetch(batteryAllRequest, axiosRequest, dispatch);
+          gstListFetch(GSTAllRequest, axiosRequest, dispatch);
         }
         break;
       case "AMPHERE":
         {
-          amphereFetch(amphereRequest, axiosRequest, dispatch);
+          amphereFetch(amphereAllRequest, axiosRequest, dispatch);
         }
         break;
       case "BATTERY_LIST":
         {
-          batteryListeFetch(batteryRequest, axiosRequest, dispatch);
+          batteryListeFetch(batteryAllRequest, axiosRequest, dispatch);
         }
         break;
       case "GST": {
-        gstListFetch(GSTRequest, axiosRequest, dispatch);
+        gstListFetch(GSTAllRequest, axiosRequest, dispatch);
       }
     }
   };
@@ -47,21 +49,21 @@ const useInitalFetch = () => {
 export default useInitalFetch;
 
 const amphereFetch = async (
-  amphereRequest: RequestConfig,
+  amphereAllRequest: RequestConfig,
   axiosRequest: any,
   dispatch: any
 ) => {
   const response: AmphareSize[] = await axiosRequest({
-    request: amphereRequest.method,
-    url: amphereRequest.url,
-    headers: amphereRequest.headers,
+    request: amphereAllRequest.method,
+    url: amphereAllRequest.url,
+    headers: amphereAllRequest.headers,
   });
   if (response) {
     dispatch({
       type: "TOGGLE_SNACKBAR",
       payload: {
         isOpen: true,
-        message: amphereRequest.success,
+        message: amphereAllRequest.success,
         severity: "success",
       },
     });
@@ -74,21 +76,21 @@ const amphereFetch = async (
 };
 
 const batteryListeFetch = async (
-  batteryRequest: RequestConfig,
+  batteryAllRequest: RequestConfig,
   axiosRequest: any,
   dispatch: any
 ) => {
   const response: BatteryNameValues[] = await axiosRequest({
-    request: batteryRequest.method,
-    url: batteryRequest.url,
-    headers: batteryRequest.headers,
+    request: batteryAllRequest.method,
+    url: batteryAllRequest.url,
+    headers: batteryAllRequest.headers,
   });
   if (response) {
     dispatch({
       type: "TOGGLE_SNACKBAR",
       payload: {
         isOpen: true,
-        message: batteryRequest.success,
+        message: batteryAllRequest.success,
         severity: "success",
       },
     });
@@ -101,21 +103,21 @@ const batteryListeFetch = async (
 };
 
 const gstListFetch = async (
-  GSTRequest: RequestConfig,
+  GSTAllRequest: RequestConfig,
   axiosRequest: any,
   dispatch: any
 ) => {
   const response: GSTValues[] = await axiosRequest({
-    request: GSTRequest.method,
-    url: GSTRequest.url,
-    headers: GSTRequest.headers,
+    request: GSTAllRequest.method,
+    url: GSTAllRequest.url,
+    headers: GSTAllRequest.headers,
   });
   if (response) {
     dispatch({
       type: "TOGGLE_SNACKBAR",
       payload: {
         isOpen: true,
-        message: GSTRequest.success,
+        message: GSTAllRequest.success,
         severity: "success",
       },
     });
