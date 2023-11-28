@@ -1,5 +1,3 @@
-import { RequestConfig } from "../store/type";
-
 let baseURL = "http://localhost:3001";
 
 process.env.NODE_ENV === "development"
@@ -58,50 +56,16 @@ export const api = {
   stock_DELETE: baseURL + "/stock/:id",
 };
 
-// export const loginRequest: RequestConfig = {
-//   method: "POST",
-//   url: api.user_Login,
-//   headers: {
-//     headers: {
-//       Authorization: "",
-//     },
-//   },
-//   success: "Login successful",
-//   error: "Error while logging",
-// };
+export const snackBarSuccessMessage = {
+  Fetch: "Records has been successfully FETCHED!",
+  Save: "New Record has been successfuly ADDED!",
+  Delete: "Record has been successfuly DELETED!",
+  Update: "Records has been successfuly UPDATED!",
+};
 
-// export const amphereRequest: RequestConfig = {
-//   method: "GET",
-//   url: api.amphere_GET,
-//   headers: {
-//     headers: {
-//       Authorization: "",
-//     },
-//   },
-//   success: "Amphere list was successfully retrieved",
-//   error: "Error while logging",
-// };
-
-// export const batteryRequest: RequestConfig = {
-//   method: "GET",
-//   url: api.battery_GET,
-//   headers: {
-//     headers: {
-//       Authorization: "",
-//     },
-//   },
-//   success: "Size list was successfully retrieved",
-//   error: "Error while logging",
-// };
-
-// export const GSTRequest: RequestConfig = {
-//   method: "GET",
-//   url: api.GST_GET,
-//   headers: {
-//     headers: {
-//       Authorization: "",
-//     },
-//   },
-//   success: "GST list was successfully retrieved",
-//   error: "Error while logging",
-// };
+export const snackBarErrorMessage = {
+  Fetch: "Error while fetching records!",
+  Save: "Error while saving record!",
+  Delete: "Error while deleting record!",
+  Update: "Error while updating record!",
+};

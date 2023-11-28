@@ -12,14 +12,14 @@ const useDeleteModal = () => {
   const deleteModalHandler = (mode: DELETE_MODE, id: string, token: string) => {
     switch (mode) {
       case "AMPHERE":
-        fetchOnetimeItems(token, "AMPHERE");
+        fetchOnetimeItems("AMPHERE");
         break;
       case "GST":
-        fetchOnetimeItems(token, "GST");
+        fetchOnetimeItems("GST");
         break;
 
       case "BATTERY_NAME":
-        fetchOnetimeItems(token, "BATTERY_LIST");
+        fetchOnetimeItems("BATTERY_LIST");
         break;
 
       default:

@@ -11,14 +11,13 @@ import {
 } from "../store/type";
 import AppContext from "../store/AppContext";
 import { useContext } from "react";
+import { Dispatch } from "../store";
+import { snackBarSuccessMessage } from "../api";
 const useInitalFetch = () => {
   const { axiosRequest } = useAxiosRequest();
   const { dispatch } = useContext(AppContext);
 
-  const fetchOnetimeItems = (token: string, operation: Operation) => {
-    batteryAllRequest.headers.headers.Authorization = token;
-    amphereAllRequest.headers.headers.Authorization = token;
-    GSTAllRequest.headers.headers.Authorization = token;
+  const fetchOnetimeItems = (operation: Operation) => {
     switch (operation) {
       case "ALL":
         {
@@ -51,7 +50,7 @@ export default useInitalFetch;
 const amphereFetch = async (
   amphereAllRequest: RequestConfig,
   axiosRequest: any,
-  dispatch: any
+  dispatch: Dispatch
 ) => {
   const response: AmphareSize[] = await axiosRequest({
     request: amphereAllRequest.method,
@@ -63,7 +62,7 @@ const amphereFetch = async (
       type: "TOGGLE_SNACKBAR",
       payload: {
         isOpen: true,
-        message: amphereAllRequest.success,
+        message: snackBarSuccessMessage.Fetch,
         severity: "success",
       },
     });
@@ -78,7 +77,7 @@ const amphereFetch = async (
 const batteryListeFetch = async (
   batteryAllRequest: RequestConfig,
   axiosRequest: any,
-  dispatch: any
+  dispatch: Dispatch
 ) => {
   const response: BatteryNameValues[] = await axiosRequest({
     request: batteryAllRequest.method,
@@ -90,7 +89,7 @@ const batteryListeFetch = async (
       type: "TOGGLE_SNACKBAR",
       payload: {
         isOpen: true,
-        message: batteryAllRequest.success,
+        message: snackBarSuccessMessage.Fetch,
         severity: "success",
       },
     });
@@ -105,7 +104,7 @@ const batteryListeFetch = async (
 const gstListFetch = async (
   GSTAllRequest: RequestConfig,
   axiosRequest: any,
-  dispatch: any
+  dispatch: Dispatch
 ) => {
   const response: GSTValues[] = await axiosRequest({
     request: GSTAllRequest.method,
@@ -117,7 +116,7 @@ const gstListFetch = async (
       type: "TOGGLE_SNACKBAR",
       payload: {
         isOpen: true,
-        message: GSTAllRequest.success,
+        message: snackBarSuccessMessage.Fetch,
         severity: "success",
       },
     });
