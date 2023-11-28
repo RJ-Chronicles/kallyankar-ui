@@ -152,7 +152,7 @@ export const customer: Customer = {
 
 export interface Headers {
   headers: {
-    Authorization: string;
+    Authorization?: string;
   };
 }
 
@@ -182,6 +182,4 @@ export interface RequestConfig {
   url: string;
   headers?: Headers;
   body?: UserFormData;
-  success?: string;
-  error?: string;
 }

@@ -1,22 +1,24 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useContext } from "react";
+import { useSession } from "../session";
 import AppContext from "../store/AppContext";
 import { Headers, Request, UserFormData } from "../store/type";
 
 interface requestConfig {
   url: string;
   body?: UserFormData;
-  headers?: Headers;
   request: Request;
 }
 const useAxiosRequest = () => {
   const { dispatch } = useContext(AppContext);
-  const axiosRequest = async ({
-    url,
-    body,
-    headers,
-    request,
-  }: requestConfig) => {
+  const { user } = useSession();
+  const axiosRequest = async ({ url, body, request }: requestConfig) => {
+    const headers: Headers = {
+      headers: {
+        Authorization: "",
+      },
+    };
+    user?.token ? (headers.headers.Authorization = user?.token) : undefined;
     dispatch({ type: "SET_LOADING", payload: true });
     try {
       let response: AxiosResponse<any, any>;

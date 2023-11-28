@@ -25,7 +25,9 @@ const useHandleFormSubmit = () => {
 
   const handleSubmit = async (
     data: UserFormData,
-    requestMeta: RequestConfig
+    requestMeta: RequestConfig,
+    success: string,
+    error: string
   ) => {
     const hasError = validator(data);
 
@@ -33,23 +35,34 @@ const useHandleFormSubmit = () => {
       return;
     }
 
-    const res = await axiosRequest({
-      url: requestMeta.url,
-      request: requestMeta.method,
-      body: data,
-    });
-    if (res === undefined) {
-      throw new Error("Could not complete the request");
+    try {
+      const res = await axiosRequest({
+        url: requestMeta.url,
+        request: requestMeta.method,
+        body: data,
+      });
+      if (res === undefined) {
+        throw new Error("Could not complete the request");
+      }
+      dispatch({
+        type: "TOGGLE_SNACKBAR",
+        payload: {
+          isOpen: true,
+          message: success,
+          severity: "success",
+        },
+      });
+      return res;
+    } catch (err) {
+      dispatch({
+        type: "TOGGLE_SNACKBAR",
+        payload: {
+          isOpen: true,
+          message: error,
+          severity: "error",
+        },
+      });
     }
-    dispatch({
-      type: "TOGGLE_SNACKBAR",
-      payload: {
-        isOpen: true,
-        message: requestMeta.success,
-        severity: "success",
-      },
-    });
-    return res;
   };
 
   return { handleSubmit };

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import useInitalFetch from "../../hooks/useInitialFetch";
 import { userLoginRequest } from "../../api/admin";
 import { useSession } from "../../session";
+import { snackBarErrorMessage, snackBarSuccessMessage } from "../../api";
 
 const LoginForm = () => {
   const naviage = useNavigate();
@@ -17,7 +18,12 @@ const LoginForm = () => {
   const { login } = useSession();
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response: UserLoggedIn = await handleSubmit(data, userLoginRequest);
+    const response: UserLoggedIn = await handleSubmit(
+      data,
+      userLoginRequest,
+      "You have been successfuly loggedIn",
+      "Error while loggedIn!"
+    );
     const { token, user, expiresIn } = response;
     if (!token || !user || !expiresIn) {
       naviage("/");
@@ -31,7 +37,7 @@ const LoginForm = () => {
     };
     login(User);
     setTimeout(() => {
-      fetchOnetimeItems(token, "ALL");
+      fetchOnetimeItems("ALL");
       naviage("/admin/dashboard");
     }, 5000);
   };
