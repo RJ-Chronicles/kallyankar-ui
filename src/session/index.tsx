@@ -3,8 +3,8 @@ import { UserLoggedIn } from "../store/type";
 
 interface SessionContextValue {
   user: UserLoggedIn | null;
-  login: (user: UserLoggedIn) => void;
-  logout: () => void;
+  userLoginHandler: (user: UserLoggedIn) => void;
+  userLogoutHandler: () => void;
 }
 
 const SessionContext = createContext<SessionContextValue | undefined>(
@@ -26,26 +26,31 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     // Check if the user is already logged in from local storage
+    console.log("CHECK IF USER ALREADY LOGGED IN!");
     const storedUser = localStorage.getItem("user");
+    console.log(storedUser);
     if (storedUser) {
       const parsedUser: UserLoggedIn = JSON.parse(storedUser);
-      if (parsedUser.expiresIn > Date.now()) {
+
+      if (parsedUser.expiresIn > Math.floor(Date.now() / 1000)) {
         setUser(parsedUser);
       } else {
         // Token has expired, clear local storage
+        console.log("INSIDE THE ELSE STATMENT: REMOVED USER VALUE");
         localStorage.removeItem("user");
       }
     }
   }, []);
 
-  const login = (user: UserLoggedIn) => {
-    // Save user details to local storage
+  const userLoginHandler = (userInfo: UserLoggedIn) => {
+    //Save user details to local storage
     //const newUser: UserLoggedIn = { ...user };
-    localStorage.setItem("user", JSON.stringify(user));
-    setUser(user);
+    localStorage.setItem("user", JSON.stringify(userInfo));
+    setUser(userInfo);
+    console.log(userInfo);
   };
 
-  const logout = () => {
+  const userLogoutHandler = () => {
     // Remove user details from local storage
     localStorage.removeItem("user");
     setUser(null);
@@ -53,8 +58,8 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const contextValue: SessionContextValue = {
     user,
-    login,
-    logout,
+    userLoginHandler,
+    userLogoutHandler,
   };
 
   return (

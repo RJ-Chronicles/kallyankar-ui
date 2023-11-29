@@ -22,10 +22,12 @@ import React, { useContext } from "react";
 import AppContext from "../../store/AppContext";
 import CustomerPage from "../../Pages/customer-page";
 import CustomerBatteryPage from "../../Pages/customer-battery-page";
+import { useSession } from "../../session";
 const KallyankarRoute: React.FC = () => {
-  const { state } = useContext(AppContext);
-  // const { isLoggedIn } = state.loggedIn;
-  const isLoggedIn = true;
+  const { user } = useSession();
+
+  const isLoggedIn = user ? user.isLoggedIn : false;
+
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
