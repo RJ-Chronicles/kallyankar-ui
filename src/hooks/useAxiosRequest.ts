@@ -19,6 +19,7 @@ const useAxiosRequest = () => {
       },
     };
     user?.token ? (headers.headers.Authorization = user?.token) : undefined;
+    console.log(user);
     dispatch({ type: "SET_LOADING", payload: true });
     try {
       let response: AxiosResponse<any, any>;

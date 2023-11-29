@@ -13,7 +13,6 @@ function App() {
   const { state } = useContext(AppContext);
   const { isDeleteModalVisible, isLoading, error } = state;
 
-  console.log(state);
   return (
     <Layout>
       <LoadingSpinner open={isLoading} color="#FFFFFF">
