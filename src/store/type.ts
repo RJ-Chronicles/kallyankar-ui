@@ -6,6 +6,7 @@ export interface User {
   role: string;
   createdBy: string;
   deleted: boolean;
+  __v?: number;
 }
 
 export interface Login {

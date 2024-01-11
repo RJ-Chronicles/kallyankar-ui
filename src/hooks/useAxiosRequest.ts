@@ -12,14 +12,16 @@ interface requestConfig {
 const useAxiosRequest = () => {
   const { dispatch } = useContext(AppContext);
   const { user } = useSession();
+  console.log("USER SESSION DATA");
+  console.log(user);
   const axiosRequest = async ({ url, body, request }: requestConfig) => {
+    console.log("USER DETAILS : ", user);
     const headers: Headers = {
       headers: {
         Authorization: "",
       },
     };
     user?.token ? (headers.headers.Authorization = user?.token) : undefined;
-    console.log(user);
     dispatch({ type: "SET_LOADING", payload: true });
     try {
       let response: AxiosResponse<any, any>;
@@ -29,6 +31,7 @@ const useAxiosRequest = () => {
           response = await axios.post(url, body, headers);
           break;
         case "GET" || "DELETE":
+          console.log(url, headers);
           response = await axios.get(url, headers);
           console.log(response);
           break;

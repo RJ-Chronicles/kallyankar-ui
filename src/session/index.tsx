@@ -23,12 +23,11 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<UserLoggedIn | null>(null);
-
+  console.log("SETTING NEW USER VALUE", user);
   useEffect(() => {
     // Check if the user is already logged in from local storage
     console.log("CHECK IF USER ALREADY LOGGED IN!");
     const storedUser = localStorage.getItem("user");
-    console.log(storedUser);
     if (storedUser) {
       const parsedUser: UserLoggedIn = JSON.parse(storedUser);
 
@@ -43,15 +42,11 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const userLoginHandler = (userInfo: UserLoggedIn) => {
-    //Save user details to local storage
-    //const newUser: UserLoggedIn = { ...user };
     localStorage.setItem("user", JSON.stringify(userInfo));
     setUser(userInfo);
-    console.log(userInfo);
   };
 
   const userLogoutHandler = () => {
-    // Remove user details from local storage
     localStorage.removeItem("user");
     setUser(null);
   };
