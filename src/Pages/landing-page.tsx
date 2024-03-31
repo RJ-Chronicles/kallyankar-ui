@@ -13,10 +13,10 @@ import Contact from "../components/LandingPage/contact";
 import Footer from "../components/LandingPage/footer";
 import MyLandingPage from "./home";
 import LandingPageHeader from "./LandingPage";
-
+import PageWrapper from "../components/UI/Page";
 const LandingPage = () => {
   return (
-    <div>
+    <PageWrapper>
       <LandingPageHeader />
 
       <div id="feature" className="bg-white py-24">
@@ -169,7 +169,7 @@ const LandingPage = () => {
       <Contact />
 
       <Footer />
-    </div>
+    </PageWrapper>
   );
 };
 

@@ -1,5 +1,7 @@
+import PageWrapper from "../components/UI/Page";
+
 const StockItemPage = () => {
-  return <div>StockItemPage</div>;
+  return <PageWrapper>StockItemPage</PageWrapper>;
 };
 
 export default StockItemPage;

@@ -1,6 +1,8 @@
+import PageWrapper from "../components/UI/Page";
+
 const SettingsPage = () => {
   return (
-    <div className="w-full">
+    <PageWrapper>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae reiciendis
       soluta nesciunt vel? Accusantium necessitatibus dolorum nihil quo delectus
       officiis dolor. Corrupti est saepe nam rerum odit quo placeat porro
@@ -53,7 +55,7 @@ const SettingsPage = () => {
       obcaecati. Reprehenderit error provident inventore minus rerum, accusamus
       dignissimos quidem tenetur, harum maiores vel assumenda voluptas animi
       neque voluptate cumque eius dolorem atque. Animi, sunt ducimus.
-    </div>
+    </PageWrapper>
   );
 };
 

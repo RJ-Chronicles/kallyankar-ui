@@ -11,9 +11,9 @@ const DeleteModal: React.FC<{
   const { state, dispatch } = useContext(AppContext);
   const { mode, title, id } = state.deleteModalProps;
 
-  const { user } = useSession();
+  // const { user } = useSession();
   const handleDeleteRecord = () => {
-    if (typeof mode === "string" && typeof user?.token === "string") {
+    if (typeof mode === "string") {
       // deleteModalHandler(mode, id, user.token);
     }
     dispatch({ type: "SET_DELETE_MODAL_VISIBLE", payload: false });

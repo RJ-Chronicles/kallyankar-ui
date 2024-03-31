@@ -12,7 +12,7 @@ import useToken from "./hooks/useAuthentication";
 import useAppContext from "./hooks/useAppContext";
 
 function App() {
-  const { auth } = useToken();
+  // const { auth } = useToken();
   const { state, dispatch } = useAppContext();
   // if (auth && auth.user) {
   //   const { user } = auth;

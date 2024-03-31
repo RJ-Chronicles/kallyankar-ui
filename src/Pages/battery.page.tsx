@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import GSTTable from "../components/UI/Table/GSTTable";
 import AmphereTable from "../components/UI/Table/AmphereTable";
 import BatteryNameTable from "../components/UI/Table/BatteryNameTable";
+import PageWrapper from "../components/UI/Page";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,7 +42,7 @@ const Battery = () => {
     setValue(newValue);
   };
   return (
-    <div className="w-full">
+    <PageWrapper>
       <div className="flex flex-col justify-center items-center md:flex-row space-x-10 md:space-x-0">
         <Box sx={{ width: "100%" }}>
           <Box
@@ -77,7 +78,7 @@ const Battery = () => {
           </TabPanel>
         </Box>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

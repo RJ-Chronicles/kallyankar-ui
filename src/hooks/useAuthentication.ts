@@ -66,7 +66,7 @@ const useToken = (): AuthProps => {
       localStorage.removeItem("expirationTime");
       localStorage.removeItem("user");
       setTokenData(null);
-    }, 60000);
+    }, 600000);
 
     return () => clearInterval(interval);
   }, [login]);

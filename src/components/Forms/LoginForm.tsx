@@ -35,6 +35,7 @@ const LoginForm = () => {
         new Date().getTime() + response.expiresIn * 1000
       );
       const expiration = expirationTime.toISOString();
+      console.log(expiration + "   expiration");
       const { token, user } = response;
       userLoginHandler(token, expiration, user);
       naviage("/admin/dashboard");

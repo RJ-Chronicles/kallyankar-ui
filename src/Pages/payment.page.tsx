@@ -1,5 +1,7 @@
+import PageWrapper from "../components/UI/Page";
+
 const PaymentPage = () => {
-  return <div>PaymentPage</div>;
+  return <PageWrapper>PaymentPage</PageWrapper>;
 };
 
 export default PaymentPage;

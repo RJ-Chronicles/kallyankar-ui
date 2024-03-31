@@ -1,11 +1,11 @@
 import BillingStatusTable from "../components/UI/Table/BillingStatusTable";
-
+import PageWrapper from "../components/UI/Page";
 const BillStatusPage = () => {
   return (
-    <div>
+    <PageWrapper>
       <p>BillStatusPage Paid Unpaid records</p>
       <BillingStatusTable />
-    </div>
+    </PageWrapper>
   );
 };
 
