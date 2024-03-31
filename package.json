@@ -12,6 +12,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.15",
+    "@stylexjs/stylex": "^0.4.1",
     "axios": "^1.5.1",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.292.0",
@@ -20,6 +21,8 @@
     "react-router-dom": "^6.13.0"
   },
   "devDependencies": {
+    "@stylexjs/babel-plugin": "^0.4.1",
+    "@stylexjs/dev-runtime": "^0.4.1",
     "@types/lodash": "^4.14.199",
     "@types/node": "^20.8.2",
     "@types/react": "^18.0.17",

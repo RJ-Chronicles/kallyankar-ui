@@ -1,7 +1,7 @@
 //import { ReactComponent as Add} from '../svg/add.svg'
 
 interface ButtonSmallProps {
-  addNewItem: () => void;
+  addNewItem?: () => void;
   title?: string;
   type?: "button" | "submit";
 }

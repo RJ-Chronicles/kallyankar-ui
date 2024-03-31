@@ -8,9 +8,16 @@ import ErrorModal from "./components/UI/ErrorModal";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
 import DeleteModal from "./components/UI/DeleteModal";
 import CustomizedSnackbar from "./components/UI/Snackbar";
+import useToken from "./hooks/useAuthentication";
+import useAppContext from "./hooks/useAppContext";
 
 function App() {
-  const { state } = useContext(AppContext);
+  const { auth } = useToken();
+  const { state, dispatch } = useAppContext();
+  // if (auth && auth.user) {
+  //   const { user } = auth;
+  //   dispatch({ type: "USER_LOG_IN", payload: { isLoggedIn: true, user } });
+  // }
   const { isDeleteModalVisible, isLoading, error } = state;
 
   return (

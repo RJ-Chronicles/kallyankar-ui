@@ -2,56 +2,43 @@ import InputBox from "../UI/Input/InputBox";
 import Form from "../UI/Form";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
-import { user, UserLoggedIn } from "../../store/type";
-import useHandleFormSubmit from "../../hooks/useHandleFormSubmit";
+import { user, Login } from "../../store/type";
 import { useNavigate } from "react-router-dom";
-import useInitalFetch from "../../hooks/useInitialFetch";
-import { userLoginRequest } from "../../api/admin";
 import { useSession } from "../../session";
 import { useEffect } from "react";
+import useAppContext from "../../hooks/useAppContext";
+import useResponseValidator from "../../hooks/useResponseValidator";
+import { postUserLogin } from "../../backend/user";
+import useToken from "../../hooks/useAuthentication";
 
 const LoginForm = () => {
   const naviage = useNavigate();
   const { setValue, data } = useHandlevalueChange(user);
-  const { handleSubmit } = useHandleFormSubmit();
-  const { fetchOnetimeItems } = useInitalFetch();
-  const { userLoginHandler, user: storedUser } = useSession();
+  const { state, dispatch } = useAppContext();
+  const { error, setError, validator } = useResponseValidator();
+  const { userLoginHandler } = useToken();
+  const { auth } = state;
+  // const { userLoginHandler } = useSession();
 
   useEffect(() => {
-    if (storedUser) {
-      console.log("INSIDE THE EFFECT");
-      setTimeout(() => {
-        fetchOnetimeItems("ALL");
-        naviage("/admin/dashboard");
-      }, 5000);
+    if (auth?.isLoggedIn) {
+      naviage("/dashboard");
     }
   }, []);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response: UserLoggedIn = await handleSubmit(
-      data,
-      userLoginRequest,
-      "You have been successfuly loggedIn",
-      "Error while loggedIn!"
-    );
-    const { token, user, expiresIn } = response;
-
-    if (!token || !user || !expiresIn) {
-      naviage("/");
-      return;
-    }
-    const User = {
-      user,
-      token,
-      expiresIn,
-      isLoggedIn: true,
-    };
-    userLoginHandler(User);
-    setTimeout(() => {
-      fetchOnetimeItems("ALL");
+    validator(data as Login);
+    if (!error) {
+      const response = await postUserLogin(data as Login);
+      const expirationTime = new Date(
+        new Date().getTime() + response.expiresIn * 1000
+      );
+      const expiration = expirationTime.toISOString();
+      const { token, user } = response;
+      userLoginHandler(token, expiration, user);
       naviage("/admin/dashboard");
-    }, 5000);
+    }
   };
 
   return (
@@ -76,3 +63,22 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+// const response: UserLoggedIn = await handleSubmit(
+//   data,
+//   userLoginRequest,
+//   "You have been successfuly loggedIn",
+//   "Error while loggedIn!"
+// );
+// const { token, user, expiresIn } = response;
+
+// if (!token || !user || !expiresIn) {
+//   naviage("/");
+//   return;
+// }
+// const User = {
+//   user,
+//   token,
+//   expiresIn,
+//   isLoggedIn: true,
+// };

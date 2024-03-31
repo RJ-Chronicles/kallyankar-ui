@@ -4,9 +4,8 @@ export interface User {
   last_name: string;
   email: string;
   role: string;
-  createdBy: string;
-  deleted: boolean;
-  __v?: number;
+  createdBy?: string;
+  deleted?: boolean;
 }
 
 export interface Login {
@@ -15,9 +14,9 @@ export interface Login {
 }
 export interface UserLoggedIn {
   user: User;
-  token: string;
-  expiresIn: string | any;
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
+  expiration: string;
+  token?: string;
 }
 export interface FormProps {
   initial_data: {};
@@ -43,21 +42,28 @@ export interface StoredCartItemsProps {
 }
 
 export interface AmphareSize {
-  _id: string;
+  _id?: string;
   size: number;
-  createdAt: string;
+  createdAt?: string;
 }
 
+export type StockItems = {
+  battery_name: string;
+  product_code: string;
+  amphere_size: string;
+  available: number;
+};
+
 export interface BatteryNameValues {
-  _id: string;
+  _id?: string;
   name: number;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface GSTValues {
-  _id: string;
+  _id?: string;
   gst: number;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface Customer {
@@ -84,6 +90,7 @@ export interface State {
   isLoading: boolean;
   customer: Customer[] | [];
   snackbar: { isOpen: boolean; message: string; severity: Severity };
+  auth: UserLoggedIn | null;
 }
 
 export const initialUser: User = {
@@ -162,7 +169,14 @@ export const user: Login = {
   password: "",
 };
 
-export type UserFormData = Customer | User | Login;
+export type UserFormData =
+  | Customer
+  | User
+  | Login
+  | AmphareSize
+  | BatteryNameValues
+  | GSTValues
+  | StockItems;
 
 export type Request = "GET" | "POST" | "DELETE" | "PATCH";
 

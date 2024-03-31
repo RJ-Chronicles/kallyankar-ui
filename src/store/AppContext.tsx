@@ -10,6 +10,11 @@ import {
 } from "./type";
 import React, { createContext, useReducer } from "react";
 
+type AppContextType = {
+  state: State;
+  dispatch: Dispatch;
+};
+
 const initialState: State = {
   GST: initialGST,
   batteryNames: initialBatteryNames,
@@ -28,12 +33,10 @@ const initialState: State = {
     message: "",
     severity: "error",
   },
+  auth: null,
 };
 
-const AppContext = createContext<{
-  state: State;
-  dispatch: Dispatch;
-}>({
+const AppContext = createContext<AppContextType>({
   state: initialState,
   dispatch: () => null,
 });

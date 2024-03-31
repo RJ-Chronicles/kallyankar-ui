@@ -31,7 +31,7 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({
     if (storedUser) {
       const parsedUser: UserLoggedIn = JSON.parse(storedUser);
 
-      if (parsedUser.expiresIn > Math.floor(Date.now() / 1000)) {
+      if (parseInt(parsedUser?.expiration) > Math.floor(Date.now() / 1000)) {
         setUser(parsedUser);
       } else {
         // Token has expired, clear local storage

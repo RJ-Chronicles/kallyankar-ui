@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import useDeleteModal from "../../hooks/useDeleteModal";
+
 import { useSession } from "../../session";
 import AppContext from "../../store/AppContext";
 import Overlay from "./Overlay";
@@ -10,11 +10,11 @@ const DeleteModal: React.FC<{
 }> = ({ open, children }) => {
   const { state, dispatch } = useContext(AppContext);
   const { mode, title, id } = state.deleteModalProps;
-  const { deleteModalHandler } = useDeleteModal();
+
   const { user } = useSession();
   const handleDeleteRecord = () => {
     if (typeof mode === "string" && typeof user?.token === "string") {
-      deleteModalHandler(mode, id, user.token);
+      // deleteModalHandler(mode, id, user.token);
     }
     dispatch({ type: "SET_DELETE_MODAL_VISIBLE", payload: false });
   };
