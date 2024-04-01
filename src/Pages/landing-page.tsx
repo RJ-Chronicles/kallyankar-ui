@@ -5,18 +5,14 @@ import {
   GearIcon,
   GiftIcon,
 } from "../assets/images/SVGIcons";
-import { Link } from "react-router-dom";
 import img1 from "../assets/images/img1.jpg";
 import landing_page_battery from "../assets/images/battery_landing_page.jpg";
-import logo from "../assets/images/logo.png";
 import Contact from "../components/LandingPage/contact";
 import Footer from "../components/LandingPage/footer";
-import MyLandingPage from "./home";
 import LandingPageHeader from "./LandingPage";
-import PageWrapper from "../components/UI/Page";
 const LandingPage = () => {
   return (
-    <PageWrapper>
+    <div>
       <LandingPageHeader />
 
       <div id="feature" className="bg-white py-24">
@@ -169,7 +165,7 @@ const LandingPage = () => {
       <Contact />
 
       <Footer />
-    </PageWrapper>
+    </div>
   );
 };
 

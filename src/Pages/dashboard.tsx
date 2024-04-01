@@ -1,6 +1,3 @@
-import CustomerForm from "../components/Forms/CustomerForm";
-import CustomerTable from "../components/UI/Table/CustomerTable";
-import { customer } from "../store/type";
 import AppContext from "../store/AppContext";
 import { useContext } from "react";
 const Dashboard = () => {
@@ -8,7 +5,8 @@ const Dashboard = () => {
   console.log(state);
   return (
     <div className="w-full flex items-center justify-center">
-      This is the Dashboard;
+      This is the DashboardThis is the DashboardThis is the DashboardThis is the
+      Dashboard;
     </div>
   );
 };

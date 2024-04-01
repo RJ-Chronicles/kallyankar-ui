@@ -4,25 +4,26 @@ import ButtonLarge from "../UI/Button/ButtonLarge";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import { user, Login } from "../../store/type";
 import { useNavigate } from "react-router-dom";
-import { useSession } from "../../session";
+// import { useSession } from "../../session";
 import { useEffect } from "react";
 import useAppContext from "../../hooks/useAppContext";
 import useResponseValidator from "../../hooks/useResponseValidator";
 import { postUserLogin } from "../../backend/user";
 import useToken from "../../hooks/useAuthentication";
+import { useAuthContext } from "../../context/AuthContext";
 
 const LoginForm = () => {
   const naviage = useNavigate();
   const { setValue, data } = useHandlevalueChange(user);
   const { state, dispatch } = useAppContext();
   const { error, setError, validator } = useResponseValidator();
-  const { userLoginHandler } = useToken();
-  const { auth } = state;
+  // const { userLoginHandler } = useToken();
+  const auth = useAuthContext();
   // const { userLoginHandler } = useSession();
-
+  const { isLoggedIn, userLoginHandler } = auth;
   useEffect(() => {
-    if (auth?.isLoggedIn) {
-      naviage("/dashboard");
+    if (isLoggedIn) {
+      naviage("admin/dashboard");
     }
   }, []);
 
@@ -37,6 +38,7 @@ const LoginForm = () => {
       const expiration = expirationTime.toISOString();
       console.log(expiration + "   expiration");
       const { token, user } = response;
+      console.log({ token, expiration, user });
       userLoginHandler(token, expiration, user);
       naviage("/admin/dashboard");
     }

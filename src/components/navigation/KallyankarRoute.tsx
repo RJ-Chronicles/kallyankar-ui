@@ -18,23 +18,14 @@ import PaymentPage from "../../Pages/payment.page";
 import SettingsPage from "../../Pages/setting";
 import StockItemPage from "../../Pages/stock.items";
 import StockPage from "../../Pages/stock-page";
-import React, { useContext, useEffect, useState } from "react";
-import AppContext from "../../store/AppContext";
+
 import CustomerPage from "../../Pages/customer-page";
 import CustomerBatteryPage from "../../Pages/customer-battery-page";
-import { useSession } from "../../session";
-import useAppContext from "../../hooks/useAppContext";
+import { useAuthContext } from "../../context/AuthContext";
 const KallyankarRoute: React.FC = () => {
-  // const { user } = useSession();
-  const { auth } = useAppContext().state;
-  //const isLoggedIn = auth?.isLoggedIn ?? false;
-  const [isLoggedIn, setLogin] = useState(false);
-  const token = localStorage.getItem("token");
-  useEffect(() => {
-    if (token) {
-      setLogin(true);
-    }
-  }, []);
+  const auth = useAuthContext();
+  const isLoggedIn = auth?.isLoggedIn ?? false;
+
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />

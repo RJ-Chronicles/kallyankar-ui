@@ -24,7 +24,7 @@ const getUserList = async () => {
   const { data } = await api.get<User[]>("admin/user_list-up");
   return data;
 };
-const logoutUser = async (token: string, email: string) => {
+const postLogoutUser = async (token: string, email: string) => {
   const { data } = await api.post<User>("admin/logout", { email, token });
   return data;
 };
@@ -42,6 +42,6 @@ export {
   updateUserById,
   deleteUserById,
   getUserList,
-  logoutUser,
+  postLogoutUser,
   postUserLogin,
 };
