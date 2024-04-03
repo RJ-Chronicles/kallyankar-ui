@@ -59,7 +59,7 @@ const LoginForm = () => {
         setValue={setValue}
       />
       <div className="flex justify-center items-end w-full px-2">
-        <ButtonLarge title="Login" addNewItem={() => {}} />
+        <ButtonLarge title="Login" />
       </div>
     </Form>
   );

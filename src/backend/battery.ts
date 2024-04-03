@@ -1,28 +1,28 @@
-import { BatteryName } from "../store/type";
+import { BatteryNameValues } from "../store/type";
 import api from "./api";
 
-const postNewBattery = async (battery: BatteryName) => {
-  const { data } = await api.post<BatteryName>("battery/add", battery);
+const postNewBattery = async (battery: BatteryNameValues) => {
+  const { data } = await api.post<BatteryNameValues>("battery/add", battery);
   return data;
 };
-const updateBatteryById = async (battery: BatteryName, id: string) => {
-  const { data } = await api.patch<BatteryName>(
+const updateBatteryById = async (battery: BatteryNameValues, id: string) => {
+  const { data } = await api.patch<BatteryNameValues>(
     "battery/update/" + id,
     battery
   );
   return data;
 };
 const deleteBatteryById = async (id: string) => {
-  const { data } = await api.delete<BatteryName>("battery/delete/" + id);
+  const { data } = await api.delete<BatteryNameValues>("battery/delete/" + id);
   return data;
 };
 const getBatteryList = async () => {
-  const { data } = await api.get<BatteryName[]>("battery/user_list-up");
+  const { data } = await api.get<BatteryNameValues[]>("battery/user_list-up");
   return data;
 };
 
 const getBatterySizeById = async (id: string) => {
-  const { data } = await api.get<BatteryName>("battery/seleted/" + id);
+  const { data } = await api.get<BatteryNameValues>("battery/seleted/" + id);
   return data;
 };
 
