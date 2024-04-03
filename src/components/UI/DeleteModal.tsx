@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 
-import { useSession } from "../../session";
 import AppContext from "../../store/AppContext";
 import Overlay from "./Overlay";
 
