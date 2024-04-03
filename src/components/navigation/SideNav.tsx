@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import styles from "./SideNav.module.css";
 import { NavLinkProps, ToggleClose, ToggleOpen } from "./NavLinkProps";
 import AvatarImage from "../../assets/images/avatar.png";
+import { useAuthContext } from "../../context/AuthContext";
 
 const MyNavLink = () => {
   return (
@@ -30,6 +31,8 @@ const MyNavLink = () => {
 
 function Sidebar() {
   const [toggleNav, setToggleNav] = useState(false);
+  const auth = useAuthContext();
+  const { user } = auth;
   return (
     <div
       className={`bg-white text-white min-h-screen shadow-lg ${
@@ -53,7 +56,7 @@ function Sidebar() {
           <>
             <div className={styles.profile}>
               <img src={AvatarImage} alt="profile_picture" />
-              <h3>Sidhesh Kallyankar</h3>
+              <h3>{user.name + " " + user.last_name}</h3>
               <p>Product Owner</p>
             </div>
             <MyNavLink />

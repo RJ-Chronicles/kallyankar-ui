@@ -1,10 +1,24 @@
 import Overlay from "./Overlay";
 import ButtonLarge from "./Button/ButtonLarge";
+import { useAuthContext } from "../../context/AuthContext";
+import useAppContext from "../../hooks/useAppContext";
+import { useNavigate } from "react-router-dom";
 const ErrorModal: React.FC<{
   children: React.ReactNode;
   open: boolean;
   errorMessage: string;
 }> = ({ children, open, errorMessage }) => {
+  const { userLogoutHandler } = useAuthContext();
+  const { dispatch } = useAppContext();
+  const navigate = useNavigate();
+  const userLogout = () => {
+    dispatch({
+      type: "SET_ERROR",
+      payload: { hasError: false, message: "" },
+    });
+    userLogoutHandler();
+    navigate("/");
+  };
   return (
     <>
       <Overlay open={open} handleClose={() => {}} widthSize="md">
@@ -18,7 +32,11 @@ const ErrorModal: React.FC<{
               Something not ideal might be happening. Check your internet
               connection or try to login again.
             </p>
-            <ButtonLarge addNewItem={() => {}} title="Logout" type="button" />
+            <ButtonLarge
+              buttonClick={() => userLogout()}
+              title="Logout"
+              type="button"
+            />
           </div>
         </div>
       </Overlay>

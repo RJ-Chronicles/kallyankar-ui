@@ -17,7 +17,7 @@ const Transition = React.forwardRef(function Transition(
 interface Props {
   children: React.ReactNode;
   open: boolean;
-  handleClose: () => void;
+  handleClose: React.Dispatch<React.SetStateAction<boolean>>;
   widthSize?: "md" | "lg" | "sm";
   showButton?: boolean;
 }
@@ -33,14 +33,22 @@ const Overlay: React.FC<Props> = ({
       open={open}
       TransitionComponent={Transition}
       keepMounted
-      onClose={handleClose}
+      onClose={() => {
+        handleClose((prev) => !prev);
+      }}
       aria-describedby="alert-dialog-slide-description"
       maxWidth={widthSize}
     >
       {children}
       {showButton && (
         <DialogActions>
-          <Button onClick={handleClose}>cLOSE</Button>
+          <Button
+            onClick={() => {
+              handleClose((prev) => !prev);
+            }}
+          >
+            cLOSE
+          </Button>
         </DialogActions>
       )}
     </Dialog>

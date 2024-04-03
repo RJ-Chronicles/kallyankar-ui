@@ -1,7 +1,7 @@
 const CUSTOMER_TABLE_COLUMN = [
-  "MARK",
-  "CUSTOMER NAME",
-  "CUSTOMER ADDRESS",
+  "SELECT",
+  "NAME",
+  "ADDRESS",
   "EMAIL",
   "CONTACT",
   "GST_NO",

@@ -74,6 +74,7 @@ export interface Customer {
   email: string;
   contact: number;
   gst_number: string;
+  createdAt?: string;
 }
 
 export interface State {

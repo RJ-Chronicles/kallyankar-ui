@@ -5,25 +5,34 @@ import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import { postNewCustomer } from "../../backend/customer";
 import useResponseValidator from "../../hooks/useResponseValidator";
+import useAppContext from "../../hooks/useAppContext";
 
 interface Props {
   customer: Customer;
+  showForm: boolean;
+  closeForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const CustomerForm: React.FC<Props> = ({ customer }) => {
+const CustomerForm: React.FC<Props> = ({ customer, closeForm, showForm }) => {
+  const { state, dispatch } = useAppContext();
   const { setValue, data } = useHandlevalueChange(customer);
-  const { error, setError, validator } = useResponseValidator();
+
   const { name, last_name, address, email, contact, gst_number } =
     data as Customer;
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validator(data as Customer);
-    if (!error) {
-      const response = await postNewCustomer(data as Customer);
-    }
+    // validator(data as Customer);
+    dispatch({ type: "SET_LOADING", payload: true });
+    const response = await postNewCustomer(data as Customer);
+
+    dispatch({ type: "SET_LOADING", payload: false });
+    dispatch({ type: "REFRESH_EFFECT", payload: !state.refreshEffect });
+
+    console.log(response);
   };
 
   return (
-    <Overlay open={true} handleClose={() => {}} showButton={true}>
+    <Overlay open={showForm} handleClose={closeForm} showButton={true}>
       <Heading heading="Customer Registration Form" />
       <div className="w-full  bg-white p-5 rounded-lg lg:rounded-l-none">
         <form
@@ -40,6 +49,7 @@ const CustomerForm: React.FC<Props> = ({ customer }) => {
               </label>
               <input
                 className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                name="name"
                 id="firstName"
                 type="text"
                 placeholder="First Name"
@@ -56,6 +66,7 @@ const CustomerForm: React.FC<Props> = ({ customer }) => {
               </label>
               <input
                 className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                name="last_name"
                 id="lastName"
                 type="text"
                 placeholder="Last Name"
@@ -73,6 +84,7 @@ const CustomerForm: React.FC<Props> = ({ customer }) => {
             </label>
             <input
               className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              name="address"
               id="address"
               type="text"
               placeholder="Address"
@@ -89,6 +101,7 @@ const CustomerForm: React.FC<Props> = ({ customer }) => {
             </label>
             <input
               className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              name="email"
               id="email"
               type="email"
               placeholder="Email"
@@ -105,26 +118,28 @@ const CustomerForm: React.FC<Props> = ({ customer }) => {
             </label>
             <input
               className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              name="contact"
               id="contact"
               type="number"
               placeholder="Contact"
-              onChange={(e) => setValue}
+              onChange={setValue}
               value={contact}
             />
           </div>
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="gst_num"
+              htmlFor="gst_number"
             >
               GST Number
             </label>
             <input
               className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="gst_num"
+              name="gst_number"
+              id="gst_number"
               type="text"
               placeholder="Customer GST Number"
-              onChange={(e) => setValue}
+              onChange={setValue}
               value={gst_number}
             />
           </div>
@@ -137,30 +152,3 @@ const CustomerForm: React.FC<Props> = ({ customer }) => {
 };
 
 export default CustomerForm;
-
-// const [user, setUser] = useState<Customer>({ ...customer });
-
-// const handleSetUser = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-// };
-// const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-//   event.preventDefault();
-// };
-
-{
-  /* <Form handleSubmit={() => {}} maxWidth="w-[600px]">
-        {customer_fields.map((field, index) => (
-          <InputBox
-            key={index}
-            label={field.label}
-            id={field.id}
-            type={field.type}
-            width={field.width}
-            margin={field.margin}
-            setValue={setValue}
-            required={field.required}
-          />
-        ))}
-        <ButtonLarge title="register now" addNewItem={() => {}} type="submit" />
-      </Form> */
-}

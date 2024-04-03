@@ -23,7 +23,7 @@ function App() {
   return (
     <Layout>
       <LoadingSpinner open={isLoading} color="#FFFFFF">
-        <ErrorModal open={false} errorMessage={error.message}>
+        <ErrorModal open={error.hasError} errorMessage={error.message}>
           <CustomizedSnackbar
             open={state.snackbar.isOpen}
             message={state.snackbar.message}

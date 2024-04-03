@@ -1,17 +1,8 @@
 import api from "./api";
 
 import { Customer } from "../store/type";
-
-// type Customer = {
-//   _id?: string;
-//   name: string;
-//   last_name: string;
-//   email: string;
-//   role: string;
-// };
-
 const postNewCustomer = async (customer: Customer) => {
-  const { data } = await api.post<Customer>("adamin/add", customer);
+  const { data } = await api.post<Customer>("customer/new-customer", customer);
   return data;
 };
 const updateCustomerById = async (customer: Customer, id: string) => {
