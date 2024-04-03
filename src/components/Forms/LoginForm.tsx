@@ -16,9 +16,9 @@ const LoginForm = () => {
   const { setValue, data } = useHandlevalueChange(user);
   const { state, dispatch } = useAppContext();
   const { error, setError, validator } = useResponseValidator();
-  // const { userLoginHandler } = useToken();
+
   const auth = useAuthContext();
-  // const { userLoginHandler } = useSession();
+
   const { isLoggedIn, userLoginHandler } = auth;
   useEffect(() => {
     if (isLoggedIn) {
@@ -30,14 +30,14 @@ const LoginForm = () => {
     e.preventDefault();
     validator(data as Login);
     if (!error) {
+      dispatch({ type: "SET_LOADING", payload: true });
       const response = await postUserLogin(data as Login);
+      dispatch({ type: "SET_LOADING", payload: false });
       const expirationTime = new Date(
         new Date().getTime() + response.expiresIn * 1000
       );
       const expiration = expirationTime.toISOString();
-      console.log(expiration + "   expiration");
       const { token, user } = response;
-      console.log({ token, expiration, user });
       userLoginHandler(token, expiration, user);
       naviage("/admin/dashboard");
     }
