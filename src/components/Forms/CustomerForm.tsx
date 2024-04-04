@@ -1,9 +1,9 @@
-import { Customer } from "../../store/type";
+import { ActionType, Customer } from "../../store/type";
 import Overlay from "../UI/Overlay";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
-import { postNewCustomer } from "../../backend/customer";
+import { postNewCustomer, updateCustomerById } from "../../backend/customer";
 import useResponseValidator from "../../hooks/useResponseValidator";
 import useAppContext from "../../hooks/useAppContext";
 
@@ -11,24 +11,32 @@ interface Props {
   customer: Customer;
   showForm: boolean;
   closeForm: React.Dispatch<React.SetStateAction<boolean>>;
+  actionType: ActionType;
 }
-const CustomerForm: React.FC<Props> = ({ customer, closeForm, showForm }) => {
+const CustomerForm: React.FC<Props> = ({
+  customer,
+  closeForm,
+  showForm,
+  actionType,
+}) => {
   const { state, dispatch } = useAppContext();
   const { setValue, data } = useHandlevalueChange(customer);
 
-  const { name, last_name, address, email, contact, gst_number } =
+  const { name, last_name, address, email, contact, gst_number, _id } =
     data as Customer;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // validator(data as Customer);
     dispatch({ type: "SET_LOADING", payload: true });
-    const response = await postNewCustomer(data as Customer);
+    if (actionType === "ADD_RECORD") {
+      const response = await postNewCustomer(data as Customer);
+    } else {
+      await updateCustomerById(data as Customer, _id ?? "");
+    }
 
     dispatch({ type: "SET_LOADING", payload: false });
     dispatch({ type: "REFRESH_EFFECT", payload: !state.refreshEffect });
-
-    console.log(response);
   };
 
   return (
@@ -143,7 +151,12 @@ const CustomerForm: React.FC<Props> = ({ customer, closeForm, showForm }) => {
               value={gst_number}
             />
           </div>
-          <ButtonLarge title="register now" type="submit" />
+          <ButtonLarge
+            title={`${
+              actionType === "ADD_RECORD" ? "register now" : "update customer"
+            }`}
+            type="submit"
+          />
           <hr className="mb-6 border-t" />
         </form>
       </div>

@@ -72,7 +72,7 @@ export interface Customer {
   last_name: string;
   address: string;
   email: string;
-  contact: number;
+  contact: string;
   gst_number: string;
   createdAt?: string;
 }
@@ -155,7 +155,7 @@ export const customer: Customer = {
   last_name: "",
   address: "",
   email: "",
-  contact: 7798689539,
+  contact: "",
   gst_number: "",
 };
 
@@ -199,3 +199,5 @@ export interface RequestConfig {
   headers?: Headers;
   body?: UserFormData;
 }
+
+export type ActionType = "ADD_RECORD" | "UPDATE_RECORD" | undefined;

@@ -4,10 +4,21 @@ import usePagination from "../../../hooks/usePagination";
 import { Pagination } from "@mui/material";
 import { useState } from "react";
 
-import { Customer } from "../../../store/type";
+import { ActionType, Customer } from "../../../store/type";
 import useDateFormater from "../../../hooks/useDateFormater";
 
-const CustomerTable: React.FC<{ data: Customer[] }> = ({ data }) => {
+type CustomerTableProps = {
+  setValue: React.Dispatch<React.SetStateAction<Customer>>;
+  data: Customer[];
+  showForm: React.Dispatch<React.SetStateAction<boolean>>;
+  setActionType: React.Dispatch<React.SetStateAction<ActionType>>;
+};
+const CustomerTable: React.FC<CustomerTableProps> = ({
+  data,
+  setValue,
+  showForm,
+  setActionType,
+}) => {
   let [page, setPage] = useState(1);
   const PER_PAGE = 10;
 
@@ -21,6 +32,14 @@ const CustomerTable: React.FC<{ data: Customer[] }> = ({ data }) => {
 
   const { dateFormater } = useDateFormater();
 
+  const editCustomerHandler = (id: string) => {
+    const record = data.find((item) => item._id === id);
+    if (record) {
+      setValue(record);
+      showForm((prev) => !prev);
+      setActionType("UPDATE_RECORD");
+    }
+  };
   return (
     <div>
       <h1 className="text-center">Customer Table</h1>
@@ -50,6 +69,14 @@ const CustomerTable: React.FC<{ data: Customer[] }> = ({ data }) => {
             <td className="px-3 py-4">{element.gst_number}</td>
             <td className="px-3 py-4">
               {dateFormater(element?.createdAt ?? "")}
+            </td>
+            <td>
+              <button
+                onClick={() => editCustomerHandler(element._id ?? "")}
+                className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+              >
+                Edit
+              </button>
             </td>
           </tr>
         ))}
