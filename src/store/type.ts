@@ -29,7 +29,8 @@ export interface FormProps {
     | undefined
     | BatteryNameValues
     | GSTValues
-    | StockItems;
+    | StockItems
+    | Product;
   mode: ActionType;
   type:
     | "CUSTOMER"
@@ -199,7 +200,8 @@ export type UserFormData =
   | AmphareSize
   | BatteryNameValues
   | GSTValues
-  | StockItems;
+  | StockItems
+  | Product;
 
 export type Request = "GET" | "POST" | "DELETE" | "PATCH";
 
@@ -221,3 +223,12 @@ export interface RequestConfig {
   headers?: Headers;
   body?: UserFormData;
 }
+
+export type Product = {
+  name: string;
+  vehicle_number: string;
+  type: string;
+  serial_number: string;
+  price: string;
+  _id: string;
+};

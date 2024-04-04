@@ -1,8 +1,6 @@
 import api from "./api";
 
-type Product = {
-  name: string;
-};
+import { Product } from "../store/type";
 
 const postNewProduct = async (product: Product) => {
   const { data } = await api.post<Product>("product/post", product);
@@ -24,8 +22,10 @@ const getProductListToExport = async () => {
   const { data } = await api.get<Product[]>("product/list-to-export");
   return data;
 };
-const getProductByCustomerId = async (id: string) => {
-  const { data } = await api.get<Product>("product/seleted/" + id);
+const getProductByCustomerId = async ({ id }: { id: string }) => {
+  const { data } = await api.get<Product[]>(
+    "product/customer-specific-list/" + id
+  );
   return data;
 };
 

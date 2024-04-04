@@ -3,8 +3,9 @@ import usePagination from "../../../hooks/usePagination";
 import { BATTERY_TABLE_COLUMN } from "./columns";
 import Table from "./Table";
 import { Pagination } from "@mui/material";
-import data from "./Mock_data.json";
-const CustomerBatteryTable = () => {
+import { Product } from "../../../store/type";
+
+const CustomerBatteryTable: React.FC<{ data: Product[] }> = ({ data }) => {
   let [page, setPage] = useState(1);
   const PER_PAGE = 10;
 
@@ -18,17 +19,17 @@ const CustomerBatteryTable = () => {
   return (
     <div className="flex items-center justify-center flex-col w-full">
       <Table column={BATTERY_TABLE_COLUMN}>
-        {_DATA.currentData().map((element, index) => (
+        {_DATA.currentData().map((element: Product, index) => (
           <tr
             key={index}
             className="bg-white border-b text-sm text-slate-700 font-base hover:bg-gray-50"
           >
             <td className="px-3 py-4">{element.name}</td>
-            <td className="px-3 py-4">{element.c_name}</td>
-            <td className="px-3 py-4">{element.add}</td>
-            <td className="px-3 py-4">{element.email}</td>
-            <td className="px-3 py-4">{element.contact}</td>
-            <td className="px-3 py-4">{element.gst}</td>
+            <td className="px-3 py-4">{element.vehicle_number}</td>
+            <td className="px-3 py-4">{element.type}</td>
+            <td className="px-3 py-4">{element.serial_number}</td>
+            <td className="px-3 py-4">{element.price}</td>
+            <td className="px-3 py-4">Action</td>
           </tr>
         ))}
       </Table>

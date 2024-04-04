@@ -7,12 +7,15 @@ import { useState } from "react";
 import { ActionType, Customer } from "../../../store/type";
 import useDateFormater from "../../../hooks/useDateFormater";
 import useAppContext from "../../../hooks/useAppContext";
+import { useNavigate } from "react-router-dom";
+import { CUSTOMERS } from "../../navigation/path";
 
 type CustomerTableProps = {
   data: Customer[];
 };
 const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
   const { dispatch } = useAppContext();
+  const navigate = useNavigate();
   let [page, setPage] = useState(1);
   const PER_PAGE = 10;
 
@@ -57,6 +60,10 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
                   value=""
                   name="default-radio"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={() => {
+                    const url = CUSTOMERS + "/" + element._id;
+                    navigate(url);
+                  }}
                 />
               </div>
             </td>
