@@ -114,6 +114,7 @@ export interface State {
   snackbar: { isOpen: boolean; message: string; severity: Severity };
   auth: UserLoggedIn | null;
   toggleForm: boolean;
+  hasFetched: boolean;
 }
 
 export const initialUser: User = {

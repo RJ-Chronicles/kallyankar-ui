@@ -27,6 +27,7 @@ export type Action =
   | { type: "USER_LOG_IN"; payload: UserLoggedIn }
   | { type: "HIDE_SHOW_FORM"; payload: boolean }
   | { type: "ADD_CUSTOMER_DATA"; payload: Customer[] }
+  | { type: "HAS_INITIAL_FETCHED"; payload: boolean }
   | {
       type: "TOGGLE_SNACKBAR";
       payload: { isOpen: boolean; message: string; severity: Severity };
@@ -123,6 +124,11 @@ const AppReducer = (state: State, action: Action) => {
       return {
         ...state,
         toggleForm: action.payload,
+      };
+    case "HAS_INITIAL_FETCHED":
+      return {
+        ...state,
+        hasFetched: action.payload,
       };
 
     default:

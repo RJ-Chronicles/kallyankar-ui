@@ -35,6 +35,7 @@ const initialState: State = {
   },
   auth: null,
   toggleForm: false,
+  hasFetched: false,
 };
 
 const AppContext = createContext<AppContextType>({
