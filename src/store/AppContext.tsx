@@ -34,6 +34,7 @@ const initialState: State = {
     severity: "error",
   },
   auth: null,
+  toggleForm: false,
 };
 
 const AppContext = createContext<AppContextType>({

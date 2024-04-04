@@ -10,6 +10,7 @@ import DeleteModal from "./components/UI/DeleteModal";
 import CustomizedSnackbar from "./components/UI/Snackbar";
 import useToken from "./hooks/useAuthentication";
 import useAppContext from "./hooks/useAppContext";
+import FormModal from "./components/UI/FormModal";
 
 function App() {
   // const { auth } = useToken();
@@ -18,24 +19,27 @@ function App() {
   //   const { user } = auth;
   //   dispatch({ type: "USER_LOG_IN", payload: { isLoggedIn: true, user } });
   // }
-  const { isDeleteModalVisible, isLoading, error } = state;
-
+  const { isDeleteModalVisible, isLoading, error, toggleForm } = state;
+  console.log(state);
   return (
-    <Layout>
-      <LoadingSpinner open={isLoading} color="#FFFFFF">
-        <ErrorModal open={error.hasError} errorMessage={error.message}>
-          <CustomizedSnackbar
-            open={state.snackbar.isOpen}
-            message={state.snackbar.message}
-            severty={state.snackbar.severity}
-          >
-            <DeleteModal open={isDeleteModalVisible}>
-              <KallyankarRoute />
-            </DeleteModal>
-          </CustomizedSnackbar>
-        </ErrorModal>
-      </LoadingSpinner>
-    </Layout>
+    <>
+      {toggleForm && <FormModal showForm={toggleForm} />}
+      <Layout>
+        <LoadingSpinner open={isLoading} color="#FFFFFF">
+          <ErrorModal open={error.hasError} errorMessage={error.message}>
+            <CustomizedSnackbar
+              open={state.snackbar.isOpen}
+              message={state.snackbar.message}
+              severty={state.snackbar.severity}
+            >
+              <DeleteModal open={isDeleteModalVisible}>
+                <KallyankarRoute />
+              </DeleteModal>
+            </CustomizedSnackbar>
+          </ErrorModal>
+        </LoadingSpinner>
+      </Layout>
+    </>
   );
 }
 

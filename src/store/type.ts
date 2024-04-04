@@ -18,10 +18,14 @@ export interface UserLoggedIn {
   expiration: string;
   token?: string;
 }
+
+export type ActionType = "ADD_RECORD" | "UPDATE_RECORD" | undefined;
+
 export interface FormProps {
-  initial_data: {};
-  mode: string;
-  title: string;
+  data: Customer | User | AmphareSize | undefined;
+  mode: ActionType;
+  type: "CUSTOMER" | "USER" | "AMPHERE" | "STOCK" | undefined;
+  title?: string;
 }
 
 export interface DeleteModalProps {
@@ -92,6 +96,7 @@ export interface State {
   customer: Customer[] | [];
   snackbar: { isOpen: boolean; message: string; severity: Severity };
   auth: UserLoggedIn | null;
+  toggleForm: boolean;
 }
 
 export const initialUser: User = {
@@ -104,9 +109,10 @@ export const initialUser: User = {
 };
 
 export const initialFormProps: FormProps = {
-  initial_data: {},
-  mode: "",
+  data: undefined,
+  mode: undefined,
   title: "",
+  type: undefined,
 };
 
 export const initialDeleteModalProps: DeleteModalProps = {
@@ -199,5 +205,3 @@ export interface RequestConfig {
   headers?: Headers;
   body?: UserFormData;
 }
-
-export type ActionType = "ADD_RECORD" | "UPDATE_RECORD" | undefined;

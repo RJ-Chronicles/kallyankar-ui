@@ -6,19 +6,13 @@ import { useState } from "react";
 
 import { ActionType, Customer } from "../../../store/type";
 import useDateFormater from "../../../hooks/useDateFormater";
+import useAppContext from "../../../hooks/useAppContext";
 
 type CustomerTableProps = {
-  setValue: React.Dispatch<React.SetStateAction<Customer>>;
   data: Customer[];
-  showForm: React.Dispatch<React.SetStateAction<boolean>>;
-  setActionType: React.Dispatch<React.SetStateAction<ActionType>>;
 };
-const CustomerTable: React.FC<CustomerTableProps> = ({
-  data,
-  setValue,
-  showForm,
-  setActionType,
-}) => {
+const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
+  const { dispatch } = useAppContext();
   let [page, setPage] = useState(1);
   const PER_PAGE = 10;
 
@@ -35,9 +29,15 @@ const CustomerTable: React.FC<CustomerTableProps> = ({
   const editCustomerHandler = (id: string) => {
     const record = data.find((item) => item._id === id);
     if (record) {
-      setValue(record);
-      showForm((prev) => !prev);
-      setActionType("UPDATE_RECORD");
+      dispatch({
+        type: "SET_FORM_PROPS",
+        payload: {
+          data: record,
+          mode: "UPDATE_RECORD",
+          type: "CUSTOMER",
+        },
+      });
+      dispatch({ type: "HIDE_SHOW_FORM", payload: true });
     }
   };
   return (

@@ -18,13 +18,14 @@ export type Action =
   | { type: "ADD_BATTERY_NAMES"; payload: BatteryNameValues[] }
   | { type: "ADD_STORED_CART_ITEMS"; payload: StoredCartItemsProps }
   | { type: "ADD_DELETE_MODAL_PROPS"; payload: DeleteModalProps }
-  | { type: "ADD_FORM_PROPS"; payload: FormProps }
+  | { type: "SET_FORM_PROPS"; payload: FormProps }
   | { type: "REFRESH_EFFECT"; payload: boolean }
   | { type: "SET_MODAL_VISIBLE"; payload: boolean }
   | { type: "SET_DELETE_MODAL_VISIBLE"; payload: boolean }
   | { type: "SET_ERROR"; payload: { hasError: boolean; message: string } }
   | { type: "SET_LOADING"; payload: boolean }
   | { type: "USER_LOG_IN"; payload: UserLoggedIn }
+  | { type: "HIDE_SHOW_FORM"; payload: boolean }
   | { type: "ADD_CUSTOMER_DATA"; payload: Customer[] }
   | {
       type: "TOGGLE_SNACKBAR";
@@ -40,6 +41,7 @@ const AppReducer = (state: State, action: Action) => {
         ...state,
         GST: action.payload,
       };
+
     case "ADD_AMPHERE_VALUES":
       return {
         ...state,
@@ -60,7 +62,7 @@ const AppReducer = (state: State, action: Action) => {
         ...state,
         deleteModalProps: action.payload,
       };
-    case "ADD_FORM_PROPS":
+    case "SET_FORM_PROPS":
       return {
         ...state,
         formProps: action.payload,
@@ -117,6 +119,12 @@ const AppReducer = (state: State, action: Action) => {
           expiration: action.payload.expiration,
         },
       };
+    case "HIDE_SHOW_FORM":
+      return {
+        ...state,
+        toggleForm: action.payload,
+      };
+
     default:
       return state;
   }

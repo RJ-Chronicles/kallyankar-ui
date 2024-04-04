@@ -10,11 +10,8 @@ import useApiCall from "../hooks/useApiCall";
 import useAppContext from "../hooks/useAppContext";
 
 const CustomerPage = () => {
-  const [showCustomerForm, setShowCustomerForm] = useState(false);
-  const [actionType, setActionType] = useState<ActionType>();
-  const [customer_data, setCustomerData] = useState<Customer>(customer);
-  const { refreshEffect } = useAppContext().state;
-
+  const { state, dispatch } = useAppContext();
+  const { refreshEffect } = state;
   const params = useMemo(() => {
     return { refreshEffect };
   }, []);
@@ -25,9 +22,15 @@ const CustomerPage = () => {
         <div className="flex justify-between items-center">
           <button
             onClick={() => {
-              setShowCustomerForm(true);
-              setActionType("ADD_RECORD");
-              setCustomerData(customer);
+              dispatch({
+                type: "SET_FORM_PROPS",
+                payload: {
+                  data: customer,
+                  mode: "ADD_RECORD",
+                  type: "CUSTOMER",
+                },
+              });
+              dispatch({ type: "HIDE_SHOW_FORM", payload: true });
             }}
             className="flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10 "
           >
@@ -36,22 +39,7 @@ const CustomerPage = () => {
           </button>
         </div>
 
-        {showCustomerForm && (
-          <CustomerForm
-            customer={customer_data}
-            showForm={showCustomerForm}
-            actionType={actionType}
-            closeForm={setShowCustomerForm}
-          />
-        )}
-        {data && (
-          <CustomerTable
-            showForm={setShowCustomerForm}
-            setValue={setCustomerData}
-            data={data}
-            setActionType={setActionType}
-          />
-        )}
+        {data && <CustomerTable data={data} />}
       </div>
     </PageWrapper>
   );

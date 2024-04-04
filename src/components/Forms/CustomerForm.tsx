@@ -7,20 +7,11 @@ import { postNewCustomer, updateCustomerById } from "../../backend/customer";
 import useResponseValidator from "../../hooks/useResponseValidator";
 import useAppContext from "../../hooks/useAppContext";
 
-interface Props {
-  customer: Customer;
-  showForm: boolean;
-  closeForm: React.Dispatch<React.SetStateAction<boolean>>;
-  actionType: ActionType;
-}
-const CustomerForm: React.FC<Props> = ({
-  customer,
-  closeForm,
-  showForm,
-  actionType,
-}) => {
+const CustomerForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
-  const { setValue, data } = useHandlevalueChange(customer);
+  const { refreshEffect, formProps } = state;
+  const { data: _customer, title, mode } = formProps;
+  const { setValue, data } = useHandlevalueChange(_customer as Customer);
 
   const { name, last_name, address, email, contact, gst_number, _id } =
     data as Customer;
@@ -29,18 +20,18 @@ const CustomerForm: React.FC<Props> = ({
     e.preventDefault();
     // validator(data as Customer);
     dispatch({ type: "SET_LOADING", payload: true });
-    if (actionType === "ADD_RECORD") {
+    if (mode === "ADD_RECORD") {
       const response = await postNewCustomer(data as Customer);
     } else {
       await updateCustomerById(data as Customer, _id ?? "");
     }
 
     dispatch({ type: "SET_LOADING", payload: false });
-    dispatch({ type: "REFRESH_EFFECT", payload: !state.refreshEffect });
+    dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
   };
 
   return (
-    <Overlay open={showForm} handleClose={closeForm} showButton={true}>
+    <>
       <Heading heading="Customer Registration Form" />
       <div className="w-full  bg-white p-5 rounded-lg lg:rounded-l-none">
         <form
@@ -153,14 +144,14 @@ const CustomerForm: React.FC<Props> = ({
           </div>
           <ButtonLarge
             title={`${
-              actionType === "ADD_RECORD" ? "register now" : "update customer"
+              mode === "ADD_RECORD" ? "register now" : "update customer"
             }`}
             type="submit"
           />
           <hr className="mb-6 border-t" />
         </form>
       </div>
-    </Overlay>
+    </>
   );
 };
 
