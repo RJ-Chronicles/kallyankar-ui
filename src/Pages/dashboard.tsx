@@ -16,6 +16,7 @@ const Dashboard = () => {
         dispatch({ type: "ADD_AMPHERE_VALUES", payload: amphere });
         dispatch({ type: "ADD_BATTERY_NAMES", payload: battery });
         dispatch({ type: "ADD_GST_VALUES", payload: gst });
+        dispatch({ type: "HAS_INITIAL_FETCHED", payload: true });
       }
     })();
   }, [hasFetched]);
