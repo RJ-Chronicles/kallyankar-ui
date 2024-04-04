@@ -1,33 +1,44 @@
 import { StockItems } from "../../store/type";
-import Overlay from "../UI/Overlay";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import useResponseValidator from "../../hooks/useResponseValidator";
 import useApiCall from "../../hooks/useApiCall";
-import { postNewStockItem } from "../../backend/stockItem";
+import { postNewStockItem, updateStockItemById } from "../../backend/stockItem";
 import { getAmphereList } from "../../backend/amphere";
 import { getBatteryList } from "../../backend/battery";
 import ButtonLarge from "../UI/Button/ButtonLarge";
-interface Props {
-  stockItems: StockItems;
-}
-const AmphereForm: React.FC<Props> = ({ stockItems }) => {
-  const { setValue, data } = useHandlevalueChange(stockItems);
+import useAppContext from "../../hooks/useAppContext";
+
+const StockItemsForms: React.FC = () => {
+  const { state, dispatch } = useAppContext();
+  const { refreshEffect, formProps } = state;
+  const { data: _stockItems, title, mode } = formProps;
+  const { setValue, data } = useHandlevalueChange(_stockItems as StockItems);
 
   const { data: amphere } = useApiCall(getAmphereList, {});
   const { data: battery } = useApiCall(getBatteryList, {});
   const { error, setError, validator } = useResponseValidator();
-  const { product_code, battery_name, available, amphere_size } =
-    stockItems as StockItems;
+  const { product_code, battery_name, available, amphere_size, _id } =
+    _stockItems as StockItems;
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     validator(data as StockItems);
     if (!error) {
-      const response = await postNewStockItem(data as StockItems);
+      dispatch({ type: "SET_LOADING", payload: true });
+      if (mode === "ADD_RECORD") {
+        const response = await postNewStockItem(data as StockItems);
+      } else {
+        await updateStockItemById(data as StockItems, _id ?? "");
+      }
+
+      dispatch({ type: "SET_LOADING", payload: false });
+      dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
     }
   };
+
   return (
-    <Overlay open={true} handleClose={() => {}}>
+    <>
       <Heading heading="User Registration Form" />
       <form className="px-8 pt-6 pb-4 bg-white rounded" onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -98,8 +109,8 @@ const AmphereForm: React.FC<Props> = ({ stockItems }) => {
         </div>
         <ButtonLarge title="register now" type="submit" />
       </form>
-    </Overlay>
+    </>
   );
 };
 
-export default AmphereForm;
+export default StockItemsForms;

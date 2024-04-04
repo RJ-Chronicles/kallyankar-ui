@@ -22,9 +22,24 @@ export interface UserLoggedIn {
 export type ActionType = "ADD_RECORD" | "UPDATE_RECORD" | undefined;
 
 export interface FormProps {
-  data: Customer | User | AmphareSize | undefined;
+  data:
+    | Customer
+    | User
+    | AmphareSize
+    | undefined
+    | BatteryNameValues
+    | GSTValues
+    | StockItems;
   mode: ActionType;
-  type: "CUSTOMER" | "USER" | "AMPHERE" | "STOCK" | undefined;
+  type:
+    | "CUSTOMER"
+    | "USER"
+    | "AMPHERE"
+    | "STOCK"
+    | "BATTERY"
+    | "GST"
+    | "STOCK_ITEM"
+    | undefined;
   title?: string;
 }
 
@@ -52,6 +67,7 @@ export interface AmphareSize {
 }
 
 export type StockItems = {
+  _id?: string;
   battery_name: string;
   product_code: string;
   amphere_size: string;

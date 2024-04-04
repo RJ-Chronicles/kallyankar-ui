@@ -1,26 +1,38 @@
 import { GSTValues } from "../../store/type";
-import Overlay from "../UI/Overlay";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import useResponseValidator from "../../hooks/useResponseValidator";
-import { postNewGST } from "../../backend/gst";
-interface Props {
-  gst: GSTValues;
-}
-const GSTForm: React.FC<Props> = ({ gst }) => {
-  const { setValue, data } = useHandlevalueChange(gst);
+import { postNewGST, updateGSTById } from "../../backend/gst";
+import useAppContext from "../../hooks/useAppContext";
+
+const GSTForm: React.FC = () => {
+  const { state, dispatch } = useAppContext();
+  const { refreshEffect, formProps } = state;
+  const { data: _gst, title, mode } = formProps;
+  const { setValue, data } = useHandlevalueChange(_gst as GSTValues);
+
   const { error, setError, validator } = useResponseValidator();
-  const { gst: gstValue } = gst as GSTValues;
+  const { gst: gstValue, _id } = _gst as GSTValues;
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     validator(data as GSTValues);
     if (!error) {
-      const response = await postNewGST(data as GSTValues);
+      dispatch({ type: "SET_LOADING", payload: true });
+      if (mode === "ADD_RECORD") {
+        const response = await postNewGST(data as GSTValues);
+      } else {
+        await updateGSTById(data as GSTValues, _id ?? "");
+      }
+
+      dispatch({ type: "SET_LOADING", payload: false });
+      dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
     }
   };
+
   return (
-    <Overlay open={true} handleClose={() => {}}>
+    <>
       <Heading heading="User Registration Form" />
       <form
         className="px-8 md:px-16 pt-6 pb-4 bg-white rounded shadow-md"
@@ -45,7 +57,7 @@ const GSTForm: React.FC<Props> = ({ gst }) => {
         </div>
         <ButtonLarge title="register now" type="submit" />
       </form>
-    </Overlay>
+    </>
   );
 };
 

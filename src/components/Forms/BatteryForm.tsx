@@ -5,23 +5,38 @@ import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import useResponseValidator from "../../hooks/useResponseValidator";
 import { postNewAmphere } from "../../backend/amphere";
-import { postNewBattery } from "../../backend/battery";
-interface Props {
-  battery: BatteryNameValues;
-}
-const BatteryForm: React.FC<Props> = ({ battery }) => {
-  const { setValue, data } = useHandlevalueChange(battery);
+import { postNewBattery, updateBatteryById } from "../../backend/battery";
+import useAppContext from "../../hooks/useAppContext";
+
+const BatteryForm: React.FC = () => {
+  const { state, dispatch } = useAppContext();
+  const { refreshEffect, formProps } = state;
+  const { data: _battery, title, mode } = formProps;
+  const { setValue, data } = useHandlevalueChange(
+    _battery as BatteryNameValues
+  );
+
   const { error, setError, validator } = useResponseValidator();
-  const { name } = battery as BatteryNameValues;
+
+  const { name, _id } = _battery as BatteryNameValues;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     validator(data as BatteryNameValues);
     if (!error) {
-      const response = await postNewBattery(data as BatteryNameValues);
+      dispatch({ type: "SET_LOADING", payload: true });
+      if (mode === "ADD_RECORD") {
+        const response = await postNewBattery(data as BatteryNameValues);
+      } else {
+        await updateBatteryById(data as BatteryNameValues, _id ?? "");
+      }
+
+      dispatch({ type: "SET_LOADING", payload: false });
+      dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
     }
   };
+
   return (
-    <Overlay open={true} handleClose={() => {}}>
+    <>
       <Heading heading="User Registration Form" />
 
       <form
@@ -47,26 +62,8 @@ const BatteryForm: React.FC<Props> = ({ battery }) => {
         </div>
         <ButtonLarge title="register now" type="submit" />
       </form>
-    </Overlay>
+    </>
   );
 };
 
 export default BatteryForm;
-
-{
-  /* <Form handleSubmit={handleSubmit} maxWidth="w-[600px]">
-{userColumns.map((field, index) => (
-  <InputBox
-    key={index}
-    label={field.label}
-    id={field.id}
-    type={field.type}
-    width={field.width}
-    margin={field.margin}
-    setValue={handleSetUser}
-    required={field.required}
-  />
-))}
-
-</Form> */
-}

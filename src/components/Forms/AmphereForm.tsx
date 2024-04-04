@@ -1,26 +1,37 @@
 import { AmphareSize } from "../../store/type";
-import Overlay from "../UI/Overlay";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import useResponseValidator from "../../hooks/useResponseValidator";
-import { postNewAmphere } from "../../backend/amphere";
-interface Props {
-  amphere: AmphareSize;
-}
-const AmphereForm: React.FC<Props> = ({ amphere }) => {
-  const { setValue, data } = useHandlevalueChange(amphere);
+import { postNewAmphere, updateAmphereById } from "../../backend/amphere";
+import useAppContext from "../../hooks/useAppContext";
+
+const AmphereForm: React.FC = () => {
+  const { state, dispatch } = useAppContext();
+  const { refreshEffect, formProps } = state;
+  const { data: _amphere, title, mode } = formProps;
+  const { setValue, data } = useHandlevalueChange(_amphere as AmphareSize);
+
   const { error, setError, validator } = useResponseValidator();
-  const { size } = amphere as AmphareSize;
+  const { size, _id } = data as AmphareSize;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     validator(data as AmphareSize);
     if (!error) {
-      const response = await postNewAmphere(data as AmphareSize);
+      dispatch({ type: "SET_LOADING", payload: true });
+      if (mode === "ADD_RECORD") {
+        const response = await postNewAmphere(data as AmphareSize);
+      } else {
+        await updateAmphereById(data as AmphareSize, _id ?? "");
+      }
+
+      dispatch({ type: "SET_LOADING", payload: false });
+      dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
     }
   };
+
   return (
-    <Overlay open={true} handleClose={() => {}}>
+    <>
       <Heading heading="User Registration Form" />
       <form
         className="px-8 md:px-16 pt-6 pb-4 bg-white rounded shadow-md"
@@ -45,26 +56,8 @@ const AmphereForm: React.FC<Props> = ({ amphere }) => {
         </div>
         <ButtonLarge title="register now" type="submit" />
       </form>
-    </Overlay>
+    </>
   );
 };
 
 export default AmphereForm;
-
-{
-  /* <Form handleSubmit={handleSubmit} maxWidth="w-[600px]">
-{userColumns.map((field, index) => (
-  <InputBox
-    key={index}
-    label={field.label}
-    id={field.id}
-    type={field.type}
-    width={field.width}
-    margin={field.margin}
-    setValue={handleSetUser}
-    required={field.required}
-  />
-))}
-
-</Form> */
-}

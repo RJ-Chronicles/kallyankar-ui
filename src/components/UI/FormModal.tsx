@@ -1,6 +1,9 @@
 import useAppContext from "../../hooks/useAppContext";
 import AmphereForm from "../Forms/AmphereForm";
+import BatteryForm from "../Forms/BatteryForm";
 import CustomerForm from "../Forms/CustomerForm";
+import GSTForm from "../Forms/GSTForm";
+import StockItemsForms from "../Forms/StockItemForm";
 import Overlay from "./Overlay";
 
 const FormModal: React.FC<{ showForm: boolean }> = ({ showForm }) => {
@@ -13,7 +16,10 @@ const FormModal: React.FC<{ showForm: boolean }> = ({ showForm }) => {
   return (
     <Overlay handleClose={handleOverlayClose} open={showForm} showButton={true}>
       {type === "CUSTOMER" && <CustomerForm />}
-      {/* {type === 'AMPHERE' && <AmphereForm/>} */}
+      {type === "AMPHERE" && <AmphereForm />}
+      {type === "BATTERY" && <BatteryForm />}
+      {type === "GST" && <GSTForm />}
+      {type === "STOCK_ITEM" && <StockItemsForms />}
     </Overlay>
   );
 };
