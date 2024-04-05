@@ -26,6 +26,7 @@ const ProductForm: React.FC = () => {
     vehicle_name,
     vehicle_number,
   } = data as Product;
+  console.log(data);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     validator(data as Product);
@@ -54,7 +55,7 @@ const ProductForm: React.FC = () => {
             <AmphereSelect setValue={setValue} value={name} />
             <BatterySelect value={type} setValue={setValue} />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 md:mr-2">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="serial_number"
@@ -75,7 +76,7 @@ const ProductForm: React.FC = () => {
 
           <div className="mb-4 md:flex md:justify-between">
             <GstSelect setValue={setValue} value={GST} />
-            <div className="md:ml-2">
+            <div className="mb-4 md:mr-2 md:mb-0 md:flex-grow">
               <label
                 className="block mb-2 text-sm font-bold text-gray-700"
                 htmlFor="v_number"
@@ -96,7 +97,7 @@ const ProductForm: React.FC = () => {
           </div>
 
           <div className="mb-4 md:flex md:justify-between">
-            <div className="mb-4 md:mr-2 md:mb-0">
+            <div className="mb-4 md:mr-2 md:mb-0 md:flex-grow">
               <label
                 className="block mb-2 text-sm font-bold text-gray-700"
                 htmlFor="vehicle_name"
@@ -113,7 +114,7 @@ const ProductForm: React.FC = () => {
                 value={vehicle_name}
               />
             </div>
-            <div className="md:ml-2">
+            <div className="mb-4 md:mr-2 md:mb-0 md:flex-grow">
               <label
                 className="block mb-2 text-sm font-bold text-gray-700"
                 htmlFor="v_number"
