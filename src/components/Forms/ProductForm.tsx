@@ -69,6 +69,7 @@ const ProductForm: React.FC = () => {
               onChange={setValue}
               value={serial_number}
               required
+              name="serial_number"
             />
           </div>
 
@@ -86,6 +87,7 @@ const ProductForm: React.FC = () => {
                 id="v_number"
                 type="number"
                 placeholder="Price"
+                name="price"
                 onChange={setValue}
                 value={price}
                 required
@@ -105,6 +107,7 @@ const ProductForm: React.FC = () => {
                 className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 id="vehicle_name"
                 type="text"
+                name="vehicle_name"
                 placeholder="Vehicle Name"
                 onChange={setValue}
                 value={vehicle_name}
@@ -121,6 +124,7 @@ const ProductForm: React.FC = () => {
                 className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 id="v_number"
                 type="text"
+                name="vehicle_number"
                 placeholder="Vehicle Number"
                 onChange={setValue}
                 value={vehicle_number}

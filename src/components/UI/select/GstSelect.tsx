@@ -23,6 +23,7 @@ const GstSelect: React.FC<AmpProps> = ({ setValue, value }) => {
       <select
         className="w-full px-9 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
         id="role"
+        name="GST"
         onChange={() => setValue}
         value={value ?? ""}
       >
