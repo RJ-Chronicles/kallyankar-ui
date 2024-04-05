@@ -8,7 +8,6 @@ const useHandlevalueChange = (initial: UserFormData) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const selectedInput = e.target.name;
-    console.log("handle change" + selectedInput + " : ");
     setData((prev) => ({ ...prev, [selectedInput]: e.target.value }));
   };
 
