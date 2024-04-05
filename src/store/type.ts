@@ -40,6 +40,7 @@ export interface FormProps {
     | "BATTERY"
     | "GST"
     | "STOCK_ITEM"
+    | "PRODUCT"
     | undefined;
   title?: string;
 }
@@ -231,5 +232,18 @@ export type Product = {
   type: string;
   serial_number: string;
   price: string;
+  GST: string;
+  vehicle_name: string;
   _id: string;
+};
+
+export const product: Product = {
+  name: "",
+  vehicle_name: "",
+  vehicle_number: "",
+  type: "",
+  serial_number: "",
+  price: "",
+  GST: "",
+  _id: "",
 };

@@ -2,7 +2,9 @@ import { useState } from "react";
 import useAppContext from "../../../hooks/useAppContext";
 import { UserFormData } from "../../../store/type";
 interface AmpProps {
-  setValue: React.Dispatch<React.SetStateAction<UserFormData>>;
+  setValue: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   value: string | number | null;
 }
 const BatterySelect: React.FC<AmpProps> = ({ setValue, value }) => {
@@ -16,6 +18,7 @@ const BatterySelect: React.FC<AmpProps> = ({ setValue, value }) => {
       id="role"
       onChange={() => setValue}
       value={value ?? ""}
+      name="type"
     >
       <option value="DEFAULT">Choose battery name.</option>
       {batteryNames?.map((data, index) => {

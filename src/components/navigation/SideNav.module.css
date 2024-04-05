@@ -66,3 +66,7 @@ ul li a .icon {
 .item {
   font-size: 14px;
 }
+
+.scroll {
+  overflow-y: scroll;
+}

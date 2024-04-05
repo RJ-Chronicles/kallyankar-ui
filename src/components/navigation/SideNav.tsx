@@ -5,6 +5,7 @@ import { NavLinkProps, ToggleClose, ToggleOpen } from "./NavLinkProps";
 import AvatarImage from "../../assets/images/avatar.png";
 import { useAuthContext } from "../../context/AuthContext";
 
+
 const MyNavLink = () => {
   return (
     <ul>
@@ -37,7 +38,7 @@ function Sidebar() {
     <div
       className={`bg-white text-white min-h-screen shadow-lg ${
         toggleNav ? "w-6" : "w-60"
-      }`}
+      } ${styles.scroll}`}
     >
       <div
         className={`${styles.sidebar} shadow-lg rounded-sm ${

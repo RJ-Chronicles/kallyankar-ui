@@ -1,9 +1,8 @@
 import CustomerTable from "../components/UI/Table/CustomerTable";
 import PageWrapper from "../components/UI/Page";
-import CustomerForm from "../components/Forms/CustomerForm";
 
-import { useMemo, useState } from "react";
-import { Customer, customer, ActionType } from "../store/type";
+import { useMemo } from "react";
+import { customer } from "../store/type";
 import { getCustomerList } from "../backend/customer";
 import useApiCall from "../hooks/useApiCall";
 
