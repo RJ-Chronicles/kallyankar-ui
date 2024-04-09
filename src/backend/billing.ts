@@ -1,12 +1,6 @@
 import api from "./api";
 
-type Billing = {
-  _id?: string;
-  name: string;
-  last_name: string;
-  email: string;
-  role: string;
-};
+import { Billing } from "../store/type";
 
 const postNewBilling = async (billing: Billing) => {
   const { data } = await api.post<Billing>("billing/add", billing);

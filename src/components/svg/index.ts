@@ -4,3 +4,5 @@ export { default as ArrowLeftCircle } from "./arrow-left-circle.svg";
 export { default as BatterIcon } from "./BatterySvg.svg";
 export { default as EditIcon } from "./edit.svg";
 export { default as HomeIcon } from "./HomeSvg.svg";
+export { default as InvoideLogo } from "./InvoiceLogo.svg";
+export { default as CartIcon } from "./cart-icon.svg";

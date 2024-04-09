@@ -3,20 +3,20 @@ import {
   User,
   AmphareSize,
   BatteryNameValues,
-  StoredCartItemsProps,
   DeleteModalProps,
   State,
   FormProps,
   UserLoggedIn,
   Customer,
   Severity,
+  Product,
 } from "./type";
 
 export type Action =
   | { type: "ADD_GST_VALUES"; payload: GSTValues[] }
   | { type: "ADD_AMPHERE_VALUES"; payload: AmphareSize[] }
   | { type: "ADD_BATTERY_NAMES"; payload: BatteryNameValues[] }
-  | { type: "ADD_STORED_CART_ITEMS"; payload: StoredCartItemsProps }
+  | { type: "ADD_STORED_CART_ITEMS"; payload: Product[] }
   | { type: "ADD_DELETE_MODAL_PROPS"; payload: DeleteModalProps }
   | { type: "SET_FORM_PROPS"; payload: FormProps }
   | { type: "REFRESH_EFFECT"; payload: boolean }

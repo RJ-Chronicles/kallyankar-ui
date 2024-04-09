@@ -14,7 +14,7 @@ const LoginPage = () => {
           </div>
 
           <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 shadow-md bg-gray-50 py-4 flex-col justify-center items-center">
-            <h1 className="text-2xl font-semibold text-slate-700 ">
+            <h1 className="text-2xl font-semibold text-slate-700 text-center font-sans ">
               Kallyankar Batteries
             </h1>
             <LoginForm />

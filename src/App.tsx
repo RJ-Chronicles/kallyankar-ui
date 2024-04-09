@@ -11,6 +11,7 @@ import CustomizedSnackbar from "./components/UI/Snackbar";
 import useToken from "./hooks/useAuthentication";
 import useAppContext from "./hooks/useAppContext";
 import FormModal from "./components/UI/FormModal";
+import ErrorBoundary from "./ErrorBoundry";
 
 function App() {
   // const { auth } = useToken();
@@ -19,18 +20,19 @@ function App() {
   //   const { user } = auth;
   //   dispatch({ type: "USER_LOG_IN", payload: { isLoggedIn: true, user } });
   // }
-  const { isDeleteModalVisible, isLoading, error, toggleForm } = state;
+  const { isDeleteModalVisible, isLoading, error, toggleForm, snackbar } =
+    state;
   console.log(state);
   return (
-    <>
+    <div className="bg-[#EEEEEE]">
       {toggleForm && <FormModal showForm={toggleForm} />}
       <Layout>
         <LoadingSpinner open={isLoading} color="#FFFFFF">
           <ErrorModal open={error.hasError} errorMessage={error.message}>
             <CustomizedSnackbar
-              open={state.snackbar.isOpen}
-              message={state.snackbar.message}
-              severty={state.snackbar.severity}
+              open={snackbar.isOpen}
+              message={snackbar.message}
+              severty={snackbar.severity}
             >
               <DeleteModal open={isDeleteModalVisible}>
                 <KallyankarRoute />
@@ -39,7 +41,7 @@ function App() {
           </ErrorModal>
         </LoadingSpinner>
       </Layout>
-    </>
+    </div>
   );
 }
 

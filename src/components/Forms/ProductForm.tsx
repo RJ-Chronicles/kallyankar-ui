@@ -11,6 +11,7 @@ import ButtonLarge from "../UI/Button/ButtonLarge";
 
 const ProductForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
+  const { storedCartItems } = state;
   const { refreshEffect, formProps, amphere } = state;
   const { data: _amphere, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_amphere as Product);
@@ -29,18 +30,23 @@ const ProductForm: React.FC = () => {
   console.log(data);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validator(data as Product);
-    if (!error) {
-      dispatch({ type: "SET_LOADING", payload: true });
-      if (mode === "ADD_RECORD") {
-        const response = await postNewProduct(data as Product);
-      } else {
-        await updateProductById(data as Product, _id ?? "");
-      }
+    dispatch({
+      type: "ADD_STORED_CART_ITEMS",
+      payload: [...storedCartItems, data as Product],
+    });
 
-      dispatch({ type: "SET_LOADING", payload: false });
-      dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
-    }
+    // validator(data as Product);
+    // if (!error) {
+    //   dispatch({ type: "SET_LOADING", payload: true });
+    //   if (mode === "ADD_RECORD") {
+    //     const response = await postNewProduct(data as Product);
+    //   } else {
+    //     await updateProductById(data as Product, _id ?? "");
+    //   }
+
+    //   dispatch({ type: "SET_LOADING", payload: false });
+    //   dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+    // }
   };
 
   return (

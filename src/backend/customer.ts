@@ -20,7 +20,7 @@ const deleteCustomerById = async (id: string) => {
   const { data } = await api.delete<Customer>("customer/delete/" + id);
   return data;
 };
-const getCustomerById = async (id: string) => {
+const getCustomerById = async ({ id }: { id: string }) => {
   const { data } = await api.get<Customer>("customer/seleted/" + id);
   return data;
 };

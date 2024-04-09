@@ -1,6 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductByCustomerId } from "../backend/product";
+import CartItems from "../components/UI/Cart/CartItems";
+import HeaderCartButton from "../components/UI/Cart/HeaderCartButton";
 import PageWrapper from "../components/UI/Page";
 import CustomerBatteryTable from "../components/UI/Table/CustomerBatteryTable";
 import useApiCall from "../hooks/useApiCall";
@@ -8,18 +10,29 @@ import useAppContext from "../hooks/useAppContext";
 import { product } from "../store/type";
 
 const CustomerBatteryPage = () => {
+  const [showCart, setShowCart] = useState(false);
   let { customerId } = useParams();
   const { state } = useAppContext();
-  const { refreshEffect } = state;
+  const { refreshEffect, storedCartItems } = state;
   const params = useMemo(() => {
     return { refreshEffect, id: customerId ?? "" };
   }, []);
 
   const { data } = useApiCall(getProductByCustomerId, params);
   const { dispatch } = useAppContext();
+
+  const hideShowCartItems = () => {
+    setShowCart((prev) => !prev);
+  };
   return (
     <PageWrapper>
       <div>
+        {storedCartItems.length > 0 && (
+          <HeaderCartButton
+            itemCount={storedCartItems.length}
+            onClick={hideShowCartItems}
+          />
+        )}
         <div className="flex justify-between items-center">
           <button
             onClick={() => {
@@ -40,6 +53,13 @@ const CustomerBatteryPage = () => {
           </button>
         </div>
         {data && <CustomerBatteryTable data={data} />}
+        {showCart && (
+          <CartItems
+            open={showCart}
+            customerId={customerId ?? ""}
+            closeCartHandler={hideShowCartItems}
+          />
+        )}
       </div>
     </PageWrapper>
   );
