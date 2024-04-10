@@ -1,12 +1,11 @@
 const CUSTOMER_TABLE_COLUMN = [
-  "SELECT",
-  "NAME",
-  "ADDRESS",
-  "EMAIL",
-  "CONTACT",
-  "GST_NO",
-  "REGISTERED",
-  "ACTION",
+  "Name",
+  "Address",
+  "Email",
+  "Contact",
+  "GST",
+  "Registered",
+  "Action",
 ];
 
 const BATTERY_TABLE_COLUMN = [

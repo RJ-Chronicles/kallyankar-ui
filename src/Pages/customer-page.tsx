@@ -7,6 +7,7 @@ import { getCustomerList } from "../backend/customer";
 import useApiCall from "../hooks/useApiCall";
 
 import useAppContext from "../hooks/useAppContext";
+import RecordTable from "../components/UI/Table/RecordTable";
 
 const CustomerPage = () => {
   const { state, dispatch } = useAppContext();
@@ -38,7 +39,7 @@ const CustomerPage = () => {
           </button>
         </div>
 
-        {data && <CustomerTable data={data} />}
+        {data && <RecordTable records={data} />}
       </div>
     </PageWrapper>
   );

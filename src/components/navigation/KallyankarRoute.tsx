@@ -36,7 +36,7 @@ const KallyankarRoute: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      if (!hasFetched) {
+      if (!hasFetched && isLoggedIn) {
         dispatch({ type: "SET_LOADING", payload: true });
         const amphere = await getAmphereList();
         const gst = await getGSTList();
