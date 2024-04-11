@@ -5,7 +5,7 @@ import useAppContext from "../../../hooks/useAppContext";
 import { Product } from "../../../store/type";
 import { BATTERY_TABLE_COLUMN } from "./columns";
 import useDateFormater from "../../../hooks/useDateFormater";
-import { Delete, Edit, Edit2, Edit2Icon, Edit3 } from "lucide-react";
+import { Edit } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type CustomerTableProps = {
@@ -31,7 +31,7 @@ const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
     }
   };
   return (
-    <div className="w-full">
+    <div className="">
       <Table className="w-full overflow-hidden">
         <Table.Head>
           {BATTERY_TABLE_COLUMN.map((col, index) => (
@@ -46,10 +46,12 @@ const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
               className="bg-white dark:border-gray-700 dark:bg-gray-800"
               key={index}
             >
-              <Table.Cell className="px-3 py-2">{row.name}</Table.Cell>
               <Table.Cell className="px-3 py-2">
-                {row.vehicle_name ?? "" + " " + row.vehicle_number ?? "-"}
+                <Link to={`/admin/customers/${row._id}`}>
+                  {row.vehicle_name}
+                </Link>
               </Table.Cell>
+              <Table.Cell className="px-3 py-2">{row.vehicle_name}</Table.Cell>
               <Table.Cell className="px-3 py-2">{row.type}</Table.Cell>
               <Table.Cell className="px-3 py-2">{row.serial_number}</Table.Cell>
               <Table.Cell className="px-3 py-2">{row.price}</Table.Cell>
@@ -59,10 +61,9 @@ const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
               <Table.Cell className="px-3 py-2">
                 <button
                   onClick={() => editCustomerProduct(row._id ?? "")}
-                  className="font-medium text-slate-600 dark:text-red-500 hover:underline flex"
+                  className="font-medium text-blue-600 dark:text-red-500 hover:underline"
                 >
-                  {/* <Delete className="w-6 h-6 text-red-800 text-sm" /> */}
-                  <Edit3 className="w-6 h-6" />
+                  <Edit />
                 </button>
               </Table.Cell>
             </Table.Row>

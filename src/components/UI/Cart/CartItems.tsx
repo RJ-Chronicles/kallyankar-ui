@@ -160,11 +160,7 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
                     <CartItemsList />
                   </div>
 
-                  <div className="mt-5 sm:mt-10">
-                    <h4 className="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
-                      Summary
-                    </h4>
-
+                  <div className="">
                     <ul className="mt-3 flex flex-col">
                       <li className="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-gray-700 dark:text-gray-200">
                         <div className="flex items-center justify-between w-full">

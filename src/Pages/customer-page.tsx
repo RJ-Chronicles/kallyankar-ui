@@ -7,6 +7,7 @@ import { getCustomerList } from "../backend/customer";
 import useApiCall from "../hooks/useApiCall";
 
 import useAppContext from "../hooks/useAppContext";
+import ButtonHeader from "../components/UI/Button/ButtonHeader";
 
 const CustomerPage = () => {
   const { state, dispatch } = useAppContext();
@@ -15,32 +16,25 @@ const CustomerPage = () => {
     return { refreshEffect };
   }, []);
   const { data } = useApiCall(getCustomerList, params);
+  const addRecordFormHandler = () => {
+    dispatch({
+      type: "SET_FORM_PROPS",
+      payload: {
+        data: customer,
+        mode: "ADD_RECORD",
+        type: "CUSTOMER",
+      },
+    });
+    dispatch({ type: "HIDE_SHOW_FORM", payload: true });
+  };
   return (
-    <PageWrapper>
-      <div>
-        <div className="flex justify-between items-center">
-          <button
-            onClick={() => {
-              dispatch({
-                type: "SET_FORM_PROPS",
-                payload: {
-                  data: customer,
-                  mode: "ADD_RECORD",
-                  type: "CUSTOMER",
-                },
-              });
-              dispatch({ type: "HIDE_SHOW_FORM", payload: true });
-            }}
-            className="flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10 "
-          >
-            <span>Add</span>
-            <span>NEW</span>
-          </button>
-        </div>
-
-        {data && <CustomerTable data={data} />}
+    <div className="w-full">
+      <div className="flex justify-start space-x-6">
+        <ButtonHeader buttonClick={addRecordFormHandler} />
+        <h1>Customer Records</h1>
       </div>
-    </PageWrapper>
+      {data && <CustomerTable data={data} />}
+    </div>
   );
 };
 

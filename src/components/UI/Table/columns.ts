@@ -1,5 +1,4 @@
 const CUSTOMER_TABLE_COLUMN = [
-  "SELECT",
   "NAME",
   "ADDRESS",
   "EMAIL",
@@ -15,6 +14,7 @@ const BATTERY_TABLE_COLUMN = [
   "TYPE",
   "SERIAL NUMBER",
   "PRICE",
+  "SOLD ON",
   "ACTION",
 ];
 

@@ -1,34 +1,21 @@
-import Table from "./Table";
-import { CUSTOMER_TABLE_COLUMN } from "./columns";
-import usePagination from "../../../hooks/usePagination";
-import { Pagination } from "@mui/material";
-import { useState } from "react";
+"use client";
 
-import { ActionType, Customer } from "../../../store/type";
-import useDateFormater from "../../../hooks/useDateFormater";
+import { Table } from "flowbite-react";
 import useAppContext from "../../../hooks/useAppContext";
-import { useNavigate } from "react-router-dom";
-import { CUSTOMERS } from "../../navigation/path";
+import { Customer } from "../../../store/type";
+import { CUSTOMER_TABLE_COLUMN } from "./columns";
+import useDateFormater from "../../../hooks/useDateFormater";
+import { Edit } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type CustomerTableProps = {
   data: Customer[];
 };
-const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
-  const { dispatch } = useAppContext();
-  const navigate = useNavigate();
-  let [page, setPage] = useState(1);
-  const PER_PAGE = 10;
 
-  const count = Math.ceil(data.length / PER_PAGE);
-  const _DATA = usePagination(data, PER_PAGE);
-
-  const handleChange = (e: React.ChangeEvent<unknown>, p: any) => {
-    setPage(p);
-    _DATA.jump(p);
-  };
-
+const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
   const { dateFormater } = useDateFormater();
 
+  const { dispatch } = useAppContext();
   const editCustomerHandler = (id: string) => {
     const record = data.find((item) => item._id === id);
     if (record) {
@@ -44,62 +31,47 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
     }
   };
   return (
-    <div>
-      <h1 className="text-center">Customer Table</h1>
-      <Table column={CUSTOMER_TABLE_COLUMN}>
-        {_DATA.currentData().map((element: Customer, index) => (
-          <tr
-            key={index}
-            className="bg-white border-b text-sm text-slate-700 font-base hover:bg-gray-50"
-          >
-            <td className="px-3 py-4">
-              <div className="flex items-center mb-4">
-                <input
-                  id="default-radio-1"
-                  type="radio"
-                  value=""
-                  name="default-radio"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  onChange={() => {
-                    const url = CUSTOMERS + "/" + element._id;
-                    navigate(url);
-                  }}
-                />
-              </div>
-            </td>
-            <td className="px-3 py-4">
-              {element.last_name + " " + element.name}
-            </td>
-            <td className="px-3 py-4">{element.address}</td>
-            <td className="px-3 py-4">{element.email}</td>
-            <td className="px-3 py-4">{element.contact}</td>
-            <td className="px-3 py-4">{element.gst_number}</td>
-            <td className="px-3 py-4">
-              {dateFormater(element?.createdAt ?? "")}
-            </td>
-            <td>
-              <button
-                onClick={() => editCustomerHandler(element._id ?? "")}
-                className="font-medium text-blue-600 dark:text-red-500 hover:underline"
-              >
-                Edit
-              </button>
-            </td>
-          </tr>
-        ))}
+    <div className="">
+      <Table className="w-full overflow-hidden">
+        <Table.Head>
+          {CUSTOMER_TABLE_COLUMN.map((col, index) => (
+            <Table.HeadCell className="px-3 py-2" key={index}>
+              {col}
+            </Table.HeadCell>
+          ))}
+        </Table.Head>
+        <Table.Body className="divide-y">
+          {data.map((row: Customer, index: number) => (
+            <Table.Row
+              className="bg-white dark:border-gray-700 dark:bg-gray-800"
+              key={index}
+            >
+              <Table.Cell className="px-3 py-2">
+                <Link to={`/admin/customers/${row._id}`}>
+                  {row.name + " " + row.last_name}
+                </Link>
+              </Table.Cell>
+              <Table.Cell className="px-3 py-2">{row.address}</Table.Cell>
+              <Table.Cell className="px-3 py-2">{row.email}</Table.Cell>
+              <Table.Cell className="px-3 py-2">{row.contact}</Table.Cell>
+              <Table.Cell className="px-3 py-2">{row.gst_number}</Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                {dateFormater(row.createdAt ?? "")}
+              </Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                <button
+                  onClick={() => editCustomerHandler(row._id ?? "")}
+                  className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+                >
+                  <Edit />
+                </button>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
       </Table>
-      <div className="flex justify-center items-center my-5 py-2 bg-white text-white">
-        <Pagination
-          count={count}
-          size="large"
-          page={page}
-          variant="outlined"
-          shape="rounded"
-          onChange={handleChange}
-        />
-      </div>
     </div>
   );
 };
 
-export default CustomerTable;
+export default FlowTable;
