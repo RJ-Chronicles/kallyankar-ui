@@ -8,6 +8,7 @@ import { getAmphereList } from "../../backend/amphere";
 import { getBatteryList } from "../../backend/battery";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import useAppContext from "../../hooks/useAppContext";
+import ButtonSave from "../UI/Button/ButtonSave";
 
 const StockItemsForms: React.FC = () => {
   const { state, dispatch } = useAppContext();
@@ -41,7 +42,7 @@ const StockItemsForms: React.FC = () => {
     <>
       <Heading heading="User Registration Form" />
       <form className="px-8 pt-6 pb-4 bg-white rounded" onSubmit={handleSubmit}>
-        <div className="mb-4">
+        <div className="mb-4 md:mr-2">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="product_code"
@@ -60,7 +61,7 @@ const StockItemsForms: React.FC = () => {
         </div>
 
         <div className="mb-4 md:flex md:justify-between">
-          <div className="mb-4 md:mr-2 md:mb-0">
+          <div className="mb-4 md:mr-2 md:mb-0 md:flex-grow">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="role"
@@ -83,7 +84,7 @@ const StockItemsForms: React.FC = () => {
               })}
             </select>
           </div>
-          <div className="md:ml-2">
+          <div className="mb-4 md:mr-2 md:mb-0 md:flex-grow">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="role"
@@ -107,7 +108,7 @@ const StockItemsForms: React.FC = () => {
             </select>
           </div>
         </div>
-        <ButtonLarge title="register now" type="submit" />
+        <ButtonSave />
       </form>
     </>
   );

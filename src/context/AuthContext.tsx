@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postLogoutUser } from "../backend/user";
+import useAppContext from "../hooks/useAppContext";
 import { User } from "../store/type";
 
 const userDefaultValue: User = {
@@ -30,6 +31,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User>(userDefaultValue);
   const [isLoggedIn, setLoggeIn] = useState<boolean>(false);
+  const { dispatch } = useAppContext();
   const [remainingTime, setRemainingTime] = useState<any>();
   const navigate = useNavigate();
   const loginHandler = useCallback(
@@ -50,7 +52,18 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
       user.email ||
       JSON.parse(localStorage.getItem("user") || "{}").email ||
       "";
-    await postLogoutUser(jwtToken, userEmail);
+    try {
+      dispatch({
+        type: "TOGGLE_SNACKBAR",
+        payload: {
+          isOpen: true,
+          message: "You have been log out",
+          severity: "success",
+        },
+      });
+      await postLogoutUser(jwtToken, userEmail);
+    } catch (err) {}
+
     clearLocalStorage();
     setLoggeIn(false);
     setUser(userDefaultValue);

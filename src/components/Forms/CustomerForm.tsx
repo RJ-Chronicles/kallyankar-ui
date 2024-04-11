@@ -6,6 +6,7 @@ import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import { postNewCustomer, updateCustomerById } from "../../backend/customer";
 import useResponseValidator from "../../hooks/useResponseValidator";
 import useAppContext from "../../hooks/useAppContext";
+import ButtonSave from "../UI/Button/ButtonSave";
 
 const CustomerForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
@@ -39,7 +40,7 @@ const CustomerForm: React.FC = () => {
           onSubmit={handleSubmit}
         >
           <div className="mb-4 md:flex md:justify-between">
-            <div className="mb-4 md:mr-2 md:mb-0">
+            <div className="mb-4 md:mr-2 md:mb-0 md:flex-grow">
               <label
                 className="block mb-2 text-sm font-bold text-gray-700"
                 htmlFor="firstName"
@@ -56,7 +57,7 @@ const CustomerForm: React.FC = () => {
                 value={name}
               />
             </div>
-            <div className="md:ml-2">
+            <div className="mb-4 md:mr-2 md:mb-0 md:flex-grow">
               <label
                 className="block mb-2 text-sm font-bold text-gray-700"
                 htmlFor="lastName"
@@ -74,7 +75,7 @@ const CustomerForm: React.FC = () => {
               />
             </div>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 md:mr-2">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="address"
@@ -91,7 +92,7 @@ const CustomerForm: React.FC = () => {
               value={address}
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 md:mr-2">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="email"
@@ -108,7 +109,7 @@ const CustomerForm: React.FC = () => {
               value={email}
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 md:mr-2">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="contact"
@@ -125,7 +126,7 @@ const CustomerForm: React.FC = () => {
               value={contact}
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 md:mr-2">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="gst_number"
@@ -142,12 +143,7 @@ const CustomerForm: React.FC = () => {
               value={gst_number}
             />
           </div>
-          <ButtonLarge
-            title={`${
-              mode === "ADD_RECORD" ? "register now" : "update customer"
-            }`}
-            type="submit"
-          />
+          <ButtonSave />
           <hr className="mb-6 border-t" />
         </form>
       </div>

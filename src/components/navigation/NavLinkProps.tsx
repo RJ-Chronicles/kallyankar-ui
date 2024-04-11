@@ -140,7 +140,6 @@ export const NavLinkProps = [
   { path: BATTERIES, label: "Batteris", icon: <IconBatteries /> },
   { path: PAYMENTS, label: "Users", icon: <IconSecurePaymentFill /> },
   { path: SETTINGS, label: "Settings", icon: <IconSettings /> },
-  { path: SETTINGS, label: "Logout", icon: <IconSettings /> },
 ];
 
 export const ToggleOpen = () => {

@@ -18,14 +18,7 @@ const CustomizedSnackbar: React.FC<{
 }> = ({ open, message, children, severty = "success" }) => {
   const { dispatch } = React.useContext(AppContext);
   React.useEffect(() => {});
-  const handleClose = (
-    event?: React.SyntheticEvent | Event
-    // reason?: string
-  ) => {
-    // if (reason === "clickaway") {
-    //   return;
-    // }
-
+  const handleClose = (event?: React.SyntheticEvent | Event) => {
     console.log("closing snackbar");
     dispatch({
       type: "TOGGLE_SNACKBAR",

@@ -3,10 +3,11 @@ import { NavLink } from "react-router-dom";
 import styles from "./SideNav.module.css";
 import { NavLinkProps, ToggleClose, ToggleOpen } from "./NavLinkProps";
 import AvatarImage from "../../assets/images/avatar.png";
-import { useAuthContext } from "../../context/AuthContext";
-
+import { useAuthContext } from "../../context/useAuthContext";
+import { LogOutIcon } from "lucide-react";
 
 const MyNavLink = () => {
+  const auth = useAuthContext();
   return (
     <ul>
       {NavLinkProps.map((item, index) => {
@@ -26,6 +27,19 @@ const MyNavLink = () => {
           </li>
         );
       })}
+      <li>
+        <div className="hover:bg-white hover:text-[#10558d]">
+          <button
+            className="pl-8 py-3 w-full flex space-x-4 "
+            onClick={() => auth.userLogoutHandler()}
+          >
+            <span>
+              <LogOutIcon />
+            </span>
+            <span className={styles.item}>Logout</span>
+          </button>
+        </div>
+      </li>
     </ul>
   );
 };

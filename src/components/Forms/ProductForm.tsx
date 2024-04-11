@@ -9,6 +9,7 @@ import BatterySelect from "../UI/select/BatterySelect";
 import GstSelect from "../UI/select/GstSelect";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import React from "react";
+import ButtonSave from "../UI/Button/ButtonSave";
 const ProductForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
   const { storedCartItems } = state;
@@ -125,12 +126,7 @@ const ProductForm: React.FC = () => {
             </div>
           </div>
 
-          <ButtonLarge
-            title={`${
-              mode === "ADD_RECORD" ? "register now" : "update customer"
-            }`}
-            type="submit"
-          />
+          <ButtonSave />
           <hr className="mb-6 border-t" />
         </form>
       </div>
