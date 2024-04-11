@@ -51,17 +51,6 @@ export interface DeleteModalProps {
   title: string;
 }
 
-export interface StoredCartItemsProps {
-  GST: string;
-  customer: string;
-  name: string;
-  price: string;
-  serial_number: string;
-  type: string;
-  vehicle_name?: string;
-  vehicle_number?: string;
-}
-
 export interface AmphareSize {
   _id?: string;
   size: number;
@@ -103,7 +92,7 @@ export interface State {
   GST: GSTValues[];
   batteryNames: BatteryNameValues[];
   amphere: AmphareSize[];
-  storedCartItems: StoredCartItemsProps;
+  storedCartItems: Product[];
   deleteModalProps: DeleteModalProps;
   formProps: FormProps;
   refreshEffect: boolean;
@@ -140,16 +129,7 @@ export const initialDeleteModalProps: DeleteModalProps = {
   title: "",
 };
 
-export const initialStoredCartItems: StoredCartItemsProps = {
-  GST: "",
-  customer: "",
-  name: "",
-  price: "",
-  serial_number: "",
-  type: "",
-  vehicle_name: "",
-  vehicle_number: "",
-};
+export const initialStoredCartItems: Product[] = [];
 
 export const initialAmphere: AmphareSize[] = [
   {
@@ -235,6 +215,7 @@ export type Product = {
   GST: string;
   vehicle_name: string;
   _id: string;
+  customer?: string;
 };
 
 export const product: Product = {
@@ -246,4 +227,13 @@ export const product: Product = {
   price: "",
   GST: "",
   _id: "",
+};
+
+export type Billing = {
+  _id?: string;
+  gst_amount: number;
+  total_amount: number;
+  unpaid_amount: number;
+  bill_status: string;
+  customer: string;
 };

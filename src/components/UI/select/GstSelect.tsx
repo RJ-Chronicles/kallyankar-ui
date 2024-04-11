@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import useAppContext from "../../../hooks/useAppContext";
-import { UserFormData } from "../../../store/type";
+import React from "react";
 interface AmpProps {
   setValue: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -37,7 +37,7 @@ const GstSelect: React.FC<AmpProps> = ({ setValue, value }) => {
         </select>
       </div>
     ),
-    [value]
+    [value, setValue, GST]
   );
 };
 
