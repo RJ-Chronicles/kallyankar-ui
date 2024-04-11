@@ -6,6 +6,7 @@ import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import { postNewCustomer, updateCustomerById } from "../../backend/customer";
 import useResponseValidator from "../../hooks/useResponseValidator";
 import useAppContext from "../../hooks/useAppContext";
+import ButtonSave from "../UI/Button/ButtonSave";
 
 const CustomerForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
@@ -142,6 +143,12 @@ const CustomerForm: React.FC = () => {
               value={gst_number}
             />
           </div>
+          <ButtonSave
+            title={`${
+              mode === "ADD_RECORD" ? "register now" : "update customer"
+            }`}
+            type="submit"
+          />
           <ButtonLarge
             title={`${
               mode === "ADD_RECORD" ? "register now" : "update customer"

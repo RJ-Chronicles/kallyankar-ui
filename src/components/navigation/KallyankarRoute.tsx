@@ -22,33 +22,12 @@ import StockPage from "../../Pages/stock-page";
 import CustomerPage from "../../Pages/customer-page";
 import CustomerBatteryPage from "../../Pages/customer-battery-page";
 import { useAuthContext } from "../../context/AuthContext";
-import useAppContext from "../../hooks/useAppContext";
-import { useEffect } from "react";
-import { getAmphereList } from "../../backend/amphere";
-import { getGSTList } from "../../backend/gst";
-import { getBatteryList } from "../../backend/battery";
+import useInitialFetch from "../../hooks/useInitialFetch";
+
 const KallyankarRoute: React.FC = () => {
   const auth = useAuthContext();
   const isLoggedIn = auth?.isLoggedIn ?? false;
-
-  const { dispatch, state } = useAppContext();
-  const { hasFetched } = state;
-
-  useEffect(() => {
-    (async () => {
-      if (!hasFetched && isLoggedIn) {
-        dispatch({ type: "SET_LOADING", payload: true });
-        const amphere = await getAmphereList();
-        const gst = await getGSTList();
-        const battery = await getBatteryList();
-        dispatch({ type: "ADD_AMPHERE_VALUES", payload: amphere });
-        dispatch({ type: "ADD_BATTERY_NAMES", payload: battery });
-        dispatch({ type: "ADD_GST_VALUES", payload: gst });
-        dispatch({ type: "HAS_INITIAL_FETCHED", payload: true });
-        dispatch({ type: "SET_LOADING", payload: false });
-      }
-    })();
-  }, [hasFetched]);
+  useInitialFetch();
 
   return (
     <Routes>
