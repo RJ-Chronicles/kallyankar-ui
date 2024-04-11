@@ -1,21 +1,21 @@
 import { Product } from "../../store/type";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
-import useResponseValidator from "../../hooks/useResponseValidator";
+
 import useAppContext from "../../hooks/useAppContext";
-import { postNewProduct, updateProductById } from "../../backend/product";
+
 import AmphereSelect from "../UI/select/AmphereSelect";
 import BatterySelect from "../UI/select/BatterySelect";
 import GstSelect from "../UI/select/GstSelect";
 import ButtonLarge from "../UI/Button/ButtonLarge";
-
+import React from "react";
 const ProductForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
+  const { storedCartItems } = state;
   const { refreshEffect, formProps, amphere } = state;
   const { data: _amphere, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_amphere as Product);
 
-  const { error, setError, validator } = useResponseValidator();
   const {
     _id,
     name,
@@ -26,26 +26,18 @@ const ProductForm: React.FC = () => {
     vehicle_name,
     vehicle_number,
   } = data as Product;
-  console.log(data);
+  console.log(refreshEffect, typeof amphere, _id);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validator(data as Product);
-    if (!error) {
-      dispatch({ type: "SET_LOADING", payload: true });
-      if (mode === "ADD_RECORD") {
-        const response = await postNewProduct(data as Product);
-      } else {
-        await updateProductById(data as Product, _id ?? "");
-      }
-
-      dispatch({ type: "SET_LOADING", payload: false });
-      dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
-    }
+    dispatch({
+      type: "ADD_STORED_CART_ITEMS",
+      payload: [...storedCartItems, data as Product],
+    });
   };
 
   return (
     <>
-      <Heading heading="Add Item to cart" />
+      <Heading heading={title ?? "Add Item to cart"} />
       <div className="w-full  bg-white p-5 rounded-lg lg:rounded-l-none">
         <form
           className="px-8 pt-6 pb-4 bg-white rounded"
