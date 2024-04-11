@@ -7,6 +7,7 @@ import useResponseValidator from "../../hooks/useResponseValidator";
 import { postNewAmphere } from "../../backend/amphere";
 import { postNewBattery, updateBatteryById } from "../../backend/battery";
 import useAppContext from "../../hooks/useAppContext";
+import ButtonSave from "../UI/Button/ButtonSave";
 
 const BatteryForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
@@ -43,7 +44,7 @@ const BatteryForm: React.FC = () => {
         className="px-8 md:px-16 pt-6 pb-4 bg-white rounded shadow-md"
         onSubmit={handleSubmit}
       >
-        <div className="mb-4">
+        <div className="mb-4 md:mr-2">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="name"
@@ -60,7 +61,7 @@ const BatteryForm: React.FC = () => {
             value={name}
           />
         </div>
-        <ButtonLarge title="register now" type="submit" />
+        <ButtonSave />
       </form>
     </>
   );

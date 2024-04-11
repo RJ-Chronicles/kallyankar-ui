@@ -19,7 +19,8 @@ function App() {
   //   const { user } = auth;
   //   dispatch({ type: "USER_LOG_IN", payload: { isLoggedIn: true, user } });
   // }
-  const { isDeleteModalVisible, isLoading, error, toggleForm } = state;
+  const { isDeleteModalVisible, isLoading, error, toggleForm, snackbar } =
+    state;
   console.log(state);
   return (
     <>
@@ -28,9 +29,9 @@ function App() {
         <LoadingSpinner open={isLoading} color="#FFFFFF">
           <ErrorModal open={error.hasError} errorMessage={error.message}>
             <CustomizedSnackbar
-              open={state.snackbar.isOpen}
-              message={state.snackbar.message}
-              severty={state.snackbar.severity}
+              open={snackbar.isOpen}
+              message={snackbar.message}
+              severty={snackbar.severity}
             >
               <DeleteModal open={isDeleteModalVisible}>
                 <KallyankarRoute />

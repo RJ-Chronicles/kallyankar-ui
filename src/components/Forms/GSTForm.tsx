@@ -5,6 +5,7 @@ import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import useResponseValidator from "../../hooks/useResponseValidator";
 import { postNewGST, updateGSTById } from "../../backend/gst";
 import useAppContext from "../../hooks/useAppContext";
+import ButtonSave from "../UI/Button/ButtonSave";
 
 const GSTForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
@@ -38,7 +39,7 @@ const GSTForm: React.FC = () => {
         className="px-8 md:px-16 pt-6 pb-4 bg-white rounded shadow-md"
         onSubmit={handleSubmit}
       >
-        <div className="mb-4">
+        <div className="mb-4 md:mr-2">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="name"
@@ -55,7 +56,7 @@ const GSTForm: React.FC = () => {
             value={gstValue}
           />
         </div>
-        <ButtonLarge title="register now" type="submit" />
+        <ButtonSave />
       </form>
     </>
   );

@@ -22,9 +22,11 @@ import StockPage from "../../Pages/stock-page";
 import CustomerPage from "../../Pages/customer-page";
 import CustomerBatteryPage from "../../Pages/customer-battery-page";
 import { useAuthContext } from "../../context/AuthContext";
+import useInitialFetch from "../../hooks/useInitialFetch";
 const KallyankarRoute: React.FC = () => {
   const auth = useAuthContext();
   const isLoggedIn = auth?.isLoggedIn ?? false;
+  useInitialFetch();
 
   return (
     <Routes>
