@@ -216,6 +216,7 @@ export type Product = {
   vehicle_name: string;
   _id: string;
   customer?: string;
+  createdAt?: string;
 };
 
 export const product: Product = {

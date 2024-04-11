@@ -4,7 +4,7 @@ import { Product } from "../../../store/type";
 const CartItemsList = () => {
   const { state, dispatch } = useAppContext();
   const { storedCartItems } = state;
-
+  console.log(storedCartItems);
   const netAmount = (price: string, GST: string) => {
     const { itemPrice } = calculateNetAmountAndGST(price, GST);
     return itemPrice;

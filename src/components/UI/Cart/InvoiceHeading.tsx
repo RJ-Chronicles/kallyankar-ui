@@ -1,7 +1,7 @@
 import useDateFormater from "../../../hooks/useDateFormater";
 import { Customer } from "../../../store/type";
 import React from "react";
-
+import invoiceLogo from "../../svg/InvoiceLogo.svg";
 const InvoiceHeading: React.FC<{ customer: Customer | null }> = ({
   customer,
 }) => {
@@ -11,7 +11,7 @@ const InvoiceHeading: React.FC<{ customer: Customer | null }> = ({
     <>
       <div className="flex flex-col p-4  bg-white  rounded-xl dark:bg-gray-800">
         <div className="flex justify-between">
-          <div>{/* <InvoideLogo /> */}</div>
+          <img src={invoiceLogo} alt="Invoice logo" />
           <div className="text-right h-full mt-20">
             <h2 className="text-xl md:text-xl font-semibold text-gray-800 dark:text-gray-200">
               GSTN-27ARIPK2620F1Z2
