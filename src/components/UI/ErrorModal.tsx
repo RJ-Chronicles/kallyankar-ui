@@ -3,6 +3,7 @@ import ButtonLarge from "./Button/ButtonLarge";
 import { useAuthContext } from "../../context/AuthContext";
 import useAppContext from "../../hooks/useAppContext";
 import { useNavigate } from "react-router-dom";
+import { initialUser } from "../../store/type";
 const ErrorModal: React.FC<{
   children: React.ReactNode;
   open: boolean;
@@ -17,6 +18,10 @@ const ErrorModal: React.FC<{
       payload: { hasError: false, message: "" },
     });
     userLogoutHandler();
+    dispatch({
+      type: "USER_LOG_IN",
+      payload: { user: initialUser, expiration: "", isLoggedIn: false },
+    });
     navigate("/");
   };
   return (
