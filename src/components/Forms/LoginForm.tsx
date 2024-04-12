@@ -1,6 +1,3 @@
-import InputBox from "../UI/Input/InputBox";
-import Form from "../UI/Form";
-import ButtonLarge from "../UI/Button/ButtonLarge";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import { user, Login } from "../../store/type";
 import { useNavigate } from "react-router-dom";
@@ -8,20 +5,20 @@ import { useEffect } from "react";
 import useAppContext from "../../hooks/useAppContext";
 import useResponseValidator from "../../hooks/useResponseValidator";
 import { postUserLogin } from "../../backend/user";
-import useToken from "../../hooks/useAuthentication";
 import { useAuthContext } from "../../context/AuthContext";
 import useAnimation from "../../hooks/useAnimation";
 import ButtonSave from "../UI/Button/ButtonSave";
 
 const LoginForm = () => {
   const naviage = useNavigate();
-  const { setValue, data } = useHandlevalueChange(user);
+  const { data, setValue } = useHandlevalueChange(user);
   const { state, dispatch } = useAppContext();
   const { error, setError, validator } = useResponseValidator();
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
 
   const auth = useAuthContext();
+  const { email, password } = data as Login;
 
   const { isLoggedIn, userLoginHandler } = auth;
   useEffect(() => {
@@ -60,41 +57,38 @@ const LoginForm = () => {
   };
 
   return (
-    <Form handleSubmit={handleFormSubmit} maxWidth="720px">
-      <InputBox
-        label="Email Address"
-        type="email"
-        id="email"
-        setValue={setValue}
-      />
-      <InputBox
-        label="Password Address"
-        type="password"
-        id="password"
-        setValue={setValue}
-      />
+    <form onSubmit={handleFormSubmit} className="px-20 py-5 text-[#333300]">
+      <div className="mb-4 w-full">
+        <label className="block mb-2 text-sm font-bold " htmlFor="email">
+          Admin Email.
+        </label>
+        <input
+          className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+          name="email"
+          id="email"
+          type="text"
+          placeholder="Email"
+          onChange={setValue}
+          value={email}
+        />
+      </div>
+      <div className="mb-4 w-full">
+        <label className="block mb-2 text-sm font-bold " htmlFor="password">
+          Admin Password.
+        </label>
+        <input
+          className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+          name="password"
+          id="password"
+          type="password"
+          placeholder="Password"
+          onChange={setValue}
+          value={password}
+        />
+      </div>
       <ButtonSave title="Login" />
-    </Form>
+    </form>
   );
 };
 
 export default LoginForm;
-
-// const response: UserLoggedIn = await handleSubmit(
-//   data,
-//   userLoginRequest,
-//   "You have been successfuly loggedIn",
-//   "Error while loggedIn!"
-// );
-// const { token, user, expiresIn } = response;
-
-// if (!token || !user || !expiresIn) {
-//   naviage("/");
-//   return;
-// }
-// const User = {
-//   user,
-//   token,
-//   expiresIn,
-//   isLoggedIn: true,
-// };

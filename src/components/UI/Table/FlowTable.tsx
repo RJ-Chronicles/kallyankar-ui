@@ -46,11 +46,6 @@ const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
               className="bg-white dark:border-gray-700 dark:bg-gray-800"
               key={index}
             >
-              <Table.Cell className="px-3 py-2">
-                <Link to={`/admin/customers/${row._id}`}>
-                  {row.vehicle_name}
-                </Link>
-              </Table.Cell>
               <Table.Cell className="px-3 py-2">{row.vehicle_name}</Table.Cell>
               <Table.Cell className="px-3 py-2">{row.type}</Table.Cell>
               <Table.Cell className="px-3 py-2">{row.serial_number}</Table.Cell>
