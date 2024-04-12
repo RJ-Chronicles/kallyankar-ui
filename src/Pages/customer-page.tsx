@@ -31,7 +31,6 @@ const CustomerPage = () => {
     <div className="w-full">
       <div className="flex justify-start space-x-6">
         <ButtonHeader buttonClick={addRecordFormHandler} />
-        <h1>Customer Records</h1>
       </div>
       {data && <CustomerTable data={data} />}
     </div>
