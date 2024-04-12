@@ -9,19 +9,19 @@ interface ApiCallResult<T> {
 const useApiSubmit = () => {
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
-  const { dispatch, state } = useAppContext();
-  useAnimation;
+  const { dispatch } = useAppContext();
+
   const submitApi = useCallback(
-    async <T>(apiFunction: () => Promise<T>): ApiCallResult<T> => {
+    async <T>(apiFunction: () => Promise<T>): Promise<ApiCallResult<T>> => {
       try {
         spinnerAnimationStart();
         const response = await apiFunction();
         snackbarAnimation("Response Saved", "success");
         spinnerAnimationStop();
-        return response;
+        return { data: response };
       } catch (error) {
         spinnerAnimationStop();
-        let error_message = "something went wrong";
+        let error_message = "Something went wrong";
         if (error instanceof Error) {
           error_message = error.message;
         }
@@ -29,10 +29,13 @@ const useApiSubmit = () => {
           type: "SET_ERROR",
           payload: { hasError: true, message: error_message },
         });
+        return { data: null };
       }
     },
-    []
+    [dispatch, snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop]
   );
+
   return { submitApi };
 };
+
 export default useApiSubmit;
