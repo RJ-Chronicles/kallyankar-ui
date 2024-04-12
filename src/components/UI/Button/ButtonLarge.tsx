@@ -6,22 +6,22 @@ interface ButtonSmallProps {
   type?: "button" | "submit";
 }
 
-import { HiOutlineArrowRight } from "react-icons/hi";
-import { Button } from "flowbite-react";
 const ButtonLarge: React.FC<ButtonSmallProps> = ({
   buttonClick,
   title = "register now",
   type = "submit",
 }) => {
   return (
-    <div className="flex justify-between items-center mx-auto w-full bg-white bg-gradient-to-r p-5 dark:bg-gray-900">
-      <Button
-        onClick={buttonClick}
-        className="group relative text-white flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-cyan-700 focus:ring-4 focus:ring-cyan-300 enabled:hover:bg-cyan-800 dark:bg-cyan-600 dark:focus:ring-cyan-800 dark:enabled:hover:bg-cyan-700 rounded-lg "
-      >
-        Choose plan
-        <HiOutlineArrowRight className="ml-2 h-5 w-5" />
-      </Button>
+    <div className="flex w-full">
+      <div className="w-full px-2 mb-5">
+        <button
+          type={type}
+          onClick={buttonClick}
+          className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal bg-blue-600 text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        >
+          {title.toUpperCase()}
+        </button>
+      </div>
     </div>
   );
 };
