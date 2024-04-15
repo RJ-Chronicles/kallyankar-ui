@@ -60,7 +60,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
           severity: "success",
         },
       });
-      await postLogoutUser(jwtToken, userEmail);
+      if (jwtToken.length > 0) await postLogoutUser(jwtToken, userEmail);
     } catch (err) {}
 
     clearLocalStorage();
