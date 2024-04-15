@@ -1,13 +1,16 @@
 import styles from "./Header.module.css";
-// import LogoImage from "./images/logo-white.png";
-import logo from "./images/logo-white.png";
 import { Link } from "react-router-dom";
+import { KalyankarLogo } from "../../assets/images";
 const LandingPageHeader = () => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles["header__logo-box"]}>
-          <img src={logo} alt="Logo" className={styles["header__logo"]} />
+          <img
+            src={KalyankarLogo}
+            alt="Logo"
+            className={`${styles["header__logo"]} animate-pulse`}
+          />
         </div>
 
         <div className={styles["header__text-box"]}>

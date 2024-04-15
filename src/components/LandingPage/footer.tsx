@@ -1,4 +1,6 @@
 import { NavLink } from "react-router-dom";
+import { KalyankarLogo } from "../../assets/images";
+
 const Footer = () => {
   return (
     <footer id="footer" className="bg-black">
@@ -6,11 +8,7 @@ const Footer = () => {
         <div className="flex flex-col items-center mb-8 space-y-6 md:flex-row md:space-y-0 md:justify-between md:items-start">
           <div className="flex flex-col items-center space-y-8 md:items-start md:space-y-4">
             <div className="h-8 mb-8 md:mb-0">
-              <img
-                src="https://do-not-delete-bucket1.s3.ap-south-1.amazonaws.com/logo1.png"
-                alt="logo"
-                className="w-44 md:ml-3"
-              />
+              <img src={KalyankarLogo} alt="logo" className="w-44 md:ml-3" />
             </div>
           </div>
           <div className="flex flex-col items-start justify-between space-y-4 text-gray-500">
