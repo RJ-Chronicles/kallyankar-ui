@@ -4,11 +4,15 @@ import { useAuthContext } from "../../context/AuthContext";
 import useAppContext from "../../hooks/useAppContext";
 import { useNavigate } from "react-router-dom";
 import { initialUser } from "../../store/type";
+const DEFAULT_ERROR =
+  "Something not ideal might be happening. Check your internet connection or try to login again.";
+
 const ErrorModal: React.FC<{
   children: React.ReactNode;
   open: boolean;
-  errorMessage: string;
-}> = ({ children, open, errorMessage }) => {
+  errorHeading?: string;
+  errorMessage?: string;
+}> = ({ children, open, errorMessage = DEFAULT_ERROR, errorHeading = "" }) => {
   const { userLogoutHandler } = useAuthContext();
   const { dispatch } = useAppContext();
   const navigate = useNavigate();
@@ -32,11 +36,8 @@ const ErrorModal: React.FC<{
             className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4  h-full"
             role="alert"
           >
-            <p className="font-bold ">{errorMessage}</p>
-            <p className="my-6 text-justify">
-              Something not ideal might be happening. Check your internet
-              connection or try to login again.
-            </p>
+            <p className="font-bold">{errorHeading}</p>
+            <p className="my-6 text-justify">{errorMessage}</p>
             <ButtonLarge
               buttonClick={() => userLogout()}
               title="Logout"

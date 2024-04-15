@@ -3,17 +3,16 @@ import { user, Login } from "../../store/type";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import useAppContext from "../../hooks/useAppContext";
-import useResponseValidator from "../../hooks/useResponseValidator";
 import { postUserLogin } from "../../backend/user";
 import { useAuthContext } from "../../context/AuthContext";
 import useAnimation from "../../hooks/useAnimation";
 import ButtonSave from "../UI/Button/ButtonSave";
+import { LoginSchema } from "../../zod";
 
 const LoginForm = () => {
   const naviage = useNavigate();
   const { data, setValue } = useHandlevalueChange(user);
-  const { state, dispatch } = useAppContext();
-  const { error, setError, validator } = useResponseValidator();
+  const { dispatch } = useAppContext();
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
 
@@ -25,39 +24,44 @@ const LoginForm = () => {
     if (isLoggedIn) {
       naviage("admin/dashboard");
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validator(data as Login);
-    if (!error) {
-      spinnerAnimationStart();
-      try {
-        const response = await postUserLogin(data as Login);
-        snackbarAnimation("Succesfully Login", "success");
-        dispatch({ type: "SET_LOADING", payload: false });
-        const expirationTime = new Date(
-          new Date().getTime() + response.expiresIn * 1000
-        );
-        const expiration = expirationTime.toISOString();
-        const { token, user } = response;
-        userLoginHandler(token, expiration, user);
-        naviage("/admin/dashboard");
-        spinnerAnimationStart();
-      } catch (error) {
-        spinnerAnimationStop();
-        snackbarAnimation("Fail to load Initial Data...", "error");
-        let message = "ERROR OCCURED!";
-        if (error instanceof Error) {
-          message = error.message;
-        }
-        dispatch({ type: "SET_ERROR", payload: { hasError: true, message } });
+
+    try {
+      const testValid = LoginSchema.safeParse({ email, password });
+      if (!testValid.success) {
+        const errors = testValid.error.flatten();
+        const { email, password } = errors.fieldErrors;
+        email && snackbarAnimation("Email is not valid", "error");
+        password && snackbarAnimation("Password is not valid", "error");
+        return;
       }
+
+      spinnerAnimationStart();
+      const response = await postUserLogin(data as Login);
+      snackbarAnimation("Succesfully Login", "success");
+      dispatch({ type: "SET_LOADING", payload: false });
+      const expirationTime = new Date(
+        new Date().getTime() + response.expiresIn * 1000
+      );
+      const expiration = expirationTime.toISOString();
+      const { token, user } = response;
+      userLoginHandler(token, expiration, user);
+      naviage("/admin/dashboard");
+      spinnerAnimationStop();
+    } catch (error) {
+      spinnerAnimationStop();
+      snackbarAnimation("Username or password incorrect!", "error");
     }
   };
 
   return (
-    <form onSubmit={handleFormSubmit} className="px-20 py-5 text-[#333300]">
+    <form
+      onSubmit={handleFormSubmit}
+      className="px-6 md:px-20 py-5 text-[#333300]"
+    >
       <div className="mb-4 w-full">
         <label className="block mb-2 text-sm font-bold " htmlFor="email">
           Admin Email.

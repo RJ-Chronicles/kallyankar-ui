@@ -20,7 +20,7 @@ const LoginPage = () => {
     <section className="h-screen mx-0 md:mx-auto" style={styleSection}>
       <div className="h-full">
         <div className="g-6 flex  h-full flex-wrap items-center justify-center ">
-          <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12 hidden md:block">
+          <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12 hidden md:block md:border-r-2">
             <img
               src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
               className="w-full"
@@ -28,7 +28,7 @@ const LoginPage = () => {
             />
           </div>
 
-          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border-l-2  py-4 flex-col justify-center items-center">
+          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 py-4 flex-col justify-center items-center w-100">
             <div className="pt-5 w-full">
               <h1
                 className="text-center animate-bounce uppercase"
