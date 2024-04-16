@@ -18,5 +18,15 @@ export const CustomerSchema = z.object({
   address: z.string().trim().min(3),
   email: z.string().trim().min(5).endsWith("com"),
   contact: z.string().trim().min(10).max(10),
-  gst_number: z.string().trim().optional(),
+  gst_number: z.string().trim().optional().default("-"),
+});
+
+export const ProductSchema = z.object({
+  name: z.string().trim().min(3),
+  price: z.string().min(3),
+  serial_number: z.string().trim().min(3),
+  type: z.string().trim().min(3),
+  GST: z.string().trim(),
+  vehicle_name: z.string().trim().optional().default("-"),
+  vehicle_number: z.string().trim().optional().default("-"),
 });

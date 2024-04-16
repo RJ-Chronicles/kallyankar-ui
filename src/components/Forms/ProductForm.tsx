@@ -7,15 +7,20 @@ import useAppContext from "../../hooks/useAppContext";
 import AmphereSelect from "../UI/select/AmphereSelect";
 import BatterySelect from "../UI/select/BatterySelect";
 import GstSelect from "../UI/select/GstSelect";
-import ButtonLarge from "../UI/Button/ButtonLarge";
 import React from "react";
 import ButtonSave from "../UI/Button/ButtonSave";
+import { ProductSchema } from "../../zod";
+import useAnimation from "../../hooks/useAnimation";
+import { ERRORS } from "../../zod/zod_error";
+import { updateProductById } from "../../backend/product";
 const ProductForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
   const { storedCartItems } = state;
-  const { refreshEffect, formProps, amphere } = state;
+  const { formProps } = state;
   const { data: _amphere, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_amphere as Product);
+  const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
+    useAnimation();
 
   const {
     _id,
@@ -27,13 +32,36 @@ const ProductForm: React.FC = () => {
     vehicle_name,
     vehicle_number,
   } = data as Product;
-  console.log(refreshEffect, typeof amphere, _id);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch({
-      type: "ADD_STORED_CART_ITEMS",
-      payload: [...storedCartItems, data as Product],
-    });
+    const validate = ProductSchema.safeParse(data as Product);
+    if (!validate.success) {
+      const errors = validate.error.flatten();
+      const { name, price, type, serial_number, GST } = errors.fieldErrors;
+      name && snackbarAnimation(ERRORS.NAME, "error");
+      price && snackbarAnimation(ERRORS.PRICE, "error");
+      type && snackbarAnimation(ERRORS.TYPE, "error");
+      serial_number && snackbarAnimation(ERRORS.SERIAL_NO, "error");
+      GST && snackbarAnimation(ERRORS.GST, "error");
+      return;
+    }
+    if (mode === "ADD_RECORD") {
+      dispatch({
+        type: "ADD_STORED_CART_ITEMS",
+        payload: [...storedCartItems, data as Product],
+      });
+    } else {
+      try {
+        spinnerAnimationStart();
+        updateProductById(data as Product, _id ?? "");
+        spinnerAnimationStop();
+        snackbarAnimation(ERRORS.SUCCESS, "success");
+      } catch (err) {
+        spinnerAnimationStop();
+        snackbarAnimation(ERRORS.FAILURE, "error");
+      }
+    }
   };
 
   return (
@@ -45,8 +73,8 @@ const ProductForm: React.FC = () => {
           onSubmit={handleSubmit}
         >
           <div className="mb-4 md:flex md:justify-between">
-            <AmphereSelect setValue={setValue} value={name} />
-            <BatterySelect value={type} setValue={setValue} />
+            <AmphereSelect setValue={setValue} value={type} />
+            <BatterySelect value={name} setValue={setValue} />
           </div>
           <div className="mb-4 md:mr-2">
             <label
@@ -62,7 +90,6 @@ const ProductForm: React.FC = () => {
               placeholder="Serial Number"
               onChange={setValue}
               value={serial_number}
-              required
               name="serial_number"
             />
           </div>
@@ -84,7 +111,6 @@ const ProductForm: React.FC = () => {
                 name="price"
                 onChange={setValue}
                 value={price}
-                required
               />
             </div>
           </div>

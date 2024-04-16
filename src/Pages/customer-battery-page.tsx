@@ -8,7 +8,7 @@ import CustomerBatteryTable from "../components/UI/Table/CustomerBatteryTable";
 import useApiCall from "../hooks/useApiCall";
 import useAppContext from "../hooks/useAppContext";
 import { product } from "../store/type";
-import { HiOutlineArrowRight, HiShoppingCart } from "react-icons/hi";
+import { HiShoppingCart } from "react-icons/hi";
 import { Button } from "flowbite-react";
 import ButtonHeader from "../components/UI/Button/ButtonHeader";
 const CustomerBatteryPage = () => {
@@ -39,13 +39,15 @@ const CustomerBatteryPage = () => {
   };
   return (
     <div className="w-full">
-      {storedCartItems.length > 0 && (
-        <HeaderCartButton
-          itemCount={storedCartItems.length}
-          onClick={hideShowCartItems}
-        />
-      )}
-      <ButtonHeader buttonClick={() => handleOpenForm()} />
+      <div className="flex justify-end w-full items-center">
+        <ButtonHeader buttonClick={() => handleOpenForm()} />
+        {storedCartItems.length > 0 && (
+          <Button onClick={hideShowCartItems} className="w-40 mr-10">
+            <HiShoppingCart className="mr-2 h-5 w-5" />
+            {storedCartItems.length}
+          </Button>
+        )}
+      </div>
       {data && <CustomerBatteryTable data={data} />}
       {showCart && (
         <CartItems
