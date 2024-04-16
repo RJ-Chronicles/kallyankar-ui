@@ -26,11 +26,11 @@ const CustomerForm: React.FC = () => {
     if (!validate.success) {
       const errors = validate.error.flatten();
       const { name, last_name, contact, email, address } = errors.fieldErrors;
-      name && snackbarAnimation(ERRORS.NAME, "error");
-      last_name && snackbarAnimation(ERRORS.LAST_NAME, "error");
-      contact && snackbarAnimation(ERRORS.CONTACT, "error");
-      email && snackbarAnimation(ERRORS.EMAIL, "error");
       address && snackbarAnimation(ERRORS.ADDRESS, "error");
+      email && snackbarAnimation(ERRORS.EMAIL, "error");
+      contact && snackbarAnimation(ERRORS.CONTACT, "error");
+      last_name && snackbarAnimation(ERRORS.LAST_NAME, "error");
+      name && snackbarAnimation(ERRORS.NAME, "error");
       return;
     }
     try {
