@@ -1,5 +1,4 @@
 import CustomerTable from "../components/UI/Table/CustomerTable";
-import PageWrapper from "../components/UI/Page";
 
 import { useMemo } from "react";
 import { customer } from "../store/type";
@@ -14,7 +13,7 @@ const CustomerPage = () => {
   const { refreshEffect } = state;
   const params = useMemo(() => {
     return { refreshEffect };
-  }, []);
+  }, [refreshEffect]);
   const { data } = useApiCall(getCustomerList, params);
   const addRecordFormHandler = () => {
     dispatch({

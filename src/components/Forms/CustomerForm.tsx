@@ -1,39 +1,57 @@
-import { ActionType, Customer } from "../../store/type";
-import Overlay from "../UI/Overlay";
-import ButtonLarge from "../UI/Button/ButtonLarge";
+import { Customer } from "../../store/type";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import { postNewCustomer, updateCustomerById } from "../../backend/customer";
-import useResponseValidator from "../../hooks/useResponseValidator";
+
 import useAppContext from "../../hooks/useAppContext";
 import ButtonSave from "../UI/Button/ButtonSave";
+import { CustomerSchema } from "../../zod";
+import useAnimation from "../../hooks/useAnimation";
+import { ERRORS } from "../../zod/zod_error";
 
 const CustomerForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
   const { refreshEffect, formProps } = state;
   const { data: _customer, title, mode } = formProps;
+  console.log(formProps);
   const { setValue, data } = useHandlevalueChange(_customer as Customer);
-
+  const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
+    useAnimation();
   const { name, last_name, address, email, contact, gst_number, _id } =
     data as Customer;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // validator(data as Customer);
-    dispatch({ type: "SET_LOADING", payload: true });
-    if (mode === "ADD_RECORD") {
-      const response = await postNewCustomer(data as Customer);
-    } else {
-      await updateCustomerById(data as Customer, _id ?? "");
+    const validate = CustomerSchema.safeParse(data as Customer);
+    if (!validate.success) {
+      const errors = validate.error.flatten();
+      const { name, last_name, contact, email, address } = errors.fieldErrors;
+      name && snackbarAnimation(ERRORS.NAME, "error");
+      last_name && snackbarAnimation(ERRORS.LAST_NAME, "error");
+      contact && snackbarAnimation(ERRORS.CONTACT, "error");
+      email && snackbarAnimation(ERRORS.EMAIL, "error");
+      address && snackbarAnimation(ERRORS.ADDRESS, "error");
+      return;
     }
-
-    dispatch({ type: "SET_LOADING", payload: false });
-    dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+    try {
+      spinnerAnimationStart();
+      dispatch({ type: "HIDE_SHOW_FORM", payload: false });
+      if (mode === "ADD_RECORD") {
+        const response = await postNewCustomer(data as Customer);
+      } else {
+        await updateCustomerById(data as Customer, _id ?? "");
+      }
+      spinnerAnimationStop();
+      dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+    } catch (err) {
+      spinnerAnimationStop();
+      snackbarAnimation(ERRORS.SAVE, "error");
+    }
   };
 
   return (
     <>
-      <Heading heading="Customer Registration Form" />
+      <Heading heading={`${title ?? "Customer Registration Form"} `} />
       <div className="w-full  bg-white p-5 rounded-lg lg:rounded-l-none">
         <form
           className="px-8 pt-6 pb-4 bg-white rounded"

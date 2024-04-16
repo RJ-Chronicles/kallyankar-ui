@@ -8,6 +8,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import useAnimation from "../../hooks/useAnimation";
 import ButtonSave from "../UI/Button/ButtonSave";
 import { LoginSchema } from "../../zod";
+import { ERRORS } from "../../zod/zod_error";
 
 const LoginForm = () => {
   const naviage = useNavigate();
@@ -34,8 +35,8 @@ const LoginForm = () => {
       if (!testValid.success) {
         const errors = testValid.error.flatten();
         const { email, password } = errors.fieldErrors;
-        email && snackbarAnimation("Email is not valid", "error");
-        password && snackbarAnimation("Password is not valid", "error");
+        email && snackbarAnimation(ERRORS.EMAIL, "error");
+        password && snackbarAnimation(ERRORS.PASSWORD, "error");
         return;
       }
 
