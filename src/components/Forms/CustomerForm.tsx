@@ -45,7 +45,7 @@ const CustomerForm: React.FC = () => {
       dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
     } catch (err) {
       spinnerAnimationStop();
-      snackbarAnimation(ERRORS.SAVE, "error");
+      snackbarAnimation(ERRORS.FAILURE, "error");
     }
   };
 
