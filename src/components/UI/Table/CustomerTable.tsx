@@ -12,7 +12,7 @@ type CustomerTableProps = {
   data: Customer[];
 };
 
-const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
+const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
   const { dateFormater } = useDateFormater();
 
   const { dispatch } = useAppContext();
@@ -25,6 +25,7 @@ const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
           data: record,
           mode: "UPDATE_RECORD",
           type: "CUSTOMER",
+          title: "Update Customer Record",
         },
       });
       dispatch({ type: "HIDE_SHOW_FORM", payload: true });
@@ -74,4 +75,4 @@ const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
   );
 };
 
-export default FlowTable;
+export default CustomerTable;
