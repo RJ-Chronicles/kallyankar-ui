@@ -34,9 +34,9 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
   return (
     <div className="">
       <Table className="w-full overflow-hidden">
-        <Table.Head>
+        <Table.Head className="text-sm text-slate-900 ">
           {CUSTOMER_TABLE_COLUMN.map((col, index) => (
-            <Table.HeadCell className="px-3 py-2" key={index}>
+            <Table.HeadCell className="px-3 py-2 bg-gray-200" key={index}>
               {col}
             </Table.HeadCell>
           ))}
@@ -44,7 +44,7 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
         <Table.Body className="divide-y">
           {data.map((row: Customer, index: number) => (
             <Table.Row
-              className="bg-white dark:border-gray-700 dark:bg-gray-800"
+              className="bg-white dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900"
               key={index}
             >
               <Table.Cell className="px-3 py-2">

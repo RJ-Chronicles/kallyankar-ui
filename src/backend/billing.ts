@@ -25,7 +25,7 @@ const getBillingList = async () => {
   return data;
 };
 const getBillingListByStatus = async ({ status }: { status: string }) => {
-  const { data } = await api.post<Billing[]>(
+  const { data } = await api.get<Billing[]>(
     "billing/get-list-by-status/" + status
   );
   return data;

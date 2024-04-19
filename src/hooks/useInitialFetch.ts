@@ -18,6 +18,7 @@ const useInitialFetch = () => {
 
   useEffect(() => {
     (async () => {
+      console.log(hasFetched + " & " + isLoggedIn);
       if (!hasFetched && isLoggedIn) {
         try {
           spinnerAnimationStart();

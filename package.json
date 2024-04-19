@@ -12,7 +12,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.18",
-    "@mui/material": "^5.14.15",
+    "@mui/material": "^5.15.15",
     "@stylexjs/stylex": "^0.4.1",
     "axios": "^1.5.1",
     "flowbite": "^2.3.0",
