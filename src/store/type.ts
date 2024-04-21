@@ -232,9 +232,15 @@ export const product: Product = {
 
 export type Billing = {
   _id?: string;
+  customer?: Customer;
   gst_amount: number;
   total_amount: number;
   unpaid_amount: number;
   bill_status: string;
-  customer: string;
+  createdAt?: string;
+};
+
+export type BillingWithMessage = {
+  billingList: Billing[];
+  message: string;
 };

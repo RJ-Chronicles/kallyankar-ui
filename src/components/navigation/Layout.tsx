@@ -24,7 +24,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           className={`${
             shouldShowSidebar ? "flex" : ""
           } w-full min-h-screen overflow-y: scroll ${
-            shouldShowSidebar ? "pl-5" : ""
+            shouldShowSidebar ? "px-5" : ""
           }`}
         >
           {children}

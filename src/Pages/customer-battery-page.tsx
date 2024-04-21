@@ -11,6 +11,7 @@ import { product } from "../store/type";
 import { HiShoppingCart } from "react-icons/hi";
 import { Button } from "flowbite-react";
 import ButtonHeader from "../components/UI/Button/ButtonHeader";
+import useInitialFetch from "../hooks/useInitialFetch";
 const CustomerBatteryPage = () => {
   const [showCart, setShowCart] = useState(false);
   const { customerId } = useParams();
@@ -22,7 +23,7 @@ const CustomerBatteryPage = () => {
 
   const { data } = useApiCall(getProductByCustomerId, params);
   const { dispatch } = useAppContext();
-
+  useInitialFetch();
   const hideShowCartItems = () => {
     setShowCart((prev) => !prev);
   };

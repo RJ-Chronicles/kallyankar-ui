@@ -1,6 +1,6 @@
 import api from "./api";
 
-import { Billing } from "../store/type";
+import { Billing, BillingWithMessage } from "../store/type";
 
 const postNewBilling = async (billing: Billing) => {
   const { data } = await api.post<Billing>("billing/add", billing);
@@ -25,10 +25,10 @@ const getBillingList = async () => {
   return data;
 };
 const getBillingListByStatus = async ({ status }: { status: string }) => {
-  const { data } = await api.get<Billing[]>(
+  const { data } = await api.get<BillingWithMessage>(
     "billing/get-list-by-status/" + status
   );
-  return data;
+  return data.billingList;
 };
 
 export {

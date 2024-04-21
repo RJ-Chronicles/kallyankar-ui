@@ -1,51 +1,73 @@
-import { useState } from "react";
-import usePagination from "../../../hooks/usePagination";
+import { Table } from "flowbite-react";
 import { BILLING_STATUS_COLUMN } from "./columns";
-import Table from "./Table";
-import { Pagination } from "@mui/material";
-import data from "./Mock_data.json";
-const BillingStatusTable = () => {
-  let [page, setPage] = useState(1);
-  const PER_PAGE = 10;
+import useDateFormater from "../../../hooks/useDateFormater";
+import { Billing } from "../../../store/type";
 
-  const count = Math.ceil(data.length / PER_PAGE);
-  const _DATA = usePagination(data, PER_PAGE);
+import { IconSecurePaymentFill } from "../../navigation/NavLinkProps";
 
-  const handleChange = (e: React.ChangeEvent<unknown>, p: any) => {
-    setPage(p);
-    _DATA.jump(p);
+const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
+  data,
+  status,
+}) => {
+  const { dateFormater } = useDateFormater();
+  const updateUnpaidAmount = (id: string) => {
+    const to_update = data?.find((element: any) => element._id === id);
+    console.log(to_update);
   };
   return (
-    <div className="flex items-center justify-center flex-col w-full">
-      <Table column={BILLING_STATUS_COLUMN}>
-        {_DATA.currentData().map((element, index) => (
-          <tr
-            key={index}
-            className="bg-white border-b text-sm text-slate-700 font-base hover:bg-gray-50"
-          >
-            <td className="px-3 py-4">{element.name}</td>
-            <td className="px-3 py-4">{element.c_name}</td>
-            <td className="px-3 py-4">{element.add}</td>
-            <td className="px-3 py-4">{element.email}</td>
-            <td className="px-3 py-4">{element.contact}</td>
-            <td className="px-3 py-4">{element.gst}</td>
-            <td className="px-3 py-4">{element.add}</td>
-            <td className="px-3 py-4">{element.email}</td>
-          </tr>
-        ))}
+    <div className="w-full">
+      <Table className="w-full overflow-hidden shadow-md rounded-md">
+        <Table.Head className="text-sm text-slate-900 ">
+          {BILLING_STATUS_COLUMN.map((col, index) => (
+            <Table.HeadCell className="px-3 py-2 bg-gray-200" key={index}>
+              {col}
+            </Table.HeadCell>
+          ))}
+        </Table.Head>
+        <Table.Body className="divide-y">
+          {data.map((row: Billing, index: number) => (
+            <Table.Row
+              className="bg-white dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900"
+              key={index}
+            >
+              <Table.Cell className="px-3 py-2">
+                {row.customer?.name + " " + row.customer?.last_name}
+              </Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                {row.customer?.contact}
+              </Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                {row.customer?.email}
+              </Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                {row.customer?.address}
+              </Table.Cell>
+
+              <Table.Cell className="px-3 py-2">{row.gst_amount}</Table.Cell>
+              <Table.Cell className="px-3 py-2">{row.total_amount}</Table.Cell>
+              <Table.Cell className="px-3 py-2">{row.unpaid_amount}</Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                {dateFormater(row.createdAt ?? "")}
+              </Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                <button
+                  onClick={() => updateUnpaidAmount(row._id ?? "")}
+                  disabled={status === "Paid"}
+                  className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+                >
+                  <IconSecurePaymentFill />
+                </button>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
       </Table>
-      <div className="flex justify-center items-center my-5 py-2 bg-white text-white">
-        <Pagination
-          count={count}
-          size="large"
-          page={page}
-          variant="outlined"
-          shape="rounded"
-          onChange={handleChange}
-        />
-      </div>
     </div>
   );
 };
+
+gst_amount: 1524;
+total_amount: 10000;
+unpaid_amount: 5000;
 
 export default BillingStatusTable;

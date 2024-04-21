@@ -32,8 +32,8 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
     }
   };
   return (
-    <div className="">
-      <Table className="w-full overflow-hidden">
+    <div className=" w-full ">
+      <Table className="w-full overflow-hidden shadow-md rounded-md">
         <Table.Head className="text-sm text-slate-900 ">
           {CUSTOMER_TABLE_COLUMN.map((col, index) => (
             <Table.HeadCell className="px-3 py-2 bg-gray-200" key={index}>
