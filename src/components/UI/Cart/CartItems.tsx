@@ -104,9 +104,9 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
         total_amount: totalAmountExcludeGST + totalGSTAmount,
         unpaid_amount: amount,
         bill_status: billStatus,
-        customer: storedCartItems[0].customer ?? "",
+        customer: undefined,
       });
-      // const resp = saveToPDF(customer?.name, customer?.contact.toString());
+      // const resp = saveToPDF(customer?.name, customer?.contact.toString());//storedCartItems[0].customer ??
     } catch (err) {
       console.log("eeror while saving record");
     }
