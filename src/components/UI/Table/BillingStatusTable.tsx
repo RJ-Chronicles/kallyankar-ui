@@ -65,9 +65,4 @@ const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
     </div>
   );
 };
-
-gst_amount: 1524;
-total_amount: 10000;
-unpaid_amount: 5000;
-
 export default BillingStatusTable;
