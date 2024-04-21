@@ -27,7 +27,7 @@ function App() {
       {toggleForm && <FormModal showForm={toggleForm} />}
       <Layout>
         <LoadingSpinner open={isLoading} color="#FFFFFF">
-          <ErrorModal open={error.hasError} errorMessage={error.message}>
+          <ErrorModal open={error.hasError} errorHeading={error.message}>
             <CustomizedSnackbar
               open={snackbar.isOpen}
               message={snackbar.message}

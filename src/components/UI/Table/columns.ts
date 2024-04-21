@@ -41,10 +41,11 @@ const BILLING_STATUS_COLUMN = [
   "Contact",
   "Email",
   "Address",
-  "GST Amount",
-  "Total Amount",
-  "Unpaid Amount",
-  "Action",
+  "GST",
+  "Total",
+  "Unpaid",
+  "Date",
+  "Pay",
 ];
 
 const AMPHERE_TABLE_COLUMN = ["Size", "Created At", "Action"];

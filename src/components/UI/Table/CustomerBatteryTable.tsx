@@ -32,7 +32,7 @@ const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
   };
   return (
     <div className="w-full">
-      <Table className="w-full overflow-hidden">
+      <Table className="w-full overflow-hidden shadow-md rounded-md">
         <Table.Head>
           {BATTERY_TABLE_COLUMN.map((col, index) => (
             <Table.HeadCell className="px-3 py-2" key={index}>

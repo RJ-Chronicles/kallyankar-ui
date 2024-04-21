@@ -1,10 +1,9 @@
 import AppContext from "../store/AppContext";
-import { useContext, useEffect } from "react";
-import useApiSubmit from "../hooks/useSubmitApi";
-import { getCustomerList } from "../backend/customer";
+import { useContext } from "react";
+import useInitialFetch from "../hooks/useInitialFetch";
 const Dashboard = () => {
   const { state, dispatch } = useContext(AppContext);
-
+  useInitialFetch();
   // const { submitApi } = useApiSubmit();
   // submitApi(async () => {
   //   const data = await getCustomerList();

@@ -6,7 +6,6 @@ import useApiCall from "../../hooks/useApiCall";
 import { postNewStockItem, updateStockItemById } from "../../backend/stockItem";
 import { getAmphereList } from "../../backend/amphere";
 import { getBatteryList } from "../../backend/battery";
-import ButtonLarge from "../UI/Button/ButtonLarge";
 import useAppContext from "../../hooks/useAppContext";
 import ButtonSave from "../UI/Button/ButtonSave";
 
