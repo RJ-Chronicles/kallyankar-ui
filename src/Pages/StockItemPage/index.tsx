@@ -1,4 +1,4 @@
-import PageWrapper from "../components/UI/Page";
+import PageWrapper from "../../components/UI/Page";
 
 const StockItemPage = () => {
   return <PageWrapper>StockItemPage</PageWrapper>;

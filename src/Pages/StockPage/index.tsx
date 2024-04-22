@@ -1,5 +1,5 @@
-import PageWrapper from "../components/UI/Page";
-import StockTable from "../components/UI/Table/StockTable";
+import PageWrapper from "../../components/UI/Page";
+import StockTable from "../../components/UI/Table/StockTable";
 
 const StockPage = () => {
   return (

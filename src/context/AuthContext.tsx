@@ -32,6 +32,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User>(userDefaultValue);
   const [isLoggedIn, setLoggeIn] = useState<boolean>(false);
   const { dispatch } = useAppContext();
+  const navigate = useNavigate();
   const [remainingTime, setRemainingTime] = useState<any>();
   const loginHandler = useCallback(
     (token: string, expirationTime: any, user: User) => {
@@ -66,6 +67,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
     clearLocalStorage();
     setLoggeIn(false);
     setUser(userDefaultValue);
+    navigate("/");
   }, []);
 
   useEffect(() => {
