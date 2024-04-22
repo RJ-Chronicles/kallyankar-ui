@@ -3,10 +3,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
-import GSTTable from "../components/UI/Table/GSTTable";
-import AmphereTable from "../components/UI/Table/AmphereTable";
-import BatteryNameTable from "../components/UI/Table/BatteryNameTable";
-import PageWrapper from "../components/UI/Page";
+import GSTTable from "../../components/UI/Table/GSTTable";
+import AmphereTable from "../../components/UI/Table/AmphereTable";
+import BatteryNameTable from "../../components/UI/Table/BatteryNameTable";
+import PageWrapper from "../../components/UI/Page";
 
 interface TabPanelProps {
   children?: React.ReactNode;

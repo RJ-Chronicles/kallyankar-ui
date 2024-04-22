@@ -1,6 +1,6 @@
-import AppContext from "../store/AppContext";
+import AppContext from "../../store/AppContext";
 import { useContext } from "react";
-import useInitialFetch from "../hooks/useInitialFetch";
+import useInitialFetch from "../../hooks/useInitialFetch";
 const Dashboard = () => {
   const { state, dispatch } = useContext(AppContext);
   useInitialFetch();

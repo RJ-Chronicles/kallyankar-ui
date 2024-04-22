@@ -1,12 +1,12 @@
-import CustomerTable from "../components/UI/Table/CustomerTable";
+import CustomerTable from "../../components/UI/Table/CustomerTable";
 
 import { useMemo } from "react";
-import { customer } from "../store/type";
-import { getCustomerList } from "../backend/customer";
-import useApiCall from "../hooks/useApiCall";
+import { customer } from "../../store/type";
+import { getCustomerList } from "../../backend/customer";
+import useApiCall from "../../hooks/useApiCall";
 
-import useAppContext from "../hooks/useAppContext";
-import ButtonHeader from "../components/UI/Button/ButtonHeader";
+import useAppContext from "../../hooks/useAppContext";
+import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 
 const CustomerPage = () => {
   const { state, dispatch } = useAppContext();

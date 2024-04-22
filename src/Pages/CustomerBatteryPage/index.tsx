@@ -1,17 +1,17 @@
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getProductByCustomerId } from "../backend/product";
-import CartItems from "../components/UI/Cart/CartItems";
-import HeaderCartButton from "../components/UI/Cart/HeaderCartButton";
+import { getProductByCustomerId } from "../../backend/product";
+import CartItems from "../../components/UI/Cart/CartItems";
+import HeaderCartButton from "../../components/UI/Cart/HeaderCartButton";
 
-import CustomerBatteryTable from "../components/UI/Table/CustomerBatteryTable";
-import useApiCall from "../hooks/useApiCall";
-import useAppContext from "../hooks/useAppContext";
-import { product } from "../store/type";
+import CustomerBatteryTable from "../../components/UI/Table/CustomerBatteryTable";
+import useApiCall from "../../hooks/useApiCall";
+import useAppContext from "../../hooks/useAppContext";
+import { product } from "../../store/type";
 import { HiShoppingCart } from "react-icons/hi";
 import { Button } from "flowbite-react";
-import ButtonHeader from "../components/UI/Button/ButtonHeader";
-import useInitialFetch from "../hooks/useInitialFetch";
+import ButtonHeader from "../../components/UI/Button/ButtonHeader";
+import useInitialFetch from "../../hooks/useInitialFetch";
 const CustomerBatteryPage = () => {
   const [showCart, setShowCart] = useState(false);
   const { customerId } = useParams();

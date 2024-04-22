@@ -9,19 +9,20 @@ import {
   BATTERIES,
   PAYMENTS,
 } from "./path";
-import Dashboard from "../../Pages/dashboard";
+import Dashboard from "../../Pages/Dashboard";
 import LoginPage from "../../Pages/login-page";
-import LandingPage from "../../Pages/landing-page";
-import Batterypage from "../../Pages/battery.page";
-import BillStatusPage from "../../Pages/bill.status.page";
+import LandingPage from "../../Pages/LandingPage";
+import Batterypage from "../../Pages/BatteryPage";
+import BillStatusPage from "../../Pages/PaymentPage";
 import PaymentPage from "../../Pages/payment.page";
 import SettingsPage from "../../Pages/setting";
-import StockItemPage from "../../Pages/stock.items";
-import StockPage from "../../Pages/stock-page";
+import StockItemPage from "../../Pages/StockItemPage";
+import StockPage from "../../Pages/StockPage";
 
-import CustomerPage from "../../Pages/customer-page";
-import CustomerBatteryPage from "../../Pages/customer-battery-page";
+import CustomerPage from "../../Pages/CustomerPage";
+import CustomerBatteryPage from "../../Pages/CustomerBatteryPage";
 import { useAuthContext } from "../../context/AuthContext";
+import PageNotFound from "../../Pages/NotFoundPage";
 const KallyankarRoute: React.FC = () => {
   const auth = useAuthContext();
   const isLoggedIn = auth?.isLoggedIn ?? false;
@@ -67,7 +68,7 @@ const KallyankarRoute: React.FC = () => {
         element={isLoggedIn ? <StockItemPage /> : <LoginPage />}
       />
 
-      <Route path="/*" element={<LoginPage />} />
+      <Route path="/*" element={<PageNotFound />} />
     </Routes>
   );
 };
