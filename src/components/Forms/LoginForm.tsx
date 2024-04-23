@@ -23,7 +23,8 @@ const LoginForm = () => {
   const { isLoggedIn, userLoginHandler } = auth;
   useEffect(() => {
     if (isLoggedIn) {
-      naviage("admin/dashboard");
+      console.log("naviagate to admin dashaovrd");
+      naviage("/admin/dashboard");
     }
   }, [isLoggedIn]);
 

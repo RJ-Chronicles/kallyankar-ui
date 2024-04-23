@@ -4,15 +4,21 @@ import useDateFormater from "../../../hooks/useDateFormater";
 import { Billing } from "../../../store/type";
 
 import { IconSecurePaymentFill } from "../../navigation/NavLinkProps";
+import PayUnpaidAmount from "../../../Pages/PaymentPage/PayUnpaidAmount";
+import { useState } from "react";
 
 const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
   data,
   status,
 }) => {
   const { dateFormater } = useDateFormater();
+  const [unpaidInfo, setUnpaidInfo] = useState<Billing | undefined>();
+  const [showUnpaidModule, setShowUnpaidModule] = useState(false);
+
   const updateUnpaidAmount = (id: string) => {
     const to_update = data?.find((element: any) => element._id === id);
-    console.log(to_update);
+    setUnpaidInfo(to_update);
+    setShowUnpaidModule(true);
   };
   return (
     <div className="w-full">
@@ -62,6 +68,13 @@ const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
           ))}
         </Table.Body>
       </Table>
+      {unpaidInfo && (
+        <PayUnpaidAmount
+          data={unpaidInfo}
+          show={showUnpaidModule}
+          setHide={setShowUnpaidModule}
+        />
+      )}
     </div>
   );
 };

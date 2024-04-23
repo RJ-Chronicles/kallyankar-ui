@@ -30,7 +30,7 @@ const KallyankarRoute: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/admin-login" element={<LoginPage />} />
       <Route
         path={DASHBOARD}
         element={isLoggedIn ? <Dashboard /> : <LoginPage />}
