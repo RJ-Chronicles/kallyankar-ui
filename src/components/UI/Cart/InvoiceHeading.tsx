@@ -2,7 +2,7 @@ import useDateFormater from "../../../hooks/useDateFormater";
 import { Customer } from "../../../store/type";
 import React from "react";
 import invoiceLogo from "../../svg/InvoiceLogo.svg";
-const InvoiceHeading: React.FC<{ customer: Customer | null }> = ({
+const InvoiceHeading: React.FC<{ customer: Customer | undefined }> = ({
   customer,
 }) => {
   const { dateFormater } = useDateFormater();
