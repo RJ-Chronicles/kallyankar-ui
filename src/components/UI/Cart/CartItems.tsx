@@ -155,7 +155,7 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
             >
               <div className="my-8 inline-block w-full max-w-3xl transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
                 <div className="p-4" id="print">
-                  <InvoiceHeading customer={_customer} />
+                  {_customer && <InvoiceHeading customer={_customer} />}
                   <div className="flex w-full justify-center items-center">
                     <CartItemsList />
                   </div>
