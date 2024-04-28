@@ -1,8 +1,10 @@
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { Table } from "flowbite-react";
+import { useRef, useState } from "react";
 import ButtonClick from "../../components/UI/Button/ButtonClick";
 import InvoiceHeading from "../../components/UI/Cart/InvoiceHeading";
 import Overlay from "../../components/UI/Overlay";
+import usePdfDownloader from "../../hooks/usePdfDownloader";
 import { Billing } from "../../store/type";
 import SelectStatuRadio from "./SelectStatusRadio";
 
@@ -19,6 +21,7 @@ const PayUnpaidAmount: React.FC<Props> = ({
 }) => {
   const [status, setStatus] = useState("Paid");
   const [inputFieldAmount, setInputAmount] = useState("");
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleAmountValueChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -32,38 +35,48 @@ const PayUnpaidAmount: React.FC<Props> = ({
       setInputAmount(() => inputAmount);
     }
   };
-
+  const { handleDownloadPDF } = usePdfDownloader();
   const hideModule = () => {
     setHide(false);
   };
+
   return (
-    <Overlay open={show} handleClose={hideModule}>
-      <div id="print">
+    <Overlay open={show} handleClose={hideModule} widthSize="lg">
+      <div id="print-area" ref={contentRef} className="w-full p-20">
         <InvoiceHeading customer={customer} />
-        <div className="text-left w-full mt-6">
-          <div className=" text-slate-700 flex justify-end w-full py-1 px-6  font-base rounded-sm">
-            <div className="flex w-1/3 justify-start">
-              <span className="pr-12">Total Amount</span>
-              <span className=" ">{unpaid_amount}</span>
-            </div>
-          </div>
-          <div className="flex justify-end w-full py-1 px-6 text-slate-700 font-base border-b border-slate-400">
-            <div className="flex w-1/3 justify-start">
-              <span className="pr-12">Paid Amount</span>
-              <span>{inputFieldAmount === "" ? "0" : inputFieldAmount}</span>
-            </div>
-          </div>
-          <div className="flex justify-end  w-full py-1 px-6 text-slate-700 font-semibold">
-            <div className="flex w-1/3 justify-start">
-              <span className="pr-3">Pending Amount</span>
-              <span>
+        <Table className="w-full overflow-hidden shadow-md rounded-md">
+          <Table.Head className="text-sm text-blue-100 ">
+            <Table.HeadCell className="px-3 py-2 bg-yellow-700">
+              {"Total Amount"}
+            </Table.HeadCell>
+            <Table.HeadCell className="px-3 py-2 bg-yellow-700">
+              {"Paid Amount"}
+            </Table.HeadCell>
+            <Table.HeadCell className="px-3 py-2 bg-yellow-700">
+              {"Date"}
+            </Table.HeadCell>
+            <Table.HeadCell className="px-3 py-2 bg-yellow-700">
+              {"Painding Amount"}
+            </Table.HeadCell>
+          </Table.Head>
+          <Table.Body className="divide-y">
+            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900">
+              <Table.Cell className="px-3 py-2">{unpaid_amount}</Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                {inputFieldAmount === "" ? "0" : inputFieldAmount}
+              </Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                {new Date().toJSON().slice(0, 10)}
+              </Table.Cell>
+              <Table.Cell className="px-3 py-2">
+                {" "}
                 {inputFieldAmount === ""
-                  ? "0"
+                  ? unpaid_amount
                   : unpaid_amount - parseInt(inputFieldAmount)}
-              </span>
-            </div>
-          </div>
-        </div>
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
       </div>
 
       <div className="text-left flex justify-left mt-6">
@@ -77,12 +90,19 @@ const PayUnpaidAmount: React.FC<Props> = ({
               onChange={handleAmountValueChange}
               type="number"
               value={inputFieldAmount}
-              className="focus:outline-none"
+              className="focus:outline-none outline-none w-96 border-none"
+              style={{ outline: "none", border: "none" }}
             />
           )}
         </div>
       </div>
-      <div className="my-6">
+      <div className="my-6 flex">
+        <ButtonClick
+          onClick={() =>
+            handleDownloadPDF(contentRef.current as HTMLDivElement, "file")
+          }
+          title="Print"
+        />
         <ButtonClick onClick={hideModule} title="Close" />
       </div>
     </Overlay>

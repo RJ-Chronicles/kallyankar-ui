@@ -11,6 +11,7 @@ import { getCustomerById } from "../../../backend/customer";
 import useApiCall from "../../../hooks/useApiCall";
 import InvoiceHeading from "./InvoiceHeading";
 import CartItemsList from "./CartItemList";
+import { usePdfDownloader } from "../../../hooks";
 
 interface Props {
   open: boolean;
@@ -25,8 +26,9 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
   const [totalAmountExcludeGST, setTotalAmountExcludeGST] = React.useState(0);
   const [inputFieldAmount, setInputAmount] = React.useState("");
   const [totalGSTAmount, setTotalGSTAmount] = React.useState(0);
-
+  const contentRef = React.useRef<HTMLDivElement>(null);
   const [hideDeleteColumn, setHideDelteColumn] = React.useState(false);
+  const { handleDownloadPDF } = usePdfDownloader();
   console.log("hideDeleteColumn :" + hideDeleteColumn);
   const params = useMemo(() => {
     return { id: customerId ?? "" };
@@ -95,17 +97,21 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
           : 0;
       amount = billStatus === "Paid" ? 0 : amount;
 
-      storedCartItems.forEach(async (product) => {
-        await postNewProduct(product as Product);
-      });
+      // storedCartItems.forEach(async (product) => {
+      //   await postNewProduct(product as Product);
+      // });
 
-      await postNewBilling({
-        gst_amount: totalGSTAmount,
-        total_amount: totalAmountExcludeGST + totalGSTAmount,
-        unpaid_amount: amount,
-        bill_status: billStatus,
-        customer: undefined,
-      });
+      // await postNewBilling({
+      //   gst_amount: totalGSTAmount,
+      //   total_amount: totalAmountExcludeGST + totalGSTAmount,
+      //   unpaid_amount: amount,
+      //   bill_status: billStatus,
+      //   customer: undefined,
+      // });
+      handleDownloadPDF(
+        contentRef.current as HTMLDivElement,
+        (_customer?.name ?? "") + new Date()
+      );
       // const resp = saveToPDF(customer?.name, customer?.contact.toString());//storedCartItems[0].customer ??
     } catch (err) {
       console.log("eeror while saving record");
@@ -154,7 +160,7 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
               leaveTo="opacity-0 scale-95"
             >
               <div className="my-8 inline-block w-full max-w-3xl transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
-                <div className="p-4" id="print">
+                <div className="p-4" id="print" ref={contentRef}>
                   {_customer && <InvoiceHeading customer={_customer} />}
                   <div className="flex w-full justify-center items-center">
                     <CartItemsList />
