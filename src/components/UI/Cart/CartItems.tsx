@@ -208,6 +208,19 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
                       </p>
                     </div>
                   </div>
+                  <div className="w-full">
+                    <p>
+                      Subject To Kolhapur Jurisdiction * I/We hereby certify
+                      that my/our registration certificate under the Maharashtra
+                      Value Added Tax Act 2002 is in force on the date which the
+                      date which the sale of goods specified in the tax invoice
+                      is made by me/us and that the transaction of sale covered
+                      by this Bill/Cash has been effect by me/us and it shall be
+                      accounted for in the turnover of sales while filing of
+                      return and the due tax if any payable of the sale has been
+                      paid or shall be paid.
+                    </p>
+                  </div>
                 </div>
 
                 <div className="text-left flex justify-between mt-6">

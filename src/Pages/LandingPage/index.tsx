@@ -10,8 +10,9 @@ LandingPageBattery;
 import Contact from "./contact";
 import Footer from "./footer";
 import LandingPageHeader from "./HeroSection";
-import { Carousel } from "flowbite-react";
-import { LandingPageBattery } from "../../assets/images";
+
+import { LandingPageBattery, KB_1, KB_2, KB_3 } from "../../assets/images";
+import Carousel from "../../components/UI/Carousel";
 
 const LandingPage = () => {
   return (
@@ -115,20 +116,7 @@ const LandingPage = () => {
         >
           Our Workplace
         </h2>
-        <Carousel indicators={false}>
-          <img
-            src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
-            alt="..."
-          />
-          <img
-            src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
-            alt="..."
-          />
-          <img
-            src="https://flowbite.com/docs/images/carousel/carousel-3.svg"
-            alt="..."
-          />
-        </Carousel>
+        <Carousel interval={10000} images={[KB_1, KB_2, KB_3]} />
       </section>
 
       <Contact />
