@@ -31,7 +31,7 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
   };
 
   return (
-    <div className="w-full overflow-hidden shadow-md rounded-md">
+    <div className="w-full overflow-hidden shadow-md rounded-md mt-5">
       <table className="table-auto w-full">
         <thead className="bg-gray-200 ">
           <tr>

@@ -1,15 +1,17 @@
 import CustomerTable from "../../components/UI/Table/CustomerTable";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { customer } from "../../store/type";
 import { getCustomerList } from "../../backend/customer";
 import useApiCall from "../../hooks/useApiCall";
 
 import useAppContext from "../../hooks/useAppContext";
 import ButtonHeader from "../../components/UI/Button/ButtonHeader";
+import SearchBox from "../../components/UI/SearchBox";
 
 const CustomerPage = () => {
   const { state, dispatch } = useAppContext();
+  const [input, setValue] = useState<string>("");
   const { refreshEffect } = state;
   const params = useMemo(() => {
     return { refreshEffect };
@@ -31,6 +33,7 @@ const CustomerPage = () => {
       <div className="flex justify-start space-x-6">
         <ButtonHeader buttonClick={addRecordFormHandler} />
       </div>
+      <SearchBox input={input} setValue={setValue} />
       {data && <CustomerTable data={data} />}
     </div>
   );
