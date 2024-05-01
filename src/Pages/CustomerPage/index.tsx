@@ -34,6 +34,7 @@ const CustomerPage = () => {
         <ButtonHeader buttonClick={addRecordFormHandler} />
       </div>
       <SearchBox input={input} setValue={setValue} />
+
       {data && <CustomerTable data={data} />}
     </div>
   );
