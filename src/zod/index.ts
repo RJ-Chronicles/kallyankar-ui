@@ -16,7 +16,7 @@ export const CustomerSchema = z.object({
   name: z.string().trim().min(3),
   last_name: z.string().trim().min(3),
   address: z.string().trim().min(3),
-  email: z.string().trim().min(5).endsWith("com"),
+  email: z.string().optional(),
   contact: z.string().trim().min(10).max(10),
   gst_number: z.string().trim().optional().default("-"),
 });

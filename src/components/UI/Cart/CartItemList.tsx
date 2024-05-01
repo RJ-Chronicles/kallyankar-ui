@@ -1,6 +1,7 @@
 import useAppContext from "../../../hooks/useAppContext";
 import React from "react";
 import { Product } from "../../../store/type";
+import { CART_ITEMS_COLUMN } from "../Table/columns";
 const CartItemsList = () => {
   const { state, dispatch } = useAppContext();
   const { storedCartItems } = state;
@@ -33,32 +34,11 @@ const CartItemsList = () => {
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" className="px-6 py-3 border border-slate-900">
-            Name
-          </th>
-
-          <th scope="col" className="px-6 py-3 border border-slate-900">
-            Serial Number
-          </th>
-          <th scope="col" className="px-6 py-3 border border-slate-900">
-            Price
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 border-spacing-6 border border-slate-900"
-          >
-            GST
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 border-spacing-8 border border-slate-900"
-          >
-            Net Amount
-          </th>
-
-          <th scope="col" className="px-6 py-3 border border-slate-900">
-            Action
-          </th>
+          {CART_ITEMS_COLUMN.map((col, index) => (
+            <th key={index} className="px-6 py-3 border border-slate-900">
+              {col}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
@@ -81,6 +61,7 @@ const CartItemsList = () => {
               <td className="px-6 py-2 border border-slate-900">
                 {item.price}
               </td>
+              <td className="px-6 py-2 border border-slate-900">{item.type}</td>
 
               <td className="px-6 py-2 border border-slate-900">
                 <button

@@ -1,6 +1,7 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
-import { KalyankarLogo } from "../../assets/images";
+
+import { KalyankarLogo } from "../../components/svg";
 const HeroSection = () => {
   return (
     <div className={styles.container}>
@@ -9,7 +10,7 @@ const HeroSection = () => {
           <img
             src={KalyankarLogo}
             alt="Logo"
-            className={`${styles["header__logo"]} animate-pulse`}
+            className={`${styles["header__logo"]}`}
           />
         </div>
 

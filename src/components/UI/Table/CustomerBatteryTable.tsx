@@ -1,21 +1,18 @@
-"use client";
-
-import { Table } from "flowbite-react";
+import { Edit3 } from "lucide-react";
+import { Link } from "react-router-dom";
 import useAppContext from "../../../hooks/useAppContext";
+import useDateFormater from "../../../hooks/useDateFormater";
 import { Product } from "../../../store/type";
 import { BATTERY_TABLE_COLUMN } from "./columns";
-import useDateFormater from "../../../hooks/useDateFormater";
-import { Delete, Edit, Edit2, Edit2Icon, Edit3 } from "lucide-react";
-import { Link } from "react-router-dom";
 
-type CustomerTableProps = {
+type ProductTableProps = {
   data: Product[];
 };
 
-const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
+const FlowTable: React.FC<ProductTableProps> = ({ data }) => {
   const { dateFormater } = useDateFormater();
-
   const { dispatch } = useAppContext();
+
   const editCustomerProduct = (id: string) => {
     const record = data.find((item) => item._id === id);
     if (record) {
@@ -30,45 +27,46 @@ const FlowTable: React.FC<CustomerTableProps> = ({ data }) => {
       dispatch({ type: "HIDE_SHOW_FORM", payload: true });
     }
   };
+
   return (
-    <div className="w-full">
-      <Table className="w-full overflow-hidden shadow-md rounded-md">
-        <Table.Head>
-          {BATTERY_TABLE_COLUMN.map((col, index) => (
-            <Table.HeadCell className="px-3 py-2" key={index}>
-              {col}
-            </Table.HeadCell>
-          ))}
-        </Table.Head>
-        <Table.Body className="divide-y">
+    <div className="w-full overflow-hidden shadow-md rounded-md">
+      <table className="table-auto w-full">
+        <thead className="bg-gray-200">
+          <tr>
+            {BATTERY_TABLE_COLUMN.map((col, index) => (
+              <th
+                key={index}
+                className="px-4 py-2 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+              >
+                {col}
+              </th>
+            ))}
+            <th className="px-4 py-2"></th> {/* Empty header for actions */}
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200 text-sm">
           {data.map((row: Product, index: number) => (
-            <Table.Row
-              className="bg-white dark:border-gray-700 dark:bg-gray-800"
-              key={index}
-            >
-              <Table.Cell className="px-3 py-2">{row.name}</Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {row.vehicle_name ?? "" + " " + row.vehicle_number ?? "-"}
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">{row.type}</Table.Cell>
-              <Table.Cell className="px-3 py-2">{row.serial_number}</Table.Cell>
-              <Table.Cell className="px-3 py-2">{row.price}</Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {dateFormater(row.createdAt ?? "")}
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">
+            <tr key={index}>
+              <td className="px-4 py-3">{row.name}</td>
+              <td className="px-4 py-3">
+                {row.vehicle_name ?? ""} {row.vehicle_number ?? "-"}
+              </td>
+              <td className="px-4 py-3">{row.type}</td>
+              <td className="px-4 py-3">{row.serial_number}</td>
+              <td className="px-4 py-3">{row.price}</td>
+              <td className="px-4 py-3">{dateFormater(row.createdAt ?? "")}</td>
+              <td className="px-4 py-3">
                 <button
                   onClick={() => editCustomerProduct(row._id ?? "")}
-                  className="font-medium text-slate-600 dark:text-red-500 hover:underline flex"
+                  className="text-blue-500 hover:text-blue-700 focus:outline-none"
                 >
-                  {/* <Delete className="w-6 h-6 text-red-800 text-sm" /> */}
-                  <Edit3 className="w-6 h-6" />
+                  <Edit3 />
                 </button>
-              </Table.Cell>
-            </Table.Row>
+              </td>
+            </tr>
           ))}
-        </Table.Body>
-      </Table>
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -1,12 +1,10 @@
-"use client";
-
-import { Table } from "flowbite-react";
+import { Edit } from "lucide-react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import useAppContext from "../../../hooks/useAppContext";
+import useDateFormater from "../../../hooks/useDateFormater";
 import { Customer } from "../../../store/type";
 import { CUSTOMER_TABLE_COLUMN } from "./columns";
-import useDateFormater from "../../../hooks/useDateFormater";
-import { Edit } from "lucide-react";
-import { Link } from "react-router-dom";
 
 type CustomerTableProps = {
   data: Customer[];
@@ -14,8 +12,8 @@ type CustomerTableProps = {
 
 const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
   const { dateFormater } = useDateFormater();
-
   const { dispatch } = useAppContext();
+
   const editCustomerHandler = (id: string) => {
     const record = data.find((item) => item._id === id);
     if (record) {
@@ -31,46 +29,53 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
       dispatch({ type: "HIDE_SHOW_FORM", payload: true });
     }
   };
+
   return (
-    <div className=" w-full ">
-      <Table className="w-full overflow-hidden shadow-md rounded-md">
-        <Table.Head className="text-sm text-slate-900 ">
-          {CUSTOMER_TABLE_COLUMN.map((col, index) => (
-            <Table.HeadCell className="px-3 py-2 bg-gray-200" key={index}>
-              {col}
-            </Table.HeadCell>
-          ))}
-        </Table.Head>
-        <Table.Body className="divide-y">
+    <div className="w-full overflow-hidden shadow-md rounded-md mt-5">
+      <table className="table-auto w-full">
+        <thead className="bg-gray-200 ">
+          <tr>
+            {CUSTOMER_TABLE_COLUMN.map((col, index) => (
+              <th
+                key={index}
+                className="px-4 py-2 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+              >
+                {col}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
           {data.map((row: Customer, index: number) => (
-            <Table.Row
-              className="bg-white dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900"
+            <tr
               key={index}
+              className=" dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900"
             >
-              <Table.Cell className="px-3 py-2">
-                <Link to={`/admin/customers/${row._id}`}>
+              <td className="px-3 py-2">
+                <Link
+                  to={`/admin/customers/${row._id}`}
+                  className="hover:underline"
+                >
                   {row.name + " " + row.last_name}
                 </Link>
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">{row.address}</Table.Cell>
-              <Table.Cell className="px-3 py-2">{row.email}</Table.Cell>
-              <Table.Cell className="px-3 py-2">{row.contact}</Table.Cell>
-              <Table.Cell className="px-3 py-2">{row.gst_number}</Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {dateFormater(row.createdAt ?? "")}
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">
+              </td>
+              <td className="px-3 py-2">{row.address}</td>
+              <td className="px-3 py-2">{row.email}</td>
+              <td className="px-3 py-2">{row.contact}</td>
+              <td className="px-3 py-2">{row.gst_number}</td>
+              <td className="px-3 py-2">{dateFormater(row.createdAt ?? "")}</td>
+              <td className="px-3 py-2">
                 <button
                   onClick={() => editCustomerHandler(row._id ?? "")}
                   className="font-medium text-blue-600 dark:text-red-500 hover:underline"
                 >
                   <Edit />
                 </button>
-              </Table.Cell>
-            </Table.Row>
+              </td>
+            </tr>
           ))}
-        </Table.Body>
-      </Table>
+        </tbody>
+      </table>
     </div>
   );
 };
