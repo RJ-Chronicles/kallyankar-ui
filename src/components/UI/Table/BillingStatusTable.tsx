@@ -1,11 +1,9 @@
-import { Table } from "flowbite-react";
-import { BILLING_STATUS_COLUMN } from "./columns";
-import useDateFormater from "../../../hooks/useDateFormater";
-import { Billing } from "../../../store/type";
-
 import { IconSecurePaymentFill } from "../../navigation/NavLinkProps";
 import PayUnpaidAmount from "../../../Pages/PaymentPage/PayUnpaidAmount";
+import useDateFormater from "../../../hooks/useDateFormater";
 import { useState } from "react";
+import { Billing } from "../../../store/type";
+import { BILLING_STATUS_COLUMN } from "./columns";
 
 const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
   data,
@@ -20,54 +18,49 @@ const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
     setUnpaidInfo(to_update);
     setShowUnpaidModule(true);
   };
-  return (
-    <div className="w-full">
-      <Table className="w-full overflow-hidden shadow-md rounded-md">
-        <Table.Head className="text-sm text-slate-900 ">
-          {BILLING_STATUS_COLUMN.map((col, index) => (
-            <Table.HeadCell className="px-3 py-2 bg-gray-200" key={index}>
-              {col}
-            </Table.HeadCell>
-          ))}
-        </Table.Head>
-        <Table.Body className="divide-y">
-          {data.map((row: Billing, index: number) => (
-            <Table.Row
-              className="bg-white dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900"
-              key={index}
-            >
-              <Table.Cell className="px-3 py-2">
-                {row.customer?.name + " " + row.customer?.last_name}
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {row.customer?.contact}
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {row.customer?.email}
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {row.customer?.address}
-              </Table.Cell>
 
-              <Table.Cell className="px-3 py-2">{row.gst_amount}</Table.Cell>
-              <Table.Cell className="px-3 py-2">{row.total_amount}</Table.Cell>
-              <Table.Cell className="px-3 py-2">{row.unpaid_amount}</Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {dateFormater(row.createdAt ?? "")}
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">
+  return (
+    <div className="w-full overflow-hidden shadow-md rounded-md">
+      <table className="table-auto w-full ">
+        <thead className="bg-gray-200">
+          <tr>
+            {BILLING_STATUS_COLUMN.map((col, index) => (
+              <th
+                key={index}
+                className="px-4 py-2 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+              >
+                {col}
+              </th>
+            ))}
+            <th className="px-4 py-2"></th> {/* Empty header for actions */}
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {data.map((row: Billing, index: number) => (
+            <tr key={index}>
+              <td className="px-4 py-3">
+                {row.customer?.name} {row.customer?.last_name}
+              </td>
+              <td className="px-4 py-3">{row.customer?.contact}</td>
+              <td className="px-4 py-3">{row.customer?.email}</td>
+              <td className="px-4 py-3">{row.customer?.address}</td>
+              <td className="px-4 py-3">{row.gst_amount}</td>
+              <td className="px-4 py-3">{row.total_amount}</td>
+              <td className="px-4 py-3">{row.unpaid_amount}</td>
+              <td className="px-4 py-3">{dateFormater(row.createdAt ?? "")}</td>
+              <td className="px-4 py-3">
                 <button
                   onClick={() => updateUnpaidAmount(row._id ?? "")}
                   disabled={status === "Paid"}
-                  className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+                  className="text-blue-500 hover:text-blue-700 focus:outline-none"
                 >
                   <IconSecurePaymentFill />
                 </button>
-              </Table.Cell>
-            </Table.Row>
+              </td>
+            </tr>
           ))}
-        </Table.Body>
-      </Table>
+        </tbody>
+      </table>
       {unpaidInfo && (
         <PayUnpaidAmount
           data={unpaidInfo}
@@ -78,4 +71,5 @@ const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
     </div>
   );
 };
+
 export default BillingStatusTable;

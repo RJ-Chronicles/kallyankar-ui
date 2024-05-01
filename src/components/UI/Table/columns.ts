@@ -48,6 +48,16 @@ const BILLING_STATUS_COLUMN = [
   "Pay",
 ];
 
+const CART_ITEMS_COLUMN = [
+  "Name",
+  "Serial Number",
+  "Price",
+  "GST",
+  "Net Amount",
+  "Amphere",
+  "Action",
+];
+
 const AMPHERE_TABLE_COLUMN = ["Size", "Created At", "Action"];
 export {
   CUSTOMER_TABLE_COLUMN,
@@ -56,4 +66,5 @@ export {
   STOCK_TABLE_COLUMN,
   BILLING_STATUS_COLUMN,
   AMPHERE_TABLE_COLUMN,
+  CART_ITEMS_COLUMN,
 };
