@@ -244,3 +244,11 @@ export type BillingWithMessage = {
   billingList: Billing[];
   message: string;
 };
+
+export type CustomerApiParam = {
+  page: number;
+  limit: number;
+  sortBy: string;
+  sortOrder: string;
+  search: string;
+};
