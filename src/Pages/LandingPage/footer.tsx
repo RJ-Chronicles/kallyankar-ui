@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { KalyankarLogo } from "../../assets/images";
+import { KalyankarLogo } from "../../components/svg";
 
 const Footer = () => {
   return (
@@ -8,7 +8,11 @@ const Footer = () => {
         <div className="flex flex-col items-center mb-8 space-y-6 md:flex-row md:space-y-0 md:justify-between md:items-start">
           <div className="flex flex-col items-center space-y-8 md:items-start md:space-y-4">
             <div className="h-8 mb-8 md:mb-0">
-              <img src={KalyankarLogo} alt="logo" className="w-44 md:ml-3" />
+              <img
+                src={KalyankarLogo}
+                alt="logo"
+                className="w-44 md:ml-3  bg-no-repeat"
+              />
             </div>
           </div>
           <div className="flex flex-col items-start justify-between space-y-4 text-gray-500">
