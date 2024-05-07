@@ -98,7 +98,7 @@
   display: block;
   font-size: 1.2rem;
   font-weight: 700;
-  letter-spacing: 1rem;
+  letter-spacing: 0.2rem;
   animation: moveInRight 1s ease-out;
 }
 
@@ -111,15 +111,16 @@
   display: inline-block;
   border-radius: 10rem;
   transition: all 0.2s;
-  position: relative;
+  position: absolute;
   font-size: 1rem;
   border: none;
   cursor: pointer;
+  top: 0;
+  right: 0;
 }
 
 .btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
 }
 .btn:hover::after {
   transform: scaleX(1.4) scaleY(1.6);
@@ -130,7 +131,6 @@
 .btn:focus {
   outline: none;
   transform: translateY(-1px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 .btn--white {
@@ -157,7 +157,7 @@
   border-radius: 10rem;
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   z-index: -1;
   transition: all 0.4s;
 }

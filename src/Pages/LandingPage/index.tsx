@@ -1,4 +1,3 @@
-import LoginForm from "../../components/Forms/LoginForm";
 import {
   CloudIcon,
   CarIcon,
@@ -38,13 +37,12 @@ const LandingPage = () => {
                         <CloudIcon />
                       </div>
                       <div className="features-content">
-                        <h4 className="feature-title">
-                          Built with TailwindCSS
+                        <h4 className="font-bold text-blue-900">
+                          Quality Guarantee
                         </h4>
                         <p>
-                          {" "}
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit. Veniam tempora quidem vel sint.
+                          We thoroughly test our batteries to make sure they're
+                          reliable and perform well.
                         </p>
                       </div>
                     </div>
@@ -55,11 +53,12 @@ const LandingPage = () => {
                         <GiftIcon />
                       </div>
                       <div className="features-content">
-                        <h4 className="feature-title">Free to Use</h4>
+                        <h4 className="font-bold text-blue-900">
+                          Quality Assurance
+                        </h4>
                         <p>
-                          {" "}
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit. Veniam tempora quidem vel sint.
+                          We thoroughly test our batteries to make sure they're
+                          reliable and perform well
                         </p>
                       </div>
                     </div>
@@ -70,11 +69,12 @@ const LandingPage = () => {
                         <GearIcon />
                       </div>
                       <div className="features-content">
-                        <h4 className="feature-title">Fully Responsive</h4>
+                        <h4 className="font-bold text-blue-900">
+                          Expert Guidance
+                        </h4>
                         <p>
-                          {" "}
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit. Veniam tempora quidem vel sint.
+                          Our knowledgeable team will help you choose the right
+                          battery for your vehicle.
                         </p>
                       </div>
                     </div>
@@ -85,11 +85,12 @@ const LandingPage = () => {
                         <CarIcon />
                       </div>
                       <div className="features-content">
-                        <h4 className="feature-title">Easy to Customize</h4>
+                        <h4 className="font-bold text-blue-900">
+                          Trusted Partnerships:
+                        </h4>
                         <p>
-                          {" "}
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit. Veniam tempora quidem vel sint.
+                          We work with top brands to offer you the best quality
+                          and service.
                         </p>
                       </div>
                     </div>
