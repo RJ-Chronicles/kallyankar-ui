@@ -2,7 +2,12 @@ import useAppContext from "../../../hooks/useAppContext";
 import React from "react";
 import { Product } from "../../../store/type";
 import { CART_ITEMS_COLUMN } from "../Table/columns";
-const CartItemsList = () => {
+import { Cross, Delete, DeleteIcon, Trash, Trash2 } from "lucide-react";
+
+type CartListPs = {
+  hideDeleteColumn: boolean;
+};
+const CartItemsList: React.FC<CartListPs> = ({ hideDeleteColumn }) => {
   const { state, dispatch } = useAppContext();
   const { storedCartItems } = state;
   console.log(storedCartItems);
@@ -29,16 +34,32 @@ const CartItemsList = () => {
       type: "ADD_STORED_CART_ITEMS",
       payload: [...cartItems],
     });
+    console.log("cartItems ", cartItems);
+    if (cartItems.length === 0) {
+      console.log("inside the if block");
+      dispatch({ type: "HIDE_SHOW_FORM", payload: false });
+    }
+    console.log("end game");
   };
   return (
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          {CART_ITEMS_COLUMN.map((col, index) => (
-            <th key={index} className="px-6 py-3 border border-slate-900">
-              {col}
-            </th>
-          ))}
+          {CART_ITEMS_COLUMN.map((col, index) => {
+            const shouldDisplayDelete = !hideDeleteColumn ? (
+              <th key={index} className="px-6 py-3 border border-slate-900">
+                {col}
+              </th>
+            ) : null;
+
+            return col !== "Action" ? (
+              <th key={index} className="px-6 py-3 border border-slate-900">
+                {col}
+              </th>
+            ) : (
+              shouldDisplayDelete
+            );
+          })}
         </tr>
       </thead>
       <tbody>
@@ -63,14 +84,16 @@ const CartItemsList = () => {
               </td>
               <td className="px-6 py-2 border border-slate-900">{item.type}</td>
 
-              <td className="px-6 py-2 border border-slate-900">
-                <button
-                  onClick={() => handleCartRemoveItem(item.serial_number)}
-                  className="w-full "
-                >
-                  delete
-                </button>
-              </td>
+              {!hideDeleteColumn && (
+                <td className="px-6 py-2 border border-slate-900">
+                  <button
+                    onClick={() => handleCartRemoveItem(item.serial_number)}
+                    className="w-full "
+                  >
+                    <Trash2 className="text-red-500" />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
       </tbody>

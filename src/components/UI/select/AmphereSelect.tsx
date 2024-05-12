@@ -10,6 +10,7 @@ interface AmpProps {
 const AmphereSelect: React.FC<AmpProps> = ({ setValue, value }) => {
   const { state } = useAppContext();
   const { amphere } = state;
+
   return useMemo(
     () => (
       <div className="mb-4 md:mr-2 md:mb-0">
@@ -24,7 +25,7 @@ const AmphereSelect: React.FC<AmpProps> = ({ setValue, value }) => {
           id="role"
           onChange={setValue}
           value={value ?? ""}
-          name="name"
+          name="type"
         >
           <option value="DEFAULT">Choose Amphere value</option>
           {amphere?.map((data, index) => (

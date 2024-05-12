@@ -163,7 +163,7 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
                 <div className="p-4" id="print" ref={contentRef}>
                   {_customer && <InvoiceHeading customer={_customer} />}
                   <div className="flex w-full justify-center items-center">
-                    <CartItemsList />
+                    <CartItemsList hideDeleteColumn={hideDeleteColumn} />
                   </div>
 
                   <div className="">
@@ -209,7 +209,7 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
                     </div>
                   </div>
                   <div className="w-full">
-                    <p className="mb-4 italic">
+                    <p className="mb-4 italic text-[10px]">
                       <strong>Subject To Kolhapur Jurisdiction. </strong> I/We
                       hereby certify that my/our registration certificate under
                       the Maharashtra Value Added Tax Act 2002 is in force on
