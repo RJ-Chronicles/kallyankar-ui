@@ -24,7 +24,7 @@ const BatterySelect: React.FC<AmpProps> = ({ setValue, value }) => {
           className="w-full px-9 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           id="role"
           onChange={setValue}
-          name="type"
+          name="name"
           value={value ?? ""}
         >
           <option value="DEFAULT">Choose battery name.</option>

@@ -17,8 +17,8 @@ const ProductForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
   const { storedCartItems } = state;
   const { formProps } = state;
-  const { data: _amphere, title, mode } = formProps;
-  const { setValue, data } = useHandlevalueChange(_amphere as Product);
+  const { data: _product, title, mode } = formProps;
+  const { setValue, data } = useHandlevalueChange(_product as Product);
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
 
@@ -51,6 +51,7 @@ const ProductForm: React.FC = () => {
         type: "ADD_STORED_CART_ITEMS",
         payload: [...storedCartItems, data as Product],
       });
+      dispatch({ type: "HIDE_SHOW_FORM", payload: false });
     } else {
       try {
         spinnerAnimationStart();
