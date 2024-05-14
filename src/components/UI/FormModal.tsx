@@ -1,3 +1,4 @@
+import { useInitialFetch } from "../../hooks";
 import useAppContext from "../../hooks/useAppContext";
 import AmphereForm from "../Forms/AmphereForm";
 import BatteryForm from "../Forms/BatteryForm";
@@ -15,6 +16,7 @@ const FormModal: React.FC<{ showForm: boolean }> = ({ showForm }) => {
     dispatch({ type: "HIDE_SHOW_FORM", payload: false });
   };
 
+  useInitialFetch();
   return (
     <Overlay handleClose={handleOverlayClose} open={showForm} showButton={true}>
       {type === "CUSTOMER" && <CustomerForm />}

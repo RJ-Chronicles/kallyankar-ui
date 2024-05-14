@@ -261,4 +261,5 @@ export type STOCK = {
   amphere_size: string;
   available: string;
   _id?: string;
+  createdAt?: string;
 };
