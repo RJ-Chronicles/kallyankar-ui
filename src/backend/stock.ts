@@ -1,32 +1,33 @@
+import { STOCK } from "../store/type";
 import api from "./api";
-
-type Stock = {
-  name: string;
+type STOCK_WITH_MSG = {
+  message: string;
+  list: STOCK[];
 };
-const postNewStock = async (stock: Stock) => {
-  const { data } = await api.post<Stock>("stock/add", stock);
+const postNewStock = async (stock: STOCK) => {
+  const { data } = await api.post<STOCK>("stock/add", stock);
   return data;
 };
 
 const postCheckStockAvailability = async (name: string, type: string) => {
-  const { data } = await api.post<Stock>("stock/", { name, type });
+  const { data } = await api.post<STOCK>("stock/", { name, type });
   return data;
 };
-const updateStockById = async (stock: Stock, id: string) => {
-  const { data } = await api.patch<Stock>("stock/update/" + id, stock);
+const updateStockById = async (stock: STOCK, id: string) => {
+  const { data } = await api.patch<STOCK>("stock/update/" + id, stock);
   return data;
 };
 const deleteStockById = async (id: string) => {
-  const { data } = await api.delete<Stock>("stock/delete/" + id);
+  const { data } = await api.delete<STOCK>("stock/delete/" + id);
   return data;
 };
 const getStockList = async () => {
-  const { data } = await api.get<Stock[]>("stock/list");
-  return data;
+  const { data } = await api.get<STOCK_WITH_MSG>("stock/list");
+  return data.list;
 };
 
 const getStockById = async (id: string) => {
-  const { data } = await api.get<Stock>("stock/seleted/" + id);
+  const { data } = await api.get<STOCK>("stock/seleted/" + id);
   return data;
 };
 

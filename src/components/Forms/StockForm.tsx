@@ -1,11 +1,7 @@
-import { STOCK, StockItems } from "../../store/type";
+import { STOCK } from "../../store/type";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
-import useResponseValidator from "../../hooks/useResponseValidator";
-import useApiCall from "../../hooks/useApiCall";
-import { postNewStockItem, updateStockItemById } from "../../backend/stockItem";
-import { getAmphereList } from "../../backend/amphere";
-import { getBatteryList } from "../../backend/battery";
+
 import useAppContext from "../../hooks/useAppContext";
 import ButtonSave from "../UI/Button/ButtonSave";
 import AmphereSelect from "../UI/select/AmphereSelect";
@@ -13,15 +9,16 @@ import BatterySelect from "../UI/select/BatterySelect";
 import { useAnimation } from "../../hooks";
 import { StockSchema } from "../../zod";
 import { ERRORS } from "../../zod/zod_error";
+import { postNewStock, updateStockById } from "../../backend/stock";
 
-const StockItemsForms: React.FC = () => {
+const StockForms: React.FC = () => {
   const { state, dispatch } = useAppContext();
   const { refreshEffect, formProps } = state;
   const { data: _stock, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_stock as STOCK);
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
-
+  console.log("formProps ", formProps);
   const { product_code, battery_name, available, amphere_size, _id } =
     data as STOCK;
 
@@ -41,13 +38,14 @@ const StockItemsForms: React.FC = () => {
 
     dispatch({ type: "SET_LOADING", payload: true });
     if (mode === "ADD_RECORD") {
-      const response = await postNewStockItem(data as StockItems);
+      const response = await postNewStock(data as STOCK);
     } else {
-      await updateStockItemById(data as StockItems, _id ?? "");
+      await updateStockById(data as STOCK, _id ?? "");
     }
 
     dispatch({ type: "SET_LOADING", payload: false });
     dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+    dispatch({ type: "HIDE_SHOW_FORM", payload: false });
   };
 
   return (
@@ -73,12 +71,12 @@ const StockItemsForms: React.FC = () => {
         </div>
 
         <div className="mb-4 md:flex md:justify-between">
-          <AmphereSelect
+          <BatterySelect
             setValue={setValue}
             value={battery_name}
             name={"battery_name"}
           />
-          <BatterySelect
+          <AmphereSelect
             setValue={setValue}
             value={amphere_size}
             name={"amphere_size"}
@@ -90,4 +88,4 @@ const StockItemsForms: React.FC = () => {
   );
 };
 
-export default StockItemsForms;
+export default StockForms;

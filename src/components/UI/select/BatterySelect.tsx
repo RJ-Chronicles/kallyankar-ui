@@ -2,12 +2,17 @@ import { useMemo } from "react";
 import useAppContext from "../../../hooks/useAppContext";
 import React from "react";
 interface AmpProps {
+  name?: string;
   setValue: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   value: string | number | null;
 }
-const BatterySelect: React.FC<AmpProps> = ({ setValue, value }) => {
+const BatterySelect: React.FC<AmpProps> = ({
+  setValue,
+  value,
+  name = "name",
+}) => {
   const { state } = useAppContext();
   const { batteryNames } = state;
 
@@ -24,7 +29,7 @@ const BatterySelect: React.FC<AmpProps> = ({ setValue, value }) => {
           className="w-full px-9 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           id="role"
           onChange={setValue}
-          name="name"
+          name={name}
           value={value ?? ""}
         >
           <option value="DEFAULT">Choose battery name.</option>
