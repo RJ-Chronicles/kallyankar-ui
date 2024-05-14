@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useAppContext from "../../../hooks/useAppContext";
 import useDateFormater from "../../../hooks/useDateFormater";
-import { Customer, STOCK } from "../../../store/type";
-import { CUSTOMER_TABLE_COLUMN } from "./columns";
+import { STOCK } from "../../../store/type";
 
 type CustomerTableProps = {
   data: STOCK[];
@@ -33,15 +32,15 @@ const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
 
   return (
     <>
-      <div className="relative  shadow-md sm:rounded-lg ">
-        <table className="w-full text-sm text-left text-gray-700 tracking-wider">
+      <div className="relative   p-10">
+        <table className="w-full text-sm text-left text-gray-700 tracking-wider shadow-lg rounded-lg">
           <thead className="text-xs md:text-sm text-gray-800 uppercase bg-gray-200 ">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Battery Name
+                Product Code
               </th>
               <th scope="col" className="px-6 py-3">
-                Product Code
+                Battery Name
               </th>
               <th scope="col" className="px-6 py-3">
                 Amphere Size
@@ -63,17 +62,21 @@ const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
                 key={index}
                 className="bg-white border-b text-sm text-slate-700 font-normal hover:bg-gray-50 "
               >
-                <Link to={`/stock/${row._id}`}>
-                  <td className="px-6 py-4">{row.battery_name}</td>
+                <Link to={`/admin/stocks/${row._id}`}>
+                  {" "}
+                  <td className="px-6 py-4">{row.product_code}</td>
                 </Link>
-
-                <td className="px-6 py-4">{row.product_code}</td>
+                <td className="px-6 py-4">{row.battery_name}</td>
                 <td className="px-6 py-4">{row.amphere_size}</td>
 
                 <td className="px-6 py-4">
                   <span>{row.available}</span>
                 </td>
-
+                <td className="px-6 py-4">
+                  <span>
+                    {dateFormater(row.createdAt ?? new Date().toString())}
+                  </span>
+                </td>
                 <td className="flex items-center px-4 py-4 space-x-2">
                   <button
                     onClick={() => editStockHandler(row._id ?? "")}

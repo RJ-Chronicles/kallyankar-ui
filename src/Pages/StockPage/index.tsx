@@ -36,7 +36,7 @@ const Stock = () => {
 
   return (
     <div className="w-full">
-      <div className=" bg-gradient-to-r from-cyan-500 to-blue-500 text-white md:pt-16 pt-10 ">
+      <div className=" bg-gradient-to-r from-cyan-500 to-blue-500 text-white md:pt-16 pt-10 shadow-md rounded-lg">
         <h1 className="text-center mt-0 mb-2 text-5xl font-medium leading-tight text-primary">
           Stock Analysis
         </h1>
@@ -68,8 +68,12 @@ const Stock = () => {
             required
           />
         </div>
-        <div className="flex justify-start space-x-6">
+        <div className="flex justify-center items-center space-x-6 mx-5">
           <ButtonHeader buttonClick={addRecordFormHandler} />
+          <h1>
+            Kalyankar Batteries{" "}
+            <strong className="text-xl text-blue-700">Customer details</strong>
+          </h1>
         </div>
       </div>
       {data && <StockTable data={data} />}
