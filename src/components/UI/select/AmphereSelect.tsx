@@ -2,12 +2,17 @@ import { useMemo } from "react";
 import useAppContext from "../../../hooks/useAppContext";
 import React from "react";
 interface AmpProps {
+  name?: string;
   setValue: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   value: string | number | null;
 }
-const AmphereSelect: React.FC<AmpProps> = ({ setValue, value }) => {
+const AmphereSelect: React.FC<AmpProps> = ({
+  setValue,
+  value,
+  name = "type",
+}) => {
   const { state } = useAppContext();
   const { amphere } = state;
 
@@ -25,7 +30,7 @@ const AmphereSelect: React.FC<AmpProps> = ({ setValue, value }) => {
           id="role"
           onChange={setValue}
           value={value ?? ""}
-          name="type"
+          name={name}
         >
           <option value="DEFAULT">Choose Amphere value</option>
           {amphere?.map((data, index) => (

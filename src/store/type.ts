@@ -30,7 +30,8 @@ export interface FormProps {
     | BatteryNameValues
     | GSTValues
     | StockItems
-    | Product;
+    | Product
+    | STOCK;
   mode: ActionType;
   type:
     | "CUSTOMER"
@@ -183,7 +184,8 @@ export type UserFormData =
   | BatteryNameValues
   | GSTValues
   | StockItems
-  | Product;
+  | Product
+  | STOCK;
 
 export type Request = "GET" | "POST" | "DELETE" | "PATCH";
 
@@ -251,4 +253,12 @@ export type CustomerApiParam = {
   sortBy: string;
   sortOrder: string;
   search: string;
+};
+
+export type STOCK = {
+  battery_name: string;
+  product_code: string;
+  amphere_size: string;
+  available: string;
+  _id?: string;
 };

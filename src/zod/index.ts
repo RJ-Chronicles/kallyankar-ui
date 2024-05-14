@@ -30,3 +30,10 @@ export const ProductSchema = z.object({
   vehicle_name: z.string().trim().optional().default("-"),
   vehicle_number: z.string().trim().optional().default("-"),
 });
+
+export const StockSchema = z.object({
+  battery_name: z.string().trim().min(2),
+  product_code: z.string().trim().min(3),
+  amphere_size: z.string().trim().min(3),
+  available: z.string().trim().optional(),
+});

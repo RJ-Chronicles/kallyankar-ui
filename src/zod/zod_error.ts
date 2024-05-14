@@ -10,5 +10,8 @@ export const ERRORS = {
   TYPE: "Please enter a valid battery type",
   SERIAL_NO: "Please enter a valid serial number",
   GST: "Please enter a valid GST",
+  AMPHERE: "Please select a valid AMPHERE",
+  BATTERY: "Please select a valid BATTERY",
+  P_CODE: "Please enter a valid Product code",
   SUCCESS: "Record updated successfully",
 };
