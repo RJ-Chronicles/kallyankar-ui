@@ -69,12 +69,11 @@ const StockItemPage = () => {
 
   const updateStockItem = (id: string) => {
     setOperaitonMode("UPDATE");
-    setPrevQuantity(quantity);
     const record = data?.find((item) => item._id === id);
     const qnt = record?.quantity ? String(record.quantity) : "0";
     setQuantity(qnt);
+    setPrevQuantity(qnt);
     setQuanityUpdateId(id);
-    console.log("udate id : ", id);
     if (!showForm) setShowForm(true);
   };
   return (
