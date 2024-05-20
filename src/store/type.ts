@@ -60,9 +60,9 @@ export interface AmphareSize {
 
 export type StockItems = {
   _id?: string;
-  stock: STOCK;
+  stock?: STOCK;
   quantity: number;
-  updatedAt: string;
+  updatedAt?: string;
 };
 
 export interface BatteryNameValues {

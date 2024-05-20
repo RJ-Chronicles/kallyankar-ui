@@ -3,9 +3,10 @@ import useDateFormater from "../../../hooks/useDateFormater";
 import { Edit } from "lucide-react";
 type Props = {
   data: StockItems[];
+  udpateStockItem: (item: string) => void;
 };
 
-const StockItemTable: React.FC<Props> = ({ data }) => {
+const StockItemTable: React.FC<Props> = ({ data, udpateStockItem }) => {
   const { dateFormater } = useDateFormater();
   return (
     <div className="relative  shadow-md sm:rounded-lg  ">
@@ -35,6 +36,7 @@ const StockItemTable: React.FC<Props> = ({ data }) => {
                 {" "}
                 <button
                   id={row._id}
+                  onClick={(e) => udpateStockItem(row._id ?? "")}
                   className="font-medium text-blue-600 dark:text-red-500 hover:underline"
                 >
                   <Edit />
