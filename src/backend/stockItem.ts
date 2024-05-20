@@ -1,6 +1,10 @@
 import { StockItems } from "../store/type";
 import api from "./api";
 
+type Stock_Item_With_msg = {
+  message: string;
+  stockItemList: StockItems[];
+};
 const postNewStockItem = async (stockItem: StockItems) => {
   const { data } = await api.post<StockItems>("stock-item/add", stockItem);
   return data;
@@ -21,9 +25,11 @@ const getStockItemList = async () => {
   return data;
 };
 
-const getStockItemBystockId = async (id: string) => {
-  const { data } = await api.get<StockItems>("stock-item/stock-items-by/" + id);
-  return data;
+const getStockItemBystockId = async ({ id }: { id: string }) => {
+  const { data } = await api.get<Stock_Item_With_msg>(
+    "stock-item/stock-items-by/" + id
+  );
+  return data.stockItemList;
 };
 
 export {
