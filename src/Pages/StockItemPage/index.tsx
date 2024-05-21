@@ -5,29 +5,28 @@ import {
   postNewStockItem,
   updateStockItemById,
 } from "../../backend/stockItem";
+import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 import StockItemTable from "../../components/UI/Table/StockItemTable";
 import { useAnimation, useApiCall, useAppContext } from "../../hooks";
 import { ERRORS } from "../../zod/zod_error";
 
 const StockItemPage = () => {
   const { stock_id } = useParams();
-  const { state } = useAppContext();
+  const { state, dispatch } = useAppContext();
   const { refreshEffect } = state;
   const [quantity, setQuantity] = useState<string>();
   const [showForm, setShowForm] = useState(false);
   const [operationMode, setOperaitonMode] = useState("ADD");
   const [udpateId, setQuanityUpdateId] = useState<string>();
   const [prevQuantify, setPrevQuantity] = useState<string>();
-  const { dispatch } = useAppContext();
-  const params = useMemo(() => {
-    return { refreshEffect, id: stock_id ?? "" };
-  }, [refreshEffect]);
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
 
-  const { data } = useApiCall(getStockItemBystockId, params);
+  const params = useMemo(() => {
+    return { refreshEffect, id: stock_id ?? "" };
+  }, [refreshEffect]);
 
-  console.log(data);
+  const { data } = useApiCall(getStockItemBystockId, params);
 
   const addNewItemHandler = () => {
     setOperaitonMode("ADD");
@@ -38,9 +37,9 @@ const StockItemPage = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    const quantityToNum = quantity ? +quantity : 0;
-    if (quantityToNum === 0) {
-      snackbarAnimation("Please enter stock value", "error");
+    const quantityToNum = +(quantity ? quantity : 0);
+    if (quantityToNum <= 0) {
+      snackbarAnimation("Please enter valid stock value", "error");
       return;
     }
 
@@ -80,17 +79,12 @@ const StockItemPage = () => {
     <div className="w-full mx-5">
       <div className="flex justify-between items-center">
         <div className="flex justify-start w-full md:w-1/4">
-          <button
-            onClick={addNewItemHandler}
-            className="flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10 "
-          >
-            <span>Add Record</span>
-          </button>
+          <ButtonHeader buttonClick={addNewItemHandler} />
         </div>
-        <div className="flex justify-start w-full">
+        <div className="flex justify-between w-full">
           {showForm && (
             <form
-              className="px-8 md:px-16 flex space-x-10"
+              className=" flex justify-end space-x-10 w-full"
               onSubmit={stockItemSubmitHandler}
             >
               <div className="flex justify-center items-center">
@@ -99,7 +93,7 @@ const StockItemPage = () => {
                   type="number"
                   required
                   id="name"
-                  placeholder="Stock Item"
+                  placeholder="Stock Quantity"
                   onChange={(e) => setQuantity(e.target.value)}
                   value={quantity}
                 />
@@ -107,7 +101,7 @@ const StockItemPage = () => {
 
               <button
                 type="submit"
-                className="w-full flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
+                className="w-[170px] py-2 px-10 group relative text-white flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-cyan-700 focus:ring-4 focus:ring-cyan-300 enabled:hover:bg-cyan-800 dark:bg-cyan-600 dark:focus:ring-cyan-800 dark:enabled:hover:bg-cyan-700 rounded-lg "
               >
                 {operationMode === "ADD" ? "ADD" : "UPDATE"}
               </button>
