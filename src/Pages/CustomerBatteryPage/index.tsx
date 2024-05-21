@@ -2,8 +2,6 @@ import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductByCustomerId } from "../../backend/product";
 import CartItems from "../../components/UI/Cart/CartItems";
-import HeaderCartButton from "../../components/UI/Cart/HeaderCartButton";
-
 import CustomerBatteryTable from "../../components/UI/Table/CustomerBatteryTable";
 import useApiCall from "../../hooks/useApiCall";
 import useAppContext from "../../hooks/useAppContext";
