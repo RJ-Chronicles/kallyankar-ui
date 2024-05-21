@@ -1,4 +1,10 @@
 import React, { useContext } from "react";
+import { deleteAmphereById } from "../../backend/amphere";
+import { deleteBatteryById } from "../../backend/battery";
+import { deleteCustomerById } from "../../backend/customer";
+import { deleteGSTById } from "../../backend/gst";
+import { deleteStockById } from "../../backend/stock";
+import { useAnimation } from "../../hooks";
 
 import AppContext from "../../store/AppContext";
 import Overlay from "./Overlay";
@@ -9,12 +15,35 @@ const DeleteModal: React.FC<{
 }> = ({ open, children }) => {
   const { state, dispatch } = useContext(AppContext);
   const { mode, title, id } = state.deleteModalProps;
-
+  const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
+    useAnimation();
   // const { user } = useSession();
-  const handleDeleteRecord = () => {
-    if (typeof mode === "string") {
-      // deleteModalHandler(mode, id, user.token);
-    }
+  const handleDeleteRecord = async () => {
+    try {
+      spinnerAnimationStart();
+      switch (mode) {
+        case "AMPHERE":
+          await deleteAmphereById(id);
+          break;
+        case "BATTERY_NAME":
+          await deleteBatteryById(id);
+          break;
+        case "GST":
+          await deleteGSTById(id);
+          break;
+        case "STOCK":
+          await deleteStockById(id);
+          break;
+        case "CUSTOMER":
+          await deleteCustomerById(id);
+          break;
+        default:
+          snackbarAnimation("invailid delete type", "warning");
+      }
+      snackbarAnimation("Record deleted successfully", "success");
+    } catch (e) {}
+    spinnerAnimationStop();
+    snackbarAnimation("Error occured while deleting record!", "error");
     dispatch({ type: "SET_DELETE_MODAL_VISIBLE", payload: false });
   };
 
