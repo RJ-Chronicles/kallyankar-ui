@@ -50,7 +50,7 @@ const Battery = () => {
             sx={{
               borderBottom: 1,
               borderColor: "divider",
-              backgroundColor: "#600080",
+              backgroundColor: "rgb(6, 182 ,212)",
               color: "white",
             }}
           >

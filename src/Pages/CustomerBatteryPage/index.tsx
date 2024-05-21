@@ -39,7 +39,7 @@ const CustomerBatteryPage = () => {
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });
   };
   return (
-    <div className="w-full">
+    <div className="w-full p-5">
       <div className="flex justify-end w-full items-center">
         <ButtonHeader buttonClick={() => handleOpenForm()} />
         {storedCartItems.length > 0 && (
