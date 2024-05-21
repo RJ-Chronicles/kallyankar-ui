@@ -8,7 +8,7 @@ import { useAnimation } from "../../hooks";
 
 const AmphereForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
-  const { refreshEffect, formProps } = state;
+  const { formProps } = state;
   const { data: _amphere, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_amphere as AmphareSize);
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
