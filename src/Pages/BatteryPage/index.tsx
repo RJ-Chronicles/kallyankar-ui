@@ -6,7 +6,8 @@ import Box from "@mui/material/Box";
 import GSTTable from "../../components/UI/Table/GSTTable";
 import AmphereTable from "../../components/UI/Table/AmphereTable";
 import BatteryNameTable from "../../components/UI/Table/BatteryNameTable";
-import PageWrapper from "../../components/UI/Page";
+
+import { useInitialFetch } from "../../hooks";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -16,7 +17,7 @@ interface TabPanelProps {
 
 const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
-
+  useInitialFetch();
   return (
     <div
       role="tabpanel"
@@ -42,7 +43,7 @@ const Battery = () => {
     setValue(newValue);
   };
   return (
-    <PageWrapper>
+    <div className="w-full">
       <div className="flex flex-col justify-center items-center md:flex-row space-x-10 md:space-x-0">
         <Box sx={{ width: "100%" }}>
           <Box
@@ -78,7 +79,7 @@ const Battery = () => {
           </TabPanel>
         </Box>
       </div>
-    </PageWrapper>
+    </div>
   );
 };
 

@@ -2,7 +2,10 @@ import { AmphareSize } from "../store/type";
 import api from "./api";
 
 const postNewAmphere = async (amphere: AmphareSize) => {
-  const { data } = await api.post<AmphareSize>("amphere/add", amphere);
+  const { size } = amphere;
+  const { data } = await api.post<AmphareSize>("amphere/add", {
+    size: size + " AH",
+  });
   return data;
 };
 const updateAmphereById = async (amphere: AmphareSize, id: string) => {
