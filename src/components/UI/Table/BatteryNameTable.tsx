@@ -1,18 +1,14 @@
 import { useContext } from "react";
 import AppContext from "../../../store/AppContext";
-import { AMPHERE_TABLE_COLUMN } from "./columns";
-import Table from "./Table";
-import { Edit2, Pencil, Trash2 } from "lucide-react";
+import { Edit2, Trash2 } from "lucide-react";
 import { useAnimation } from "../../../hooks";
 import useDateFormater from "../../../hooks/useDateFormater";
-import { BatteryNameValues } from "../../../store/type";
 import ButtonHeader from "../Button/ButtonHeader";
 
 const BatteryNameTable = () => {
   const { state, dispatch } = useContext(AppContext);
   const { batteryNames } = state;
 
-  const handleDeleteModal = (event: React.MouseEvent<HTMLButtonElement>) => {};
   const { dateFormater } = useDateFormater();
   const { snackbarAnimation } = useAnimation();
 
@@ -53,6 +49,7 @@ const BatteryNameTable = () => {
         data: battery,
         mode: "UPDATE_RECORD",
         type: "BATTERY",
+        title: "Update Battery record",
       },
     });
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });

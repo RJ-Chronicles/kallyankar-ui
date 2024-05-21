@@ -1,42 +1,51 @@
 import { GSTValues } from "../../store/type";
-import ButtonLarge from "../UI/Button/ButtonLarge";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
-import useResponseValidator from "../../hooks/useResponseValidator";
 import { postNewGST, updateGSTById } from "../../backend/gst";
 import useAppContext from "../../hooks/useAppContext";
 import ButtonSave from "../UI/Button/ButtonSave";
+import { useAnimation } from "../../hooks";
 
 const GSTForm: React.FC = () => {
-  const { state, dispatch } = useAppContext();
-  const { refreshEffect, formProps } = state;
+  const {
+    state: { formProps },
+    dispatch,
+  } = useAppContext();
   const { data: _gst, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_gst as GSTValues);
 
-  const { error, setError, validator } = useResponseValidator();
-  const { gst: gstValue, _id } = _gst as GSTValues;
-
+  const { gst, _id } = data as GSTValues;
+  const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
+    useAnimation();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validator(data as GSTValues);
-    if (!error) {
-      dispatch({ type: "SET_LOADING", payload: true });
+    if (gst <= 0) {
+      snackbarAnimation("Please enter valid GST value", "error");
+      return;
+    }
+
+    try {
+      spinnerAnimationStart();
       if (mode === "ADD_RECORD") {
-        const response = await postNewGST(data as GSTValues);
+        await postNewGST(data as GSTValues);
       } else {
         await updateGSTById(data as GSTValues, _id ?? "");
       }
-
-      dispatch({ type: "SET_LOADING", payload: false });
-      dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+      snackbarAnimation("Record saved successfully!", "success");
+      dispatch({ type: "HAS_INITIAL_FETCHED", payload: false });
+      dispatch({ type: "HIDE_SHOW_FORM", payload: false });
+    } catch (err) {
+      console.log("error");
+      snackbarAnimation("Error occured while saving/ updating record", "error");
     }
+    spinnerAnimationStop();
   };
 
   return (
     <>
-      <Heading heading="User Registration Form" />
+      <Heading heading={title ?? "Add GST VALUE"} />
       <form
-        className="px-8 md:px-16 pt-6 pb-4 bg-white rounded shadow-md"
+        className="px-8 md:px-16 pt-6 pb-4 bg-white rounded shadow-md w-[400px]"
         onSubmit={handleSubmit}
       >
         <div className="mb-4 md:mr-2">
@@ -53,7 +62,8 @@ const GSTForm: React.FC = () => {
             onChange={setValue}
             id="name"
             placeholder="GST"
-            value={gstValue}
+            name="gst"
+            value={gst}
           />
         </div>
         <ButtonSave />

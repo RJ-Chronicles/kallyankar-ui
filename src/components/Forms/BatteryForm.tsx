@@ -1,10 +1,6 @@
 import { BatteryNameValues } from "../../store/type";
-import Overlay from "../UI/Overlay";
-import ButtonLarge from "../UI/Button/ButtonLarge";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
-import useResponseValidator from "../../hooks/useResponseValidator";
-import { postNewAmphere } from "../../backend/amphere";
 import { postNewBattery, updateBatteryById } from "../../backend/battery";
 import useAppContext from "../../hooks/useAppContext";
 import ButtonSave from "../UI/Button/ButtonSave";
@@ -18,7 +14,6 @@ const BatteryForm: React.FC = () => {
     _battery as BatteryNameValues
   );
 
-  console.log("formprops : ", formProps, data);
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
   const { name, _id } = data as BatteryNameValues;
@@ -48,7 +43,7 @@ const BatteryForm: React.FC = () => {
 
   return (
     <>
-      <Heading heading="Battery record Form" />
+      <Heading heading={title ?? "Battery record Form"} />
 
       <form
         className="px-8 md:px-16 pt-6 pb-4 bg-white rounded shadow-md w-[400px]"
