@@ -67,7 +67,7 @@ export type StockItems = {
 
 export interface BatteryNameValues {
   _id?: string;
-  name: number;
+  name: string;
   createdAt?: string;
 }
 
@@ -142,7 +142,7 @@ export const initialAmphere: AmphareSize[] = [
 export const initialBatteryNames: BatteryNameValues[] = [
   {
     _id: "",
-    name: 0,
+    name: "",
     createdAt: "",
   },
 ];

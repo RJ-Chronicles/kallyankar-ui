@@ -41,9 +41,11 @@ const DeleteModal: React.FC<{
           snackbarAnimation("invailid delete type", "warning");
       }
       snackbarAnimation("Record deleted successfully", "success");
-    } catch (e) {}
+    } catch (e) {
+      snackbarAnimation("Error occured while deleting record!", "error");
+    }
     spinnerAnimationStop();
-    snackbarAnimation("Error occured while deleting record!", "error");
+
     dispatch({ type: "SET_DELETE_MODAL_VISIBLE", payload: false });
   };
 
