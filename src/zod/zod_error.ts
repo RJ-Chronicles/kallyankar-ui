@@ -13,5 +13,5 @@ export const ERRORS = {
   AMPHERE: "Please select a valid AMPHERE",
   BATTERY: "Please select a valid BATTERY",
   P_CODE: "Please enter a valid Product code",
-  SUCCESS: "Record updated successfully",
+  SUCCESS: "Record added or updated successfully",
 };
