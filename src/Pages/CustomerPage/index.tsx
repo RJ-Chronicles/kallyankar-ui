@@ -5,7 +5,6 @@ import { customer, CustomerApiParam, Customer } from "../../store/type";
 
 import useAppContext from "../../hooks/useAppContext";
 import ButtonHeader from "../../components/UI/Button/ButtonHeader";
-import SearchBox from "../../components/UI/SearchBox";
 import axios from "axios";
 import { useAnimation } from "../../hooks";
 

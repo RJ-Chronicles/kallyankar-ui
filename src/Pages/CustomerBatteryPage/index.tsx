@@ -2,8 +2,6 @@ import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductByCustomerId } from "../../backend/product";
 import CartItems from "../../components/UI/Cart/CartItems";
-import HeaderCartButton from "../../components/UI/Cart/HeaderCartButton";
-
 import CustomerBatteryTable from "../../components/UI/Table/CustomerBatteryTable";
 import useApiCall from "../../hooks/useApiCall";
 import useAppContext from "../../hooks/useAppContext";
@@ -39,7 +37,7 @@ const CustomerBatteryPage = () => {
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });
   };
   return (
-    <div className="w-full">
+    <div className="w-full p-5">
       <div className="flex justify-end w-full items-center">
         <ButtonHeader buttonClick={() => handleOpenForm()} />
         {storedCartItems.length > 0 && (

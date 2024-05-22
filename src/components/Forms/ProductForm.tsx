@@ -1,4 +1,4 @@
-import { Product } from "../../store/type";
+import { Product, Severity } from "../../store/type";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 
@@ -7,14 +7,16 @@ import useAppContext from "../../hooks/useAppContext";
 import AmphereSelect from "../UI/select/AmphereSelect";
 import BatterySelect from "../UI/select/BatterySelect";
 import GstSelect from "../UI/select/GstSelect";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ButtonSave from "../UI/Button/ButtonSave";
 import { ProductSchema } from "../../zod";
 import useAnimation from "../../hooks/useAnimation";
 import { ERRORS } from "../../zod/zod_error";
 import { updateProductById } from "../../backend/product";
+import { postCheckStockAvailability } from "../../backend/stock";
 const ProductForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
+  const [isStockNotPresent, setStockNotPresent] = useState(false);
   const { storedCartItems } = state;
   const { formProps } = state;
   const { data: _product, title, mode } = formProps;
@@ -35,6 +37,13 @@ const ProductForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isStockNotPresent) {
+      snackbarAnimation(
+        "No stock item present for " + name + " & " + type,
+        "error"
+      );
+      return;
+    }
     const validate = ProductSchema.safeParse(data as Product);
     if (!validate.success) {
       const errors = validate.error.flatten();
@@ -64,6 +73,33 @@ const ProductForm: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (name.length > 1 && type.length > 1) {
+          const response = await postCheckStockAvailability(name, type);
+          const { available } = response;
+          let severtyType: Severity = "success";
+          setStockNotPresent(false);
+          if (+available === 0) {
+            severtyType = "error";
+            setStockNotPresent(true);
+          } else if (+available < 10) {
+            severtyType = "warning";
+          }
+          snackbarAnimation(`${available} Items are in stock`, severtyType);
+        }
+      } catch (err) {
+        console.log(err);
+        snackbarAnimation(
+          "No stock item present for " + name + " & " + type,
+          "error"
+        );
+        setStockNotPresent(true);
+      }
+    })();
+  }, [name, type]);
 
   return (
     <>

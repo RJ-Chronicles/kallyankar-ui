@@ -4,14 +4,22 @@ type STOCK_WITH_MSG = {
   message: string;
   list: STOCK[];
 };
+
+type STOCK_MSG = {
+  message: string;
+  stock: STOCK;
+};
 const postNewStock = async (stock: STOCK) => {
   const { data } = await api.post<STOCK>("stock/add", stock);
   return data;
 };
 
 const postCheckStockAvailability = async (name: string, type: string) => {
-  const { data } = await api.post<STOCK>("stock/", { name, type });
-  return data;
+  const { data } = await api.post<STOCK_MSG>("stock/check-availability", {
+    name,
+    type,
+  });
+  return data.stock;
 };
 const updateStockById = async (stock: STOCK, id: string) => {
   const { data } = await api.patch<STOCK>("stock/update/" + id, stock);

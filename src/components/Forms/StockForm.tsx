@@ -9,10 +9,16 @@ import BatterySelect from "../UI/select/BatterySelect";
 import { useAnimation } from "../../hooks";
 import { StockSchema } from "../../zod";
 import { ERRORS } from "../../zod/zod_error";
-import { postNewStock, updateStockById } from "../../backend/stock";
+import {
+  postCheckStockAvailability,
+  postNewStock,
+  updateStockById,
+} from "../../backend/stock";
+import { useEffect, useState } from "react";
 
 const StockForms: React.FC = () => {
   const { state, dispatch } = useAppContext();
+  const [isStockNotPresent, setStockNotPresent] = useState(false);
   const { refreshEffect, formProps } = state;
   const { data: _stock, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_stock as STOCK);
@@ -24,6 +30,13 @@ const StockForms: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isStockNotPresent) {
+      snackbarAnimation(
+        `Record already exist for ${battery_name + " and " + amphere_size}`,
+        "error"
+      );
+      return;
+    }
 
     const validate = StockSchema.safeParse(data as STOCK);
     if (!validate.success) {
@@ -35,22 +48,50 @@ const StockForms: React.FC = () => {
       product_code && snackbarAnimation(ERRORS.P_CODE, "error");
       return;
     }
-
-    dispatch({ type: "SET_LOADING", payload: true });
-    if (mode === "ADD_RECORD") {
-      const response = await postNewStock(data as STOCK);
-    } else {
-      await updateStockById(data as STOCK, _id ?? "");
+    spinnerAnimationStart();
+    try {
+      if (mode === "ADD_RECORD") {
+        await postNewStock(data as STOCK);
+      } else {
+        await updateStockById(data as STOCK, _id ?? "");
+      }
+      snackbarAnimation(ERRORS.SUCCESS, "success");
+    } catch (err) {
+      snackbarAnimation(ERRORS.FAILURE, "error");
     }
-
-    dispatch({ type: "SET_LOADING", payload: false });
+    spinnerAnimationStop();
     dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
     dispatch({ type: "HIDE_SHOW_FORM", payload: false });
   };
 
+  useEffect(() => {
+    (async () => {
+      try {
+        if (amphere_size.length > 1 && battery_name.length > 1) {
+          const response = await postCheckStockAvailability(
+            battery_name,
+            amphere_size
+          );
+          if (response) {
+            snackbarAnimation(
+              `Record already exist for ${
+                battery_name + " and " + amphere_size
+              }`,
+              "error"
+            );
+          }
+          setStockNotPresent(true);
+        }
+      } catch (err) {
+        console.log(err);
+        setStockNotPresent(false);
+      }
+    })();
+  }, [battery_name, amphere_size]);
+
   return (
     <>
-      <Heading heading="User Registration Form" />
+      <Heading heading={title ?? "User Registration Form"} />
       <form className="px-8 pt-6 pb-4 bg-white rounded" onSubmit={handleSubmit}>
         <div className="mb-4 md:mr-2">
           <label
