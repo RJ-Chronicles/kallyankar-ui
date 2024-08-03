@@ -2,7 +2,7 @@ import useAppContext from "../../../hooks/useAppContext";
 import React from "react";
 import { Product } from "../../../store/type";
 import { CART_ITEMS_COLUMN } from "../Table/columns";
-import { Cross, Delete, DeleteIcon, Trash, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 type CartListPs = {
   hideDeleteColumn: boolean;

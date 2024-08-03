@@ -215,7 +215,7 @@ export type Product = {
   price: string;
   GST: string;
   vehicle_name: string;
-  _id: string;
+  _id?: string;
   customer?: string;
   createdAt?: string;
 };
@@ -239,6 +239,7 @@ export type Billing = {
   unpaid_amount: number;
   bill_status: string;
   createdAt?: string;
+  customerId?: string;
 };
 
 export type BillingWithMessage = {

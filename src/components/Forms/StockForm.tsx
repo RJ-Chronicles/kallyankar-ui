@@ -67,20 +67,22 @@ const StockForms: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        if (amphere_size.length > 1 && battery_name.length > 1) {
-          const response = await postCheckStockAvailability(
-            battery_name,
-            amphere_size
-          );
-          if (response) {
-            snackbarAnimation(
-              `Record already exist for ${
-                battery_name + " and " + amphere_size
-              }`,
-              "error"
+        if (mode === "ADD_RECORD") {
+          if (amphere_size.length > 1 && battery_name.length > 1) {
+            const response = await postCheckStockAvailability(
+              battery_name,
+              amphere_size
             );
+            if (response) {
+              snackbarAnimation(
+                `Record already exist for ${
+                  battery_name + " and " + amphere_size
+                }`,
+                "error"
+              );
+            }
+            setStockNotPresent(true);
           }
-          setStockNotPresent(true);
         }
       } catch (err) {
         console.log(err);
@@ -91,7 +93,7 @@ const StockForms: React.FC = () => {
 
   return (
     <>
-      <Heading heading={title ?? "User Registration Form"} />
+      <Heading heading={title ?? "Stock Item Entry Form"} />
       <form className="px-8 pt-6 pb-4 bg-white rounded" onSubmit={handleSubmit}>
         <div className="mb-4 md:mr-2">
           <label
