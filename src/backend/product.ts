@@ -3,6 +3,7 @@ import api from "./api";
 import { Product } from "../store/type";
 
 const postNewProduct = async (product: Product) => {
+  delete product._id;
   const { data } = await api.post<Product>("product/post", product);
   return data;
 };

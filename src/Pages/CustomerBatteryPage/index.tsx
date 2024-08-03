@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductByCustomerId } from "../../backend/product";
 import CartItems from "../../components/UI/Cart/CartItems";
@@ -10,6 +10,7 @@ import { HiShoppingCart } from "react-icons/hi";
 import { Button } from "flowbite-react";
 import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 import useInitialFetch from "../../hooks/useInitialFetch";
+import Nothing from "../../components/UI/Nothing";
 const CustomerBatteryPage = () => {
   const [showCart, setShowCart] = useState(false);
   const { customerId } = useParams();
@@ -36,6 +37,17 @@ const CustomerBatteryPage = () => {
     });
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });
   };
+
+  // delete stored Items if doesn't match with the selecte customer ID
+  useEffect(() => {
+    if (storedCartItems.length > 0) {
+      const { customer = null } = storedCartItems[0];
+      console.log({ customer, customerId });
+      if (customer !== customerId) {
+        dispatch({ type: "ADD_STORED_CART_ITEMS", payload: [] });
+      }
+    }
+  }, []);
   return (
     <div className="w-full p-5">
       <div className="flex justify-end w-full items-center">
@@ -47,7 +59,14 @@ const CustomerBatteryPage = () => {
           </Button>
         )}
       </div>
-      {data && <CustomerBatteryTable data={data} />}
+      {data && data.length > 0 ? (
+        <CustomerBatteryTable data={data} />
+      ) : (
+        <Nothing
+          heading="No item Available"
+          subHeading="Please add items in a cart"
+        />
+      )}
       {showCart && (
         <CartItems
           open={showCart}

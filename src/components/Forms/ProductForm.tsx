@@ -56,9 +56,13 @@ const ProductForm: React.FC = () => {
       return;
     }
     if (mode === "ADD_RECORD") {
+      const customerId = window.location.href.split("/").pop() ?? null;
       dispatch({
         type: "ADD_STORED_CART_ITEMS",
-        payload: [...storedCartItems, data as Product],
+        payload: [
+          ...storedCartItems,
+          { ...data, customer: customerId } as Product,
+        ],
       });
       dispatch({ type: "HIDE_SHOW_FORM", payload: false });
     } else {

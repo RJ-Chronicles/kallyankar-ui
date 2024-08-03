@@ -3,7 +3,10 @@ import api from "./api";
 import { Billing, BillingWithMessage } from "../store/type";
 
 const postNewBilling = async (billing: Billing) => {
-  const { data } = await api.post<Billing>("billing/add", billing);
+  const { data } = await api.post<Billing>("billing/add", {
+    ...billing,
+    customer: billing.customerId,
+  });
   return data;
 };
 const updateBillingById = async (billing: Billing, id: string) => {
