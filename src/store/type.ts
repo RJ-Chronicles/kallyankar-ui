@@ -234,8 +234,8 @@ export const product: Product = {
 export type Billing = {
   _id?: string;
   customer?: Customer;
-  gst_amount: number;
-  total_amount: number;
+  gst_amount?: number;
+  total_amount?: number;
   unpaid_amount: number;
   bill_status: string;
   createdAt?: string;

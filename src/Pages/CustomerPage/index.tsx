@@ -86,7 +86,7 @@ const CustomerPage = () => {
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });
   };
   return (
-    <div className="w-full">
+    <div className="w-full p-10">
       <div className="flex justify-center items-center space-x-6 mx-5">
         <ButtonHeader buttonClick={addRecordFormHandler} />
         <h1>
@@ -95,7 +95,7 @@ const CustomerPage = () => {
         </h1>
       </div>
 
-      <div className="m-5">
+      <div className="">
         <div className="flex justify-end space-x-6">
           <input
             className={

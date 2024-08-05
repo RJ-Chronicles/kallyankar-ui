@@ -1,10 +1,13 @@
 import TextField from "@mui/material/TextField";
-import { Table } from "flowbite-react";
-import { useRef, useState } from "react";
+
+import { useContext, useEffect, useRef, useState } from "react";
+import { updateBillingById } from "../../backend/billing";
 import ButtonClick from "../../components/UI/Button/ButtonClick";
 import InvoiceHeading from "../../components/UI/Cart/InvoiceHeading";
 import Overlay from "../../components/UI/Overlay";
+import { useAnimation } from "../../hooks";
 import usePdfDownloader from "../../hooks/usePdfDownloader";
+import AppContext from "../../store/AppContext";
 import { Billing } from "../../store/type";
 import SelectStatuRadio from "./SelectStatusRadio";
 
@@ -14,14 +17,21 @@ type Props = {
   setHide: (val: boolean) => void;
 };
 
-const PayUnpaidAmount: React.FC<Props> = ({
-  data: { customer, unpaid_amount, _id },
-  show,
-  setHide,
-}) => {
+const PayUnpaidAmount: React.FC<Props> = ({ data, show, setHide }) => {
+  const { customer, unpaid_amount, _id } = data;
   const [status, setStatus] = useState("Paid");
   const [inputFieldAmount, setInputAmount] = useState("");
   const contentRef = useRef<HTMLDivElement>(null);
+  const {
+    state: { refreshEffect },
+    dispatch,
+  } = useContext(AppContext);
+  const { spinnerAnimationStart, spinnerAnimationStop, snackbarAnimation } =
+    useAnimation();
+
+  useEffect(() => {
+    setInputAmount(unpaid_amount.toString());
+  }, [unpaid_amount]);
 
   const handleAmountValueChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -40,48 +50,62 @@ const PayUnpaidAmount: React.FC<Props> = ({
     setHide(false);
   };
 
+  const togglePaymentStatus = (status: string) => {
+    console.log({ status });
+    if (status === "Paid") {
+      setInputAmount(unpaid_amount.toString());
+    }
+    setStatus(status);
+  };
+
+  const updateCustomerPayment = async () => {
+    spinnerAnimationStart();
+    hideModule();
+    const pendingAmount = unpaid_amount - parseInt(inputFieldAmount);
+    const bill_status =
+      unpaid_amount - parseInt(inputFieldAmount) === 0 ? "Paid" : "Unpaid";
+    const body = { bill_status, unpaid_amount: pendingAmount };
+    await updateBillingById(body, _id ?? "");
+    handleDownloadPDF(
+      contentRef.current as HTMLDivElement,
+      `file_${customer?.name}_${customer?._id}`
+    );
+
+    spinnerAnimationStop();
+    snackbarAnimation("Record Updated successfully! ", "success");
+    dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+  };
   return (
     <Overlay open={show} handleClose={hideModule} widthSize="lg">
       <div id="print-area" ref={contentRef} className="w-full p-20">
         <InvoiceHeading customer={customer} />
-        <Table className="w-full overflow-hidden shadow-md rounded-md">
-          <Table.Head className="text-sm text-blue-100 ">
-            <Table.HeadCell className="px-3 py-2 bg-yellow-700">
-              {"Total Amount"}
-            </Table.HeadCell>
-            <Table.HeadCell className="px-3 py-2 bg-yellow-700">
-              {"Paid Amount"}
-            </Table.HeadCell>
-            <Table.HeadCell className="px-3 py-2 bg-yellow-700">
-              {"Date"}
-            </Table.HeadCell>
-            <Table.HeadCell className="px-3 py-2 bg-yellow-700">
-              {"Painding Amount"}
-            </Table.HeadCell>
-          </Table.Head>
-          <Table.Body className="divide-y">
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900">
-              <Table.Cell className="px-3 py-2">{unpaid_amount}</Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {inputFieldAmount === "" ? "0" : inputFieldAmount}
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {new Date().toJSON().slice(0, 10)}
-              </Table.Cell>
-              <Table.Cell className="px-3 py-2">
-                {" "}
-                {inputFieldAmount === ""
-                  ? unpaid_amount
-                  : unpaid_amount - parseInt(inputFieldAmount)}
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
+        <table className="w-full overflow-hidden shadow-md rounded-md">
+          <tr className="text-sm text-blue-100 text-left">
+            <th className="px-3 py-2 bg-yellow-700 ">{"Total Amount"}</th>
+            <th className="px-3 py-2 bg-yellow-700">{"Paid Amount"}</th>
+            <th className="px-3 py-2 bg-yellow-700">{"Date"}</th>
+            <th className="px-3 py-2 bg-yellow-700">{"Pending Amount"}</th>
+          </tr>
+
+          <tr className="bg-white dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900">
+            <td className="px-3 py-2">{unpaid_amount}</td>
+            <td className="px-3 py-2">
+              {inputFieldAmount === "" ? "0" : inputFieldAmount}
+            </td>
+            <td className="px-3 py-2">{new Date().toJSON().slice(0, 10)}</td>
+            <td className="px-3 py-2">
+              {" "}
+              {inputFieldAmount === ""
+                ? unpaid_amount
+                : unpaid_amount - parseInt(inputFieldAmount)}
+            </td>
+          </tr>
+        </table>
       </div>
 
       <div className="text-left flex justify-left mt-6">
         <div className="flex justify-between items-center">
-          <SelectStatuRadio setStatus={setStatus} status={status} />
+          <SelectStatuRadio setStatus={togglePaymentStatus} status={status} />
           {status === "Unpaid" && (
             <TextField
               label="Amount In INR"
@@ -97,12 +121,7 @@ const PayUnpaidAmount: React.FC<Props> = ({
         </div>
       </div>
       <div className="my-6 flex">
-        <ButtonClick
-          onClick={() =>
-            handleDownloadPDF(contentRef.current as HTMLDivElement, "file")
-          }
-          title="Print"
-        />
+        <ButtonClick onClick={updateCustomerPayment} title="Print" />
         <ButtonClick onClick={hideModule} title="Close" />
       </div>
     </Overlay>

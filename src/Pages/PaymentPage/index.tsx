@@ -14,7 +14,7 @@ const BillStatusPage = () => {
   const { data } = useApiCall(getBillingListByStatus, params);
 
   return (
-    <div className="w-full">
+    <div className="w-full p-10">
       <SelectStatuRadio setStatus={setStatus} status={status} />
       {data && <BillingStatusTable data={data} status={status} />}
     </div>
