@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import useAppContext from "../../../hooks/useAppContext";
 import useDateFormater from "../../../hooks/useDateFormater";
 import { STOCK } from "../../../store/type";
+import Nothing from "../Nothing";
 
 type CustomerTableProps = {
   data: STOCK[];
@@ -33,63 +34,70 @@ const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
   return (
     <>
       <div className="relative   p-10">
-        <table className="w-full text-sm text-left text-gray-700 tracking-wider shadow-lg rounded-lg">
-          <thead className="text-xs md:text-sm text-gray-800 uppercase bg-gray-200 ">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Product Code
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Battery Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Amphere Size
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Available
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Date
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody className="overflow-y-scroll w-full max-h-60">
-            {data.map((row: STOCK, index: number) => (
-              <tr
-                key={index}
-                className="bg-white border-b text-sm text-slate-700 font-normal hover:bg-gray-50 "
-              >
-                <Link to={`/admin/stocks/${row._id}`}>
-                  {" "}
-                  <td className="px-6 py-4">{row.product_code}</td>
-                </Link>
-                <td className="px-6 py-4">{row.battery_name}</td>
-                <td className="px-6 py-4">{row.amphere_size}</td>
-
-                <td className="px-6 py-4">
-                  <span>{row.available}</span>
-                </td>
-                <td className="px-6 py-4">
-                  <span>
-                    {dateFormater(row.createdAt ?? new Date().toString())}
-                  </span>
-                </td>
-                <td className="flex items-center px-4 py-4 space-x-2">
-                  <button
-                    onClick={() => editStockHandler(row._id ?? "")}
-                    name={row._id}
-                    className="font-medium text-blue-600 dark:text-red-500 hover:underline"
-                  >
-                    <Edit2 />
-                  </button>
-                </td>
+        {data.length < 1 ? (
+          <Nothing
+            heading="No Record"
+            subHeading="Please add records to see..."
+          />
+        ) : (
+          <table className="w-full text-sm text-left text-gray-700 tracking-wider shadow-lg rounded-lg">
+            <thead className="text-xs md:text-sm text-gray-800 uppercase bg-gray-200 ">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Product Code
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Battery Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Amphere Size
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Available
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="overflow-y-scroll w-full max-h-60">
+              {data.map((row: STOCK, index: number) => (
+                <tr
+                  key={index}
+                  className="bg-white border-b text-sm text-slate-700 font-normal hover:bg-gray-50 "
+                >
+                  <Link to={`/admin/stocks/${row._id}`}>
+                    {" "}
+                    <td className="px-6 py-4">{row.product_code}</td>
+                  </Link>
+                  <td className="px-6 py-4">{row.battery_name}</td>
+                  <td className="px-6 py-4">{row.amphere_size}</td>
+
+                  <td className="px-6 py-4">
+                    <span>{row.available}</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span>
+                      {dateFormater(row.createdAt ?? new Date().toString())}
+                    </span>
+                  </td>
+                  <td className="flex items-center px-4 py-4 space-x-2">
+                    <button
+                      onClick={() => editStockHandler(row._id ?? "")}
+                      name={row._id}
+                      className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+                    >
+                      <Edit2 />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </>
   );
