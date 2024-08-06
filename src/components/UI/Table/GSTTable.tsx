@@ -6,6 +6,7 @@ import { Edit2, Pencil, Trash2 } from "lucide-react";
 import useDateFormater from "../../../hooks/useDateFormater";
 import { useAnimation } from "../../../hooks";
 import ButtonHeader from "../Button/ButtonHeader";
+import Nothing from "../Nothing";
 
 const GSTTable = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -60,8 +61,11 @@ const GSTTable = () => {
     <div className="relative   p-5">
       <ButtonHeader buttonClick={addRecordHandler} />
 
-      {GST.length === 0 ? (
-        <div>No record found</div>
+      {GST.length < 1 ? (
+        <Nothing
+          heading="No Record"
+          subHeading="Please add records to see..."
+        />
       ) : (
         <table className="w-full text-sm text-left text-gray-700 tracking-wider shadow-lg rounded-lg">
           <thead className="text-xs md:text-sm text-gray-800 uppercase bg-gray-200 ">

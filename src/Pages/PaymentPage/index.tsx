@@ -4,6 +4,7 @@ import useApiCall from "../../hooks/useApiCall";
 import { getBillingListByStatus } from "../../backend/billing";
 import BillingStatusTable from "../../components/UI/Table/BillingStatusTable";
 import SelectStatuRadio from "./SelectStatusRadio";
+import Nothing from "../../components/UI/Nothing";
 const BillStatusPage = () => {
   const { state } = useAppContext();
   const [status, setStatus] = useState("Unpaid");
@@ -16,7 +17,15 @@ const BillStatusPage = () => {
   return (
     <div className="w-full p-10">
       <SelectStatuRadio setStatus={setStatus} status={status} />
-      {data && <BillingStatusTable data={data} status={status} />}
+      {data && data.length < 1 && (
+        <Nothing
+          heading="No Record"
+          subHeading="Please add records to see..."
+        />
+      )}
+      {data && data.length > 0 && (
+        <BillingStatusTable data={data} status={status} />
+      )}
     </div>
   );
 };

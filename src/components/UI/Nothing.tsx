@@ -4,9 +4,11 @@ interface Props {
 }
 const Nothing: React.FC<Props> = ({ heading, subHeading }) => {
   return (
-    <div className="bg-gray-100 p-6 rounded-lg shadow-md text-center">
-      <h2 className="text-xl font-semibold text-gray-600">{heading}</h2>
-      <p className="text-gray-500">{subHeading}</p>
+    <div className="bg-yellow-200 p-5 rounded-lg shadow-md text-center">
+      <h2 className="text-xl font-semibold text-yellow-900 tracking-wider">
+        {heading}
+      </h2>
+      <p className="text-yellow-600 tracking-widest">{subHeading}</p>
     </div>
   );
 };

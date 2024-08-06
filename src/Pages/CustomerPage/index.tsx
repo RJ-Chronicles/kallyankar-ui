@@ -86,23 +86,29 @@ const CustomerPage = () => {
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });
   };
   return (
-    <div className="w-full p-10">
-      <div className="flex justify-center items-center space-x-6 mx-5">
-        <ButtonHeader buttonClick={addRecordFormHandler} />
-        <h1>
-          Kalyankar Batteries{" "}
-          <strong className="text-xl text-blue-700">Customer details</strong>
-        </h1>
-      </div>
-
-      <div className="">
+    <div className="w-full ">
+      <div className="bg-yellow-500 p-10">
+        <div className="flex justify-center items-center space-x-6 mx-5 ">
+          <ButtonHeader
+            buttonClick={addRecordFormHandler}
+            bgColor="bg-yellow-500"
+          />
+          <div>
+            <h1 className="tracking-widest text-3xl font-bold text-slate-100 ">
+              Kalyankar Batteries{" "}
+              <strong className="text-base text-white tracking-widest uppercase">
+                Customer details
+              </strong>
+            </h1>
+          </div>
+        </div>
         <div className="flex justify-end space-x-6">
           <input
             className={
-              " rounded-sm w-full  px-4 bg-white text-sm text-slate-500 h-12 border-2  border-slate-100 placeholder:text-center md:text-left placeholder:md:text-left focus:outline-none focus:shadow-xl focus:border-blue-300"
+              " rounded-sm w-full tracking-wider  px-4  text-sm text-slate-500 h-12 border-2   placeholder:text-center md:text-left placeholder:md:text-left focus:outline-none focus:shadow-xl focus:border-blue-300"
             }
             type="text"
-            placeholder={"Search record based on name/contact"}
+            placeholder={"Search record based on name|contact"}
             required
             onChange={handleSearchInputChange}
             value={val}
@@ -115,7 +121,9 @@ const CustomerPage = () => {
             Reset
           </button>
         </div>
+      </div>
 
+      <div className="p-10">
         {customers && <CustomerTable data={customers} />}
         <div className="mt-4">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
