@@ -49,7 +49,7 @@ const CustomerBatteryPage = () => {
     }
   }, []);
   return (
-    <div className="w-full p-5">
+    <div className="w-full p-10">
       <div className="flex justify-end w-full items-center">
         <ButtonHeader buttonClick={() => handleOpenForm()} />
         {storedCartItems.length > 0 && (
