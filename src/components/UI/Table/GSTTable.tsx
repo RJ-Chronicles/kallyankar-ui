@@ -10,7 +10,7 @@ import Nothing from "../Nothing";
 
 const GSTTable = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { GST } = state;
+  const { GST, isLoading } = state;
 
   const { dateFormater } = useDateFormater();
   const { snackbarAnimation } = useAnimation();
@@ -57,11 +57,12 @@ const GSTTable = () => {
     });
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });
   };
+  const showNothing = !isLoading && GST.length === 0;
   return (
     <div className="relative   p-5">
       <ButtonHeader buttonClick={addRecordHandler} />
 
-      {GST.length < 1 ? (
+      {showNothing ? (
         <Nothing
           heading="No Record"
           subHeading="Please add records to see..."

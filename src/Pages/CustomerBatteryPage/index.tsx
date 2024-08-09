@@ -15,7 +15,7 @@ const CustomerBatteryPage = () => {
   const [showCart, setShowCart] = useState(false);
   const { customerId } = useParams();
   const { state } = useAppContext();
-  const { refreshEffect, storedCartItems } = state;
+  const { refreshEffect, storedCartItems, isLoading } = state;
   const params = useMemo(() => {
     return { refreshEffect, id: customerId ?? "" };
   }, []);
@@ -48,6 +48,7 @@ const CustomerBatteryPage = () => {
       }
     }
   }, []);
+  const showNothing = !isLoading && data && data.length === 0;
   return (
     <div className="w-full p-10">
       <div className="flex justify-end w-full items-center">
@@ -59,13 +60,13 @@ const CustomerBatteryPage = () => {
           </Button>
         )}
       </div>
-      {data && data.length > 0 ? (
-        <CustomerBatteryTable data={data} />
-      ) : (
+      {showNothing ? (
         <Nothing
           heading="No item Available"
           subHeading="Please add items in a cart"
         />
+      ) : (
+        <CustomerBatteryTable data={data ?? []} />
       )}
       {showCart && (
         <CartItems

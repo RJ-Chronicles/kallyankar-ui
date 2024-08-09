@@ -62,14 +62,17 @@ const LoginForm = () => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="px-6 md:px-20 py-5 text-[#333300]"
+      className="px-6 md:px-28 py-5 text-[#333300] "
     >
       <div className="mb-4 w-full">
-        <label className="block mb-2 text-sm font-bold " htmlFor="email">
+        <label
+          className="block mb-2 text-sm font-bold tracking-wide"
+          htmlFor="email"
+        >
           Admin Email.
         </label>
         <input
-          className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+          className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline tracking-wide"
           name="email"
           id="email"
           type="text"
@@ -79,11 +82,14 @@ const LoginForm = () => {
         />
       </div>
       <div className="mb-4 w-full">
-        <label className="block mb-2 text-sm font-bold " htmlFor="password">
+        <label
+          className="block mb-2 text-sm font-bold tracking-wide"
+          htmlFor="password"
+        >
           Admin Password.
         </label>
         <input
-          className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+          className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline tracking-wide"
           name="password"
           id="password"
           type="password"

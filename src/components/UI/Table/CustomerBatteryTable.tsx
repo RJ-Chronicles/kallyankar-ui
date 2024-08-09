@@ -12,7 +12,10 @@ type ProductTableProps = {
 
 const FlowTable: React.FC<ProductTableProps> = ({ data }) => {
   const { dateFormater } = useDateFormater();
-  const { dispatch } = useAppContext();
+  const {
+    dispatch,
+    state: { isLoading },
+  } = useAppContext();
 
   const editCustomerProduct = (id: string) => {
     const record = data.find((item) => item._id === id);
@@ -28,10 +31,10 @@ const FlowTable: React.FC<ProductTableProps> = ({ data }) => {
       dispatch({ type: "HIDE_SHOW_FORM", payload: true });
     }
   };
-
+  const showNothing = !isLoading && data.length === 0;
   return (
     <div className="w-full overflow-hidden shadow-md rounded-md">
-      {data.length < 1 ? (
+      {showNothing ? (
         <Nothing
           heading="No Record"
           subHeading="Please add records to see..."

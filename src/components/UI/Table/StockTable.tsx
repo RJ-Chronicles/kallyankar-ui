@@ -12,7 +12,10 @@ type CustomerTableProps = {
 
 const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
   const { dateFormater } = useDateFormater();
-  const { dispatch } = useAppContext();
+  const {
+    dispatch,
+    state: { isLoading },
+  } = useAppContext();
 
   const editStockHandler = (id: string) => {
     const record = data.find((item) => item._id === id);
@@ -30,11 +33,11 @@ const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
       dispatch({ type: "HIDE_SHOW_FORM", payload: true });
     }
   };
-
+  const showNothing = !isLoading && data.length === 0;
   return (
     <>
       <div className="relative   p-10">
-        {data.length < 1 ? (
+        {showNothing ? (
           <Nothing
             heading="No Record"
             subHeading="Please add records to see..."

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Billing } from "../../../store/type";
 import { BILLING_STATUS_COLUMN } from "./columns";
 import Nothing from "../Nothing";
+import { useAppContext } from "../../../hooks";
 
 const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
   data,
@@ -13,16 +14,19 @@ const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
   const { dateFormater } = useDateFormater();
   const [unpaidInfo, setUnpaidInfo] = useState<Billing | undefined>();
   const [showUnpaidModule, setShowUnpaidModule] = useState(false);
-
+  const {
+    state: { isLoading },
+  } = useAppContext();
   const updateUnpaidAmount = (id: string) => {
     const to_update = data?.find((element: any) => element._id === id);
     setUnpaidInfo(to_update);
     setShowUnpaidModule(true);
   };
 
+  const showNothing = !isLoading && data.length === 0;
   return (
     <div className="w-full overflow-hidden shadow-md rounded-md">
-      {data.length < 1 ? (
+      {showNothing ? (
         <Nothing
           heading="No Record"
           subHeading="Please add records to see..."
