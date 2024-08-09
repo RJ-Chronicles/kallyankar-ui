@@ -20,8 +20,8 @@ interface Props {
 }
 
 const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
-  const { state } = useAppContext();
-  const { storedCartItems } = state;
+  const { state, dispatch } = useAppContext();
+  const { storedCartItems, refreshEffect } = state;
   const [billStatus, setBillStatus] = useState("Paid");
   const [inputFieldAmount, setInputAmount] = useState("");
   const [totals, setTotals] = useState({ excludeGST: 0, GST: 0 });
@@ -91,6 +91,9 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
         contentRef.current as HTMLDivElement,
         `${customer?.name ?? ""} ${new Date()}`
       );
+      dispatch({ type: "ADD_STORED_CART_ITEMS", payload: [] });
+      dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+      closeCartHandler();
     } catch (err) {
       console.error("Error while saving record:", err);
     }

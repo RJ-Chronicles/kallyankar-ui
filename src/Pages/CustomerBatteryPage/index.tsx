@@ -18,7 +18,7 @@ const CustomerBatteryPage = () => {
   const { refreshEffect, storedCartItems, isLoading } = state;
   const params = useMemo(() => {
     return { refreshEffect, id: customerId ?? "" };
-  }, []);
+  }, [refreshEffect]);
 
   const { data } = useApiCall(getProductByCustomerId, params);
   const { dispatch } = useAppContext();
