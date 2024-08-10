@@ -2,6 +2,7 @@ import { StockItems } from "../../../store/type";
 import useDateFormater from "../../../hooks/useDateFormater";
 import { Edit } from "lucide-react";
 import Nothing from "../Nothing";
+import { useAppContext } from "../../../hooks";
 type Props = {
   data: StockItems[];
   udpateStockItem: (item: string) => void;
@@ -9,9 +10,13 @@ type Props = {
 
 const StockItemTable: React.FC<Props> = ({ data, udpateStockItem }) => {
   const { dateFormater } = useDateFormater();
+  const {
+    state: { isLoading },
+  } = useAppContext();
+  const showNothing = !isLoading && data.length === 0;
   return (
     <div className="relative  shadow-md sm:rounded-lg  ">
-      {data.length < 1 ? (
+      {showNothing ? (
         <Nothing
           heading="No Record"
           subHeading="Please add records to see..."

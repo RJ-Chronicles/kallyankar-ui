@@ -8,7 +8,7 @@ import Nothing from "../Nothing";
 
 const AmphereTable = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { amphere } = state;
+  const { amphere, isLoading } = state;
   const { dateFormater } = useDateFormater();
   const { snackbarAnimation } = useAnimation();
   const deleteButtonHandler = (id: string) => {
@@ -52,10 +52,12 @@ const AmphereTable = () => {
     });
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });
   };
+
+  const showNothing = !isLoading && amphere.length === 0;
   return (
     <div className="relative   p-5">
       <ButtonHeader buttonClick={addRecordHandler} />
-      {amphere.length === 0 ? (
+      {showNothing ? (
         <Nothing
           heading="No Record"
           subHeading="Please add records to see..."

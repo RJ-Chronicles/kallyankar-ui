@@ -13,7 +13,10 @@ type CustomerTableProps = {
 
 const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
   const { dateFormater } = useDateFormater();
-  const { dispatch } = useAppContext();
+  const {
+    dispatch,
+    state: { isLoading },
+  } = useAppContext();
 
   const editCustomerHandler = (id: string) => {
     const record = data.find((item) => item._id === id);
@@ -30,10 +33,10 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
       dispatch({ type: "HIDE_SHOW_FORM", payload: true });
     }
   };
-
+  const showNothing = !isLoading && data.length === 0;
   return (
     <div className="w-full overflow-hidden shadow-md rounded-md mt-5">
-      {data.length < 1 ? (
+      {showNothing ? (
         <Nothing
           heading="No Record"
           subHeading="Please add records to see..."

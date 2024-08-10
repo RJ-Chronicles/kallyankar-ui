@@ -8,7 +8,7 @@ import Nothing from "../Nothing";
 
 const BatteryNameTable = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { batteryNames } = state;
+  const { batteryNames, isLoading } = state;
 
   const { dateFormater } = useDateFormater();
   const { snackbarAnimation } = useAnimation();
@@ -56,11 +56,12 @@ const BatteryNameTable = () => {
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });
   };
 
+  const showNothing = !isLoading && batteryNames.length === 0;
   return (
     <div className="relative   p-5">
       <ButtonHeader buttonClick={addRecordHandler} />
 
-      {batteryNames?.length === 0 ? (
+      {showNothing ? (
         <Nothing
           heading="No Record"
           subHeading="Please add records to see..."
