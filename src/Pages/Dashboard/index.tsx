@@ -1,9 +1,11 @@
 import AppContext from "../../store/AppContext";
 import { useContext } from "react";
+import useSessionExpirationWarning from "../../hooks/useSessionExpirationWarning";
+
 const Dashboard = () => {
   const { state, dispatch } = useContext(AppContext);
-
-  // const { submitApi } = useApiSubmit();
+  useSessionExpirationWarning();
+  // const { submitApi }  = useApiSubmit();
   // submitApi(async () => {
   //   const data = await getCustomerList();
   //   console.log(data);
