@@ -3,11 +3,13 @@ import { NavLink } from "react-router-dom";
 import styles from "./SideNav.module.css";
 import { NavLinkProps, ToggleClose, ToggleOpen } from "./NavLinkProps";
 import AvatarImage from "../../assets/images/avatar.png";
-import { useAuthContext } from "../../context/useAuthContext";
+
 import { LogOutIcon } from "lucide-react";
+import useSessionManagement from "../../hooks/useSessionManagement";
+import useAuthContext from "../../auth-store/useAuthContext";
 
 const MyNavLink = () => {
-  const auth = useAuthContext();
+  const { handleUserLogout } = useSessionManagement();
   return (
     <ul>
       {NavLinkProps.map((item, index) => {
@@ -31,7 +33,7 @@ const MyNavLink = () => {
         <div className="hover:bg-white hover:text-[#10558d]">
           <button
             className="pl-8 py-3 w-full flex space-x-4 "
-            onClick={() => auth.userLogoutHandler()}
+            onClick={() => handleUserLogout()}
           >
             <span>
               <LogOutIcon />
@@ -46,8 +48,10 @@ const MyNavLink = () => {
 
 function Sidebar() {
   const [toggleNav, setToggleNav] = useState(false);
-  const auth = useAuthContext();
-  const { user } = auth;
+  const {
+    state: { user },
+  } = useAuthContext();
+
   return (
     <div
       className={`bg-white text-white min-h-screen shadow-lg ${
@@ -71,7 +75,7 @@ function Sidebar() {
           <>
             <div className={styles.profile}>
               <img src={AvatarImage} alt="profile_picture" />
-              <h3>{user.name + " " + user.last_name}</h3>
+              <h3>{user?.name + " " + user?.last_name}</h3>
               <p>Product Owner</p>
             </div>
             <MyNavLink />

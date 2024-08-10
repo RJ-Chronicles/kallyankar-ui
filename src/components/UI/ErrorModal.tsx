@@ -13,7 +13,6 @@ const ErrorModal: React.FC<{
   errorHeading?: string;
   errorMessage?: string;
 }> = ({ children, open, errorMessage = DEFAULT_ERROR, errorHeading = "" }) => {
-  const { userLogoutHandler } = useAuthContext();
   const { dispatch } = useAppContext();
   const navigate = useNavigate();
   const userLogout = () => {
@@ -21,12 +20,12 @@ const ErrorModal: React.FC<{
       type: "SET_ERROR",
       payload: { hasError: false, message: "" },
     });
-    userLogoutHandler();
-    dispatch({
-      type: "USER_LOG_IN",
-      payload: { user: initialUser, expiration: "", isLoggedIn: false },
-    });
-    navigate("/");
+    // userLogoutHandler();
+    // dispatch({
+    //   type: "USER_LOG_IN",
+    //   payload: { user: initialUser, expiration: "", isLoggedIn: false },
+    // });
+    // navigate("/");
   };
   return (
     <>
