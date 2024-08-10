@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import {
   DASHBOARD,
@@ -21,51 +21,59 @@ import StockPage from "../../Pages/StockPage";
 
 import CustomerPage from "../../Pages/CustomerPage";
 import CustomerBatteryPage from "../../Pages/CustomerBatteryPage";
-import { useAuthContext } from "../../context/AuthContext";
-import PageNotFound from "../../Pages/NotFoundPage";
-const KallyankarRoute: React.FC = () => {
-  const auth = useAuthContext();
-  const isLoggedIn = auth?.isLoggedIn ?? false;
 
+import PageNotFound from "../../Pages/NotFoundPage";
+import useAuthContext from "../../auth-store/useAuthContext";
+
+const ProtectedRoute = ({ element }: { element: JSX.Element }) => {
+  const {
+    state: { isAuthenticated },
+  } = useAuthContext();
+
+  return isAuthenticated ? element : <Navigate to="/admin-login" replace />;
+};
+
+const KallyankarRoute: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/admin-login" element={<LoginPage />} />
+
       <Route
         path={DASHBOARD}
-        element={isLoggedIn ? <Dashboard /> : <LoginPage />}
+        element={<ProtectedRoute element={<Dashboard />} />}
       />
       <Route
-        path={CUSTOMERS + "/:customerId"}
-        element={isLoggedIn ? <CustomerBatteryPage /> : <LoginPage />}
+        path={`${CUSTOMERS}/:customerId`}
+        element={<ProtectedRoute element={<CustomerBatteryPage />} />}
       />
       <Route
         path={CUSTOMERS}
-        element={isLoggedIn ? <CustomerPage /> : <LoginPage />}
+        element={<ProtectedRoute element={<CustomerPage />} />}
       />
       <Route
         path={BATTERIES}
-        element={isLoggedIn ? <Batterypage /> : <LoginPage />}
+        element={<ProtectedRoute element={<Batterypage />} />}
       />
       <Route
         path={BILLINGS}
-        element={isLoggedIn ? <BillStatusPage /> : <LoginPage />}
+        element={<ProtectedRoute element={<BillStatusPage />} />}
       />
       <Route
         path={PAYMENTS}
-        element={isLoggedIn ? <PaymentPage /> : <LoginPage />}
+        element={<ProtectedRoute element={<PaymentPage />} />}
       />
       <Route
         path={SETTINGS}
-        element={isLoggedIn ? <SettingsPage /> : <LoginPage />}
+        element={<ProtectedRoute element={<SettingsPage />} />}
       />
       <Route
         path={STOCK}
-        element={isLoggedIn ? <StockPage /> : <LoginPage />}
+        element={<ProtectedRoute element={<StockPage />} />}
       />
       <Route
-        path={STOCK + "/:stock_id"}
-        element={isLoggedIn ? <StockItemPage /> : <LoginPage />}
+        path={`${STOCK}/:stock_id`}
+        element={<ProtectedRoute element={<StockItemPage />} />}
       />
 
       <Route path="/*" element={<PageNotFound />} />

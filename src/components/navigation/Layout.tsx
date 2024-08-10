@@ -3,14 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "./SideNav";
 
 import { useLocation } from "react-router-dom";
-import { useAuthContext } from "../../context/AuthContext";
+import useAuthContext from "../../auth-store/useAuthContext";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { pathname } = useLocation();
+  const { state } = useAuthContext();
   const isLandingScreen = pathname === "/";
-  const auth = useAuthContext();
-  const { isLoggedIn } = auth;
-  const shouldShowSidebar = !isLandingScreen && isLoggedIn;
+  const { isAuthenticated } = state;
+  const shouldShowSidebar = !isLandingScreen && isAuthenticated;
 
   return (
     <>

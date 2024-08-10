@@ -4,12 +4,13 @@ import { getBatteryList } from "../backend/battery";
 import { getGSTList } from "../backend/gst";
 
 import useAppContext from "./useAppContext";
-import { useAuthContext } from "../context/useAuthContext";
+
 import useAnimation from "./useAnimation";
+import useAuthContext from "../auth-store/useAuthContext";
 
 const useInitialFetch = () => {
-  const auth = useAuthContext();
-  const isLoggedIn = auth?.isLoggedIn ?? false;
+  const { state: authState } = useAuthContext();
+  const { isAuthenticated } = authState ?? false;
 
   const { dispatch, state } = useAppContext();
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
@@ -18,8 +19,7 @@ const useInitialFetch = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(hasFetched + " & " + isLoggedIn);
-      if (!hasFetched && isLoggedIn) {
+      if (!hasFetched && isAuthenticated) {
         try {
           spinnerAnimationStart();
           snackbarAnimation("Loading Initial Data...", "success");
@@ -43,7 +43,7 @@ const useInitialFetch = () => {
         }
       }
     })();
-  }, [hasFetched, isLoggedIn, dispatch]);
+  }, [hasFetched, isAuthenticated, dispatch]);
 };
 
 export default useInitialFetch;

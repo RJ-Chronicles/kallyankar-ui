@@ -4,29 +4,32 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import useAppContext from "../../hooks/useAppContext";
 import { postUserLogin } from "../../backend/user";
-import { useAuthContext } from "../../context/AuthContext";
+
 import useAnimation from "../../hooks/useAnimation";
 import ButtonSave from "../UI/Button/ButtonSave";
 import { LoginSchema } from "../../zod";
 import { ERRORS } from "../../zod/zod_error";
+import useAuthContext from "../../auth-store/useAuthContext";
+import useSessionManagement from "../../hooks/useSessionManagement";
 
 const LoginForm = () => {
-  const naviage = useNavigate();
+  const navigate = useNavigate();
   const { data, setValue } = useHandlevalueChange(user);
   const { dispatch } = useAppContext();
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
-
-  const auth = useAuthContext();
+  const { restoreUserSession, handleUserLogin } = useSessionManagement();
+  const {
+    state: { isAuthenticated },
+  } = useAuthContext();
   const { email, password } = data as Login;
 
-  const { isLoggedIn, userLoginHandler } = auth;
   useEffect(() => {
-    if (isLoggedIn) {
-      console.log("naviagate to admin dashaovrd");
-      naviage("/admin/dashboard");
+    restoreUserSession();
+    if (isAuthenticated) {
+      navigate("/admin/dashboard");
     }
-  }, [isLoggedIn]);
+  }, [restoreUserSession, isAuthenticated]);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,13 +48,9 @@ const LoginForm = () => {
       const response = await postUserLogin(data as Login);
       snackbarAnimation("Succesfully Login", "success");
       dispatch({ type: "SET_LOADING", payload: false });
-      const expirationTime = new Date(
-        new Date().getTime() + response.expiresIn * 1000
-      );
-      const expiration = expirationTime.toISOString();
-      const { token, user } = response;
-      userLoginHandler(token, expiration, user);
-      naviage("/admin/dashboard");
+      const { token, user, expiresIn } = response;
+      handleUserLogin({ ...user, token, expiration: expiresIn.toString() });
+      navigate("/admin/dashboard");
       spinnerAnimationStop();
     } catch (error) {
       spinnerAnimationStop();
