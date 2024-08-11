@@ -90,7 +90,7 @@ const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
                   key={index}
                   className="bg-white border-b text-sm text-slate-700 font-normal hover:bg-gray-50 "
                 >
-                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                     <Link
                       to={`/admin/stocks/${row._id}`}
                       className="text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400"
@@ -99,17 +99,17 @@ const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
                     </Link>
                   </td>
 
-                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                     {row.battery_name}
                   </td>
-                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                     {row.amphere_size}
                   </td>
 
-                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                     <span>{row.available}</span>
                   </td>
-                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                     <span>
                       {dateFormater(row.createdAt ?? new Date().toString())}
                     </span>

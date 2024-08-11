@@ -38,7 +38,7 @@ const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
               {BILLING_STATUS_COLUMN.map((col, index) => (
                 <th
                   key={index}
-                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold  uppercase tracking-wider"
                 >
                   {col}
                 </th>
@@ -49,31 +49,31 @@ const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
           <tbody className="bg-white divide-y divide-gray-200">
             {data.map((row: Billing, index: number) => (
               <tr key={index}>
-                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                <td className="px-6 py-3 text-left text-xs   tracking-wider">
                   {row.customer?.name} {row.customer?.last_name}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                <td className="px-6 py-3 text-left text-xs   tracking-wider">
                   {row.customer?.contact}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                <td className="px-6 py-3 text-left text-xs   tracking-wider">
                   {row.customer?.email}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                <td className="px-6 py-3 text-left text-xs   tracking-wider">
                   {row.customer?.address}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                <td className="px-6 py-3 text-left text-xs   tracking-wider">
                   {row.gst_amount}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                <td className="px-6 py-3 text-left text-xs   tracking-wider">
                   {row.total_amount}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                <td className="px-6 py-3 text-left text-xs   tracking-wider">
                   {row.unpaid_amount}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                <td className="px-6 py-3 text-left text-xs   tracking-wider">
                   {dateFormater(row.createdAt ?? "")}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                <td className="px-6 py-3 text-left text-xs   tracking-wider">
                   <button
                     onClick={() => updateUnpaidAmount(row._id ?? "")}
                     disabled={status === "Paid"}

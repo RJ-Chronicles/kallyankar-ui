@@ -97,13 +97,13 @@ const BatteryNameTable = () => {
                 key={index}
                 className="bg-white border-b text-sm text-slate-700 font-base hover:bg-gray-50"
               >
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {element.name}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {dateFormater(element.createdAt ?? "")}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider flex items-center space-x-3">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider flex items-center space-x-3">
                   <button
                     onClick={() => deleteButtonHandler(element._id ?? "")}
                     name={element._id}

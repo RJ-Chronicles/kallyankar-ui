@@ -57,25 +57,25 @@ const FlowTable: React.FC<ProductTableProps> = ({ data }) => {
           <tbody className="bg-white divide-y divide-gray-200 text-sm">
             {data.map((row: Product, index: number) => (
               <tr key={index}>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {row.name}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {row.vehicle_name ?? ""} {row.vehicle_number ?? "-"}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {row.type}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {row.serial_number}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {row.price}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {dateFormater(row.createdAt ?? "")}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   <button
                     onClick={() => editCustomerProduct(row._id ?? "")}
                     className="text-blue-500 hover:text-blue-700 focus:outline-none"
