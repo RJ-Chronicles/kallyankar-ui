@@ -92,13 +92,13 @@ const AmphereTable = () => {
                 key={index}
                 className="hover:bg-gray-50 transition-colors duration-150"
               >
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {element.size}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {dateFormater(element.createdAt ?? "")}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider flex items-center space-x-3">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider flex items-center space-x-3">
                   <button
                     onClick={() => deleteButtonHandler(element._id ?? "")}
                     name={element._id}

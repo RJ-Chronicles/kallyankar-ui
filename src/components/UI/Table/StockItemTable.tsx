@@ -51,13 +51,13 @@ const StockItemTable: React.FC<Props> = ({ data, udpateStockItem }) => {
                 key={index}
                 className="bg-white border-b text-sm text-slate-700 font-normal hover:bg-gray-50 "
               >
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {row.quantity}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {dateFormater(row.updatedAt ?? "")}
                 </td>
-                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                <td className="px-6 py-3 text-left text-xs  uppercase tracking-wider">
                   {" "}
                   <button
                     id={row._id}

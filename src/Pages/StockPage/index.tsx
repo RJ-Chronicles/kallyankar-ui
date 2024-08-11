@@ -1,6 +1,5 @@
 import * as React from "react";
 import { getStockList } from "../../backend/stock";
-import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 import StockTable from "../../components/UI/Table/StockTable";
 import TitleScreen from "../../components/UI/TitleScreen";
 import { useApiCall, useAppContext } from "../../hooks";
