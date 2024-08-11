@@ -35,49 +35,51 @@ const ProtectedRoute = ({ element }: { element: JSX.Element }) => {
 
 const KallyankarRoute: React.FC = () => {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/admin-login" element={<LoginPage />} />
+    <div className="font-sans w-full">
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/admin-login" element={<LoginPage />} />
 
-      <Route
-        path={DASHBOARD}
-        element={<ProtectedRoute element={<Dashboard />} />}
-      />
-      <Route
-        path={`${CUSTOMERS}/:customerId`}
-        element={<ProtectedRoute element={<CustomerBatteryPage />} />}
-      />
-      <Route
-        path={CUSTOMERS}
-        element={<ProtectedRoute element={<CustomerPage />} />}
-      />
-      <Route
-        path={BATTERIES}
-        element={<ProtectedRoute element={<Batterypage />} />}
-      />
-      <Route
-        path={BILLINGS}
-        element={<ProtectedRoute element={<BillStatusPage />} />}
-      />
-      <Route
-        path={PAYMENTS}
-        element={<ProtectedRoute element={<PaymentPage />} />}
-      />
-      <Route
-        path={SETTINGS}
-        element={<ProtectedRoute element={<SettingsPage />} />}
-      />
-      <Route
-        path={STOCK}
-        element={<ProtectedRoute element={<StockPage />} />}
-      />
-      <Route
-        path={`${STOCK}/:stock_id`}
-        element={<ProtectedRoute element={<StockItemPage />} />}
-      />
+        <Route
+          path={DASHBOARD}
+          element={<ProtectedRoute element={<Dashboard />} />}
+        />
+        <Route
+          path={`${CUSTOMERS}/:customerId`}
+          element={<ProtectedRoute element={<CustomerBatteryPage />} />}
+        />
+        <Route
+          path={CUSTOMERS}
+          element={<ProtectedRoute element={<CustomerPage />} />}
+        />
+        <Route
+          path={BATTERIES}
+          element={<ProtectedRoute element={<Batterypage />} />}
+        />
+        <Route
+          path={BILLINGS}
+          element={<ProtectedRoute element={<BillStatusPage />} />}
+        />
+        <Route
+          path={PAYMENTS}
+          element={<ProtectedRoute element={<PaymentPage />} />}
+        />
+        <Route
+          path={SETTINGS}
+          element={<ProtectedRoute element={<SettingsPage />} />}
+        />
+        <Route
+          path={STOCK}
+          element={<ProtectedRoute element={<StockPage />} />}
+        />
+        <Route
+          path={`${STOCK}/:stock_id`}
+          element={<ProtectedRoute element={<StockItemPage />} />}
+        />
 
-      <Route path="/*" element={<PageNotFound />} />
-    </Routes>
+        <Route path="/*" element={<PageNotFound />} />
+      </Routes>
+    </div>
   );
 };
 

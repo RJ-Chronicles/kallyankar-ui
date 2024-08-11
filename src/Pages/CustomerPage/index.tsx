@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { customer, CustomerApiParam, Customer } from "../../store/type";
 
 import useAppContext from "../../hooks/useAppContext";
-import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 import axios from "axios";
 import { useAnimation } from "../../hooks";
+import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 
 const CustomerPage = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -86,55 +86,48 @@ const CustomerPage = () => {
     dispatch({ type: "HIDE_SHOW_FORM", payload: true });
   };
   return (
-    <div className="w-full ">
-      <div className="bg-yellow-500 p-10">
-        <div className="flex justify-center items-center space-x-6 mx-5 ">
-          <ButtonHeader
-            buttonClick={addRecordFormHandler}
-            bgColor="bg-yellow-500"
-          />
+    <div className="w-full bg-gray-50">
+      <div className="bg-indigo-600 p-6 md:p-10 shadow-md animate-fadeIn">
+        <div className="flex flex-col md:flex-row justify-center md:justify-between items-center space-y-4 md:space-y-0 md:space-x-6 mx-5">
           <div>
-            <h1 className="tracking-widest text-3xl font-bold text-slate-100 ">
-              Kalyankar Batteries{" "}
-              <strong className="text-base text-white tracking-widest uppercase">
-                Customer details
-              </strong>
+            <ButtonHeader title="Add New" buttonClick={addRecordFormHandler} />
+          </div>
+          <div className="text-center md:text-left">
+            <h1 className="font-sans tracking-wider text-3xl md:text-2xl font-bold text-white animate-slideIn leading-tight">
+              Kalyankar Batteries
             </h1>
           </div>
         </div>
-        <div className="flex justify-end space-x-6">
+        <div className="flex flex-col md:flex-row justify-end space-y-4 md:space-y-0 md:space-x-4 mt-6 animate-fadeInUp">
           <input
-            className={
-              " rounded-sm w-full tracking-wider  px-4  text-sm text-slate-500 h-12 border-2   placeholder:text-center md:text-left placeholder:md:text-left focus:outline-none focus:shadow-xl focus:border-blue-300"
-            }
+            className="rounded-md w-full md:w-auto tracking-wider px-4 py-2 text-sm text-gray-700 h-12 border-2 border-gray-300 placeholder-center focus:outline-none focus:shadow-lg focus:border-indigo-400 transition-all"
             type="text"
-            placeholder={"Search record based on name|contact"}
+            placeholder="Search record based on name | contact"
             required
             onChange={handleSearchInputChange}
             value={val}
           />
           <button
             onClick={handleResetInput}
-            className="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="w-full md:w-32 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md shadow-lg transition-all animate-pulse"
           >
-            {" "}
             Reset
           </button>
         </div>
       </div>
 
-      <div className="p-10">
+      <div className="p-6 md:p-10 bg-white  rounded-lg mt-6 animate-fadeIn">
         {customers && <CustomerTable data={customers} />}
-        <div className="mt-4">
+        <div className="mt-4 flex justify-center">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
               onClick={() => handlePageChange(page)}
-              className={`mx-1 py-2 px-3 rounded ${
+              className={`mx-1 py-2 px-4 rounded-lg transition-all ${
                 currentPage === page
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700"
-              }`}
+                  ? "bg-indigo-600 text-white shadow-md"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              } animate-bounce`}
             >
               {page}
             </button>
