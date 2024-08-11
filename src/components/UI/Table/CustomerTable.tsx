@@ -42,13 +42,13 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
           subHeading="Please add records to see..."
         />
       ) : (
-        <table className="table-auto w-full">
-          <thead className="bg-gray-200 ">
+        <table className="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden font-sans">
+          <thead className="bg-indigo-600 text-white">
             <tr>
               {CUSTOMER_TABLE_COLUMN.map((col, index) => (
                 <th
                   key={index}
-                  className="px-4 py-2 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
                 >
                   {col}
                 </th>
@@ -59,27 +59,35 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data }) => {
             {data.map((row: Customer, index: number) => (
               <tr
                 key={index}
-                className=" dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900"
+                className="hover:bg-gray-100 transition-colors duration-200 dark:bg-gray-800 dark:hover:bg-gray-700"
               >
-                <td className="px-3 py-2">
+                <td className="px-6 py-4 whitespace-nowrap">
                   <Link
                     to={`/admin/customers/${row._id}`}
-                    className="hover:underline"
+                    className="text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400"
                   >
                     {row.name + " " + row.last_name}
                   </Link>
                 </td>
-                <td className="px-3 py-2">{row.address}</td>
-                <td className="px-3 py-2">{row.email}</td>
-                <td className="px-3 py-2">{row.contact}</td>
-                <td className="px-3 py-2">{row.gst_number}</td>
-                <td className="px-3 py-2">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                  {row.address}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                  {row.email}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                  {row.contact}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                  {row.gst_number}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
                   {dateFormater(row.createdAt ?? "")}
                 </td>
-                <td className="px-3 py-2">
+                <td className="px-6 py-4 whitespace-nowrap">
                   <button
                     onClick={() => editCustomerHandler(row._id ?? "")}
-                    className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+                    className="text-indigo-600 hover:underline dark:text-indigo-400"
                   >
                     <Edit />
                   </button>

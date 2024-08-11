@@ -5,21 +5,16 @@ import Overlay from "../UI/Overlay";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
-import useResponseValidator from "../../hooks/useResponseValidator";
 import { postNewUser } from "../../backend/user";
 interface Props {
   user: User;
 }
 const UserForm: React.FC<Props> = ({ user }) => {
   const { setValue, data } = useHandlevalueChange(user);
-  const { error, setError, validator } = useResponseValidator();
+
   const { name, last_name, email, role } = data as User;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validator({ ...data, role } as User);
-    if (!error) {
-      const response = await postNewUser({ ...data, role } as User);
-    }
   };
   return (
     <Overlay open={true} handleClose={() => {}}>

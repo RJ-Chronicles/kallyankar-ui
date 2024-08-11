@@ -1,9 +1,6 @@
 import Overlay from "./Overlay";
 import ButtonLarge from "./Button/ButtonLarge";
-import { useAuthContext } from "../../context/AuthContext";
 import useAppContext from "../../hooks/useAppContext";
-import { useNavigate } from "react-router-dom";
-import { initialUser } from "../../store/type";
 const DEFAULT_ERROR =
   "Something not ideal might be happening. Check your internet connection or try to login again.";
 
@@ -14,18 +11,12 @@ const ErrorModal: React.FC<{
   errorMessage?: string;
 }> = ({ children, open, errorMessage = DEFAULT_ERROR, errorHeading = "" }) => {
   const { dispatch } = useAppContext();
-  const navigate = useNavigate();
+
   const userLogout = () => {
     dispatch({
       type: "SET_ERROR",
       payload: { hasError: false, message: "" },
     });
-    // userLogoutHandler();
-    // dispatch({
-    //   type: "USER_LOG_IN",
-    //   payload: { user: initialUser, expiration: "", isLoggedIn: false },
-    // });
-    // navigate("/");
   };
   return (
     <>
