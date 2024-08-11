@@ -15,114 +15,74 @@ import Carousel from "../../components/UI/Carousel";
 
 const LandingPage = () => {
   return (
-    <div>
+    <div className="bg-white">
       <LandingPageHeader />
-
-      <div id="feature" className="bg-white py-24 px-6 ">
-        <div className="container">
-          <div className="flex flex-wrap items-center">
-            <div className="w-full lg:w-1/2">
-              <div className="mb-5 lg:mb-0">
-                <h2
-                  className="mb-12 section-heading wow fadeInDown font-bold text-xl tracking-wide"
-                  data-wow-delay="0.3s"
-                >
-                  Our Services
-                </h2>
-
-                <div className="flex flex-wrap">
-                  <div className="w-full sm:w-1/2 lg:w-1/2">
-                    <div className="m-3">
-                      <div className="icon text-4xl">
-                        <CloudIcon />
-                      </div>
-                      <div className="features-content">
-                        <h4 className="font-bold text-blue-900">
-                          Quality Guarantee
-                        </h4>
-                        <p>
-                          We thoroughly test our batteries to make sure they're
-                          reliable and perform well.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="w-full sm:w-1/2 lg:w-1/2">
-                    <div className="m-3">
-                      <div className="icon text-4xl">
-                        <GiftIcon />
-                      </div>
-                      <div className="features-content">
-                        <h4 className="font-bold text-blue-900">
-                          Quality Assurance
-                        </h4>
-                        <p>
-                          We thoroughly test our batteries to make sure they're
-                          reliable and perform well
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="w-full sm:w-1/2 lg:w-1/2">
-                    <div className="m-3">
-                      <div className="icon text-4xl">
-                        <GearIcon />
-                      </div>
-                      <div className="features-content">
-                        <h4 className="font-bold text-blue-900">
-                          Expert Guidance
-                        </h4>
-                        <p>
-                          Our knowledgeable team will help you choose the right
-                          battery for your vehicle.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="w-full sm:w-1/2 lg:w-1/2">
-                    <div className="m-3">
-                      <div className="icon text-4xl">
-                        <CarIcon />
-                      </div>
-                      <div className="features-content">
-                        <h4 className="font-bold text-blue-900">
-                          Trusted Partnerships:
-                        </h4>
-                        <p>
-                          We work with top brands to offer you the best quality
-                          and service.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      <div id="feature" className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
+          <div className="flex flex-col lg:flex-row items-center">
+            <div className="w-full lg:w-1/2 mb-12 lg:mb-0">
+              <h2 className="mb-8 text-3xl font-semibold text-indigo-700 tracking-wide text-center lg:text-left">
+                Our Services
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <ServiceCard
+                  icon={<CloudIcon />}
+                  title="Quality Guarantee"
+                  description="We thoroughly test our batteries to make sure they're reliable and perform well."
+                />
+                <ServiceCard
+                  icon={<GiftIcon />}
+                  title="Quality Assurance"
+                  description="We thoroughly test our batteries to make sure they're reliable and perform well."
+                />
+                <ServiceCard
+                  icon={<GearIcon />}
+                  title="Expert Guidance"
+                  description="Our knowledgeable team will help you choose the right battery for your vehicle."
+                />
+                <ServiceCard
+                  icon={<CarIcon />}
+                  title="Trusted Partnerships"
+                  description="We work with top brands to offer you the best quality and service."
+                />
               </div>
             </div>
             <div className="w-full lg:w-1/2">
-              <div
-                className="mx-3 lg:mr-0 lg:ml-3 wow fadeInRight"
-                data-wow-delay="0.3s"
-              >
-                <img src={LandingPageBattery} alt="" />
+              <div className="mx-auto lg:ml-12 flex justify-center">
+                <img
+                  src={LandingPageBattery}
+                  alt="Battery"
+                  className="w-full max-w-md lg:max-w-lg h-auto"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <section id="team" className="bg-slate-100 py-24 text-center px-6">
-        <h2
-          className="mb-12 section-heading wow fadeInDown font-bold text-xl tracking-wide"
-          data-wow-delay="0.3s"
-        >
-          Our Workplace
-        </h2>
-        <Carousel interval={10000} images={[KB_1, KB_2, KB_3]} />
+      <section id="team" className="bg-slate-100 w-full p-10">
+        <div className="m-12">
+          <h2 className="mb-8 text-3xl font-semibold text-indigo-700 tracking-wide">
+            Our Workplace
+          </h2>
+          <Carousel interval={10000} images={[KB_1, KB_2, KB_3]} />
+        </div>
       </section>
-
       <Contact />
-
       <Footer />
+    </div>
+  );
+};
+
+// Example of ServiceCard component
+const ServiceCard: React.FC<any> = ({ icon, title, description }) => {
+  return (
+    <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <div className="flex justify-center mb-4 text-indigo-700">{icon}</div>
+      <h4 className="text-xl font-semibold text-gray-800 mb-2 text-center">
+        {title}
+      </h4>
+      <p className="text-gray-600 text-center">{description}</p>
     </div>
   );
 };

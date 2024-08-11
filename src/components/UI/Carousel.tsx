@@ -27,13 +27,13 @@ const Carousel: React.FC<CarouselProps> = ({ images, interval = 3000 }) => {
 
   return (
     <div className="relative h-[80vh] flex justify-center items-center">
-      <div className="carousel">
+      <div className="carousel relative w-full h-full">
         {images.map((image, index) => (
           <div
             key={index}
             className={`${
               index === currentIndex ? "opacity-100" : "opacity-0"
-            } absolute inset-0 transition-opacity duration-1000 px-[10%]`}
+            } absolute inset-0 transition-opacity duration-1000`}
           >
             <img
               className="w-full h-full object-cover rounded-sm shadow-md"
@@ -42,17 +42,21 @@ const Carousel: React.FC<CarouselProps> = ({ images, interval = 3000 }) => {
             />
           </div>
         ))}
+
+        {/* Previous Button */}
         <button
           onClick={prevSlide}
-          className="mx-[10%] absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 p-2 rounded-full text-white shadow-md"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 p-3 rounded-full text-white shadow-md hover:bg-opacity-70 transition duration-300 md:left-6 lg:left-8"
         >
-          <MoveLeft />
+          <MoveLeft className="w-6 h-6" />
         </button>
+
+        {/* Next Button */}
         <button
           onClick={nextSlide}
-          className="mx-[10%] absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 p-2 rounded-full text-white shadow-md"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 p-3 rounded-full text-white shadow-md hover:bg-opacity-70 transition duration-300 md:right-6 lg:right-8"
         >
-          <MoveRight />
+          <MoveRight className="w-6 h-6" />
         </button>
       </div>
     </div>
