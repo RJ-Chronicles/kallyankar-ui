@@ -14,8 +14,6 @@ import LoginPage from "../../Pages/login-page";
 import LandingPage from "../../Pages/LandingPage";
 import Batterypage from "../../Pages/BatteryPage";
 import BillStatusPage from "../../Pages/PaymentPage";
-import PaymentPage from "../../Pages/payment.page";
-import SettingsPage from "../../Pages/setting";
 import StockItemPage from "../../Pages/StockItemPage";
 import StockPage from "../../Pages/StockPage";
 
@@ -25,6 +23,7 @@ import CustomerBatteryPage from "../../Pages/CustomerBatteryPage";
 import PageNotFound from "../../Pages/NotFoundPage";
 import useAuthContext from "../../auth-store/useAuthContext";
 import UserPage from "../../Pages/UsersPage";
+import SettingsPage from "../../Pages/Settings";
 
 const ProtectedRoute = ({ element }: { element: JSX.Element }) => {
   const {

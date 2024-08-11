@@ -1,6 +1,6 @@
 import { STOCK } from "../store/type";
 import api from "./api";
-type STOCK_WITH_MSG = {
+type StockMsg = {
   message: string;
   list: STOCK[];
 };
@@ -30,7 +30,7 @@ const deleteStockById = async (id: string) => {
   return data;
 };
 const getStockList = async () => {
-  const { data } = await api.get<STOCK_WITH_MSG>("stock/list");
+  const { data } = await api.get<StockMsg>("stock/list");
   return data.list;
 };
 

@@ -2,6 +2,11 @@ import api from "./api";
 
 import { Billing, BillingWithMessage } from "../store/type";
 
+interface PaymentMsg {
+  billingList: Billing[];
+  message: string;
+}
+
 const postNewBilling = async (billing: Billing) => {
   const { data } = await api.post<Billing>("billing/add", {
     ...billing,
@@ -24,8 +29,8 @@ const getBillingById = async (id: string) => {
   return data;
 };
 const getBillingList = async () => {
-  const { data } = await api.get<Billing[]>("billing/get-list");
-  return data;
+  const { data } = await api.get<PaymentMsg>("billing/get-list");
+  return data.billingList;
 };
 const getBillingListByStatus = async ({ status }: { status: string }) => {
   const { data } = await api.get<BillingWithMessage>(

@@ -1,55 +1,36 @@
 import {
   BatteryIcon,
-  DownloadCloud,
   IndianRupeeIcon,
   SmartphoneIcon,
   UserIcon,
 } from "lucide-react";
-import React from "react";
-import { getBillingList } from "../backend/billing";
-import { getCustomerList } from "../backend/customer";
-import { getProductList } from "../backend/product";
-import { getStockList } from "../backend/stock";
-import TitleScreen from "../components/UI/TitleScreen";
-import { useAnimation } from "../hooks";
-import { Billing, Customer, Product, STOCK } from "../store/type";
+import * as XLSX from "xlsx";
+
+import { getBillingList } from "../../backend/billing";
+import { getCustomerListToExport } from "../../backend/customer";
+import { getProductList } from "../../backend/product";
+import { getStockList } from "../../backend/stock";
+import TitleScreen from "../../components/UI/TitleScreen";
+import { useAnimation } from "../../hooks";
+import { Billing, Customer, Product, STOCK } from "../../store/type";
+import BackupCard from "./BackupCard";
 type Selection = "CUSTOMER" | "STOCK" | "PAYMENT" | "PRODUCT";
-interface BackupCardProps {
+export interface BackupCardProps {
   title: string;
   icon: JSX.Element;
   handleClick: () => void;
 }
-
-const BackupCard: React.FC<BackupCardProps> = ({
-  title,
-  icon,
-  handleClick,
-}) => (
-  <div className="w-full">
-    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 group hover:scale-105 transform transition-transform duration-300 m-4 rounded-md text-[#EEA47F] pt-6 px-5 shadow-lg">
-      <div className="w-full flex justify-center items-center mb-4">{icon}</div>
-      <p className="text-white font-semibold text-xl font-serif text-center mb-4 tracking-widest">
-        {title}
-      </p>
-      <div className="flex justify-center items-center h-full">
-        <CustomButton onClick={handleClick}>
-          <DownloadCloud size={24} />
-        </CustomButton>
-      </div>
-    </div>
-  </div>
-);
-
+type EXPORT = (Customer | STOCK | Product | Billing)[] | null;
 const SettingsPage = () => {
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
   const handleBackupRecords = async (type: Selection) => {
-    let exportData: (Customer | STOCK | Product | Billing)[] | null = null;
+    let exportData: EXPORT = null;
     try {
       spinnerAnimationStart();
       switch (type) {
         case "CUSTOMER":
-          exportData = await getCustomerList();
+          exportData = await getCustomerListToExport();
           break;
         case "PAYMENT":
           exportData = await getBillingList();
@@ -61,7 +42,14 @@ const SettingsPage = () => {
           exportData = await getProductList();
           break;
       }
-      snackbarAnimation(`${type.toLowerCase()} has been exported`, "success");
+      const fileName =
+        new Date().toDateString() + `_${type.toLowerCase()} .xlsx`;
+      await exportToExcel(exportData, fileName);
+      snackbarAnimation(
+        `${type.toLowerCase()} data has been exported`,
+        "success"
+      );
+      console.log(exportData);
     } catch (err) {
       snackbarAnimation(
         `Problem while exporting ${type.toLowerCase()} data`,
@@ -69,6 +57,29 @@ const SettingsPage = () => {
       );
     }
     spinnerAnimationStop();
+  };
+
+  const exportToExcel = (data: EXPORT, fileName: string): Promise<void> => {
+    return new Promise<void>((resolve, reject) => {
+      try {
+        // Create a worksheet from the customer data
+        if (data && data.length > 0) {
+          const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+          // Create a new workbook and append the worksheet
+          const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(workbook, worksheet, "export");
+
+          // Write the workbook to an Excel file
+          XLSX.writeFile(workbook, fileName);
+        }
+
+        resolve(); // Resolve the promise on success
+      } catch (error) {
+        console.error("Error exporting to Excel:", error);
+        reject(error); // Reject the promise on failure
+      }
+    });
   };
 
   const cardsData: BackupCardProps[] = [
@@ -97,12 +108,12 @@ const SettingsPage = () => {
   return (
     <div>
       <TitleScreen
-        pageTitle="Daily take backup of your data..."
+        pageTitle="Please keep backups of your data daily."
         onAddRecord={() => {}}
         isVisible={false}
       />
       <div className="p-10">
-        <div className="flex flex-col md:flex-row justify-center mx-20 space-y-6 md:space-y-0 md:space-x-6">
+        <div className="flex flex-col md:flex-row justify-center mx-10 space-y-6 md:space-y-0 md:space-x-6">
           {cardsData.map((card, index) => (
             <BackupCard
               key={index}
@@ -114,20 +125,6 @@ const SettingsPage = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-const CustomButton: React.FC<{
-  children: React.ReactNode;
-  onClick: () => void;
-}> = ({ children, onClick }) => {
-  return (
-    <button
-      onClick={onClick}
-      className="bg-green-500 hover:bg-green-600 w-full text-white font-bold py-2 px-6 rounded-md shadow-lg transition-all animate-fadeInUp my-4 flex justify-center"
-    >
-      {children}
-    </button>
   );
 };
 

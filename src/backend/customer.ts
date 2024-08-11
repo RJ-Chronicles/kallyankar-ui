@@ -34,6 +34,10 @@ const getCustomerList = async () => {
   const { data } = await api.get<Customer[]>("customer/customer-all");
   return data;
 };
+const getCustomerListToExport = async () => {
+  const { data } = await api.get<Customer[]>("customer/export");
+  return data;
+};
 
 const logoutCustomer = async (token: string, email: string) => {
   const { data } = await api.post<Customer>("customer/logout", {
@@ -52,4 +56,5 @@ export {
   logoutCustomer,
   getCustomerByBillingStatus,
   updateCustomerBillingStatus,
+  getCustomerListToExport,
 };
