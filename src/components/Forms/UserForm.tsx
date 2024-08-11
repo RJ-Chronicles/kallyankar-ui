@@ -1,23 +1,53 @@
-import { useState } from "react";
-
 import { User } from "../../store/type";
 import Overlay from "../UI/Overlay";
 import ButtonLarge from "../UI/Button/ButtonLarge";
 import Heading from "../UI/Heading";
 import useHandlevalueChange from "../../hooks/useHandleValueChange";
 import { postNewUser } from "../../backend/user";
-interface Props {
-  user: User;
-}
-const UserForm: React.FC<Props> = ({ user }) => {
-  const { setValue, data } = useHandlevalueChange(user);
+import { useAnimation, useAppContext } from "../../hooks";
+import ButtonHeader from "../UI/Button/ButtonHeader";
+import useAuthContext from "../../auth-store/useAuthContext";
+import { UserSchema } from "../../zod";
+import { ERRORS } from "../../zod/zod_error";
 
-  const { name, last_name, email, role } = data as User;
+const UserForm = () => {
+  const { state, dispatch } = useAppContext();
+  const { state: authState } = useAuthContext();
+  const { refreshEffect, formProps } = state;
+  const { data: user, title, mode } = formProps;
+  const { setValue, data } = useHandlevalueChange(user as User);
+  const { name, last_name, email, role, password } = data as User;
+
+  const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
+    useAnimation();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const validate = UserSchema.safeParse(data as User);
+
+    if (!validate.success) {
+      const errors = validate.error.flatten();
+      const { name, password, last_name, role, email } = errors.fieldErrors;
+      name && snackbarAnimation(ERRORS.NAME, "error");
+      password && snackbarAnimation(ERRORS.PASSWORD, "error");
+      last_name && snackbarAnimation(ERRORS.LAST_NAME, "error");
+      email && snackbarAnimation(ERRORS.EMAIL, "error");
+      return;
+    }
+    spinnerAnimationStart();
+    try {
+      const { user } = authState;
+      await postNewUser({ ...data, createdBy: user?.email } as User);
+      snackbarAnimation(ERRORS.SUCCESS, "success");
+    } catch (err) {
+      snackbarAnimation(ERRORS.FAILURE, "error");
+    }
+    spinnerAnimationStop();
+    dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+    dispatch({ type: "HIDE_SHOW_FORM", payload: false });
   };
   return (
-    <Overlay open={true} handleClose={() => {}}>
+    <div>
       <Heading heading="User Registration Form" />
       <div className="w-full  bg-white px-5 rounded-lg lg:rounded-l-none">
         <form
@@ -35,6 +65,7 @@ const UserForm: React.FC<Props> = ({ user }) => {
               <input
                 className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 id="name"
+                name="name"
                 type="text"
                 placeholder="User Name"
                 onChange={setValue}
@@ -53,6 +84,7 @@ const UserForm: React.FC<Props> = ({ user }) => {
                 className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 id="l_name"
                 type="text"
+                name="last_name"
                 placeholder="Last Name"
                 onChange={setValue}
                 value={last_name}
@@ -74,6 +106,7 @@ const UserForm: React.FC<Props> = ({ user }) => {
               required
               onChange={setValue}
               id="email"
+              name="email"
               placeholder="Username"
               value={email}
             />
@@ -88,38 +121,45 @@ const UserForm: React.FC<Props> = ({ user }) => {
             </label>
             <select
               className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              defaultValue={user.role}
+              defaultValue={role}
               onChange={setValue}
               id="role"
+              name="role"
             >
               <option value="DEFAULT">Choose a role</option>
               <option value="admin">Admin</option>
               <option value="user">User</option>
             </select>
           </div>
-          <ButtonLarge title="register now" type="submit" />
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="password"
+            >
+              Password
+            </label>
+            <input
+              className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              type="text"
+              required
+              onChange={setValue}
+              id="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+            />
+          </div>
+          <div className="flex justify-end items-center">
+            <ButtonHeader
+              title="Register User"
+              buttonClick={() => {}}
+              type="submit"
+            />
+          </div>
         </form>
       </div>
-    </Overlay>
+    </div>
   );
 };
 
 export default UserForm;
-
-{
-  /* <Form handleSubmit={handleSubmit} maxWidth="w-[600px]">
-{userColumns.map((field, index) => (
-  <InputBox
-    key={index}
-    label={field.label}
-    id={field.id}
-    type={field.type}
-    width={field.width}
-    margin={field.margin}
-    setValue={handleSetUser}
-    required={field.required}
-  />
-))}
-
-</Form> */
-}

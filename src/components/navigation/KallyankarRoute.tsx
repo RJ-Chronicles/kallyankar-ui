@@ -7,7 +7,7 @@ import {
   CUSTOMERS,
   SETTINGS,
   BATTERIES,
-  PAYMENTS,
+  USERS,
 } from "./path";
 import Dashboard from "../../Pages/Dashboard";
 import LoginPage from "../../Pages/login-page";
@@ -24,6 +24,7 @@ import CustomerBatteryPage from "../../Pages/CustomerBatteryPage";
 
 import PageNotFound from "../../Pages/NotFoundPage";
 import useAuthContext from "../../auth-store/useAuthContext";
+import UserPage from "../../Pages/UsersPage";
 
 const ProtectedRoute = ({ element }: { element: JSX.Element }) => {
   const {
@@ -61,8 +62,8 @@ const KallyankarRoute: React.FC = () => {
           element={<ProtectedRoute element={<BillStatusPage />} />}
         />
         <Route
-          path={PAYMENTS}
-          element={<ProtectedRoute element={<PaymentPage />} />}
+          path={USERS}
+          element={<ProtectedRoute element={<UserPage />} />}
         />
         <Route
           path={SETTINGS}

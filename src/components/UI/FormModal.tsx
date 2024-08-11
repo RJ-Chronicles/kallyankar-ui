@@ -6,6 +6,7 @@ import CustomerForm from "../Forms/CustomerForm";
 import GSTForm from "../Forms/GSTForm";
 import ProductForm from "../Forms/ProductForm";
 import StockForms from "../Forms/StockForm";
+import UserForm from "../Forms/UserForm";
 import Overlay from "./Overlay";
 
 const FormModal: React.FC<{ showForm: boolean }> = ({ showForm }) => {
@@ -24,6 +25,7 @@ const FormModal: React.FC<{ showForm: boolean }> = ({ showForm }) => {
       {type === "GST" && <GSTForm />}
       {type === "PRODUCT" && <ProductForm />}
       {type === "STOCK" && <StockForms />}
+      {type === "USER" && <UserForm />}
     </Overlay>
   );
 };

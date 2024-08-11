@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import AppContext from "../../../store/AppContext";
-import { AMPHERE_TABLE_COLUMN } from "./columns";
-import Table from "./Table";
-import { Edit2, Pencil, Trash2 } from "lucide-react";
+import { Edit2, Trash2 } from "lucide-react";
 import useDateFormater from "../../../hooks/useDateFormater";
 import { useAnimation } from "../../../hooks";
 import ButtonHeader from "../Button/ButtonHeader";

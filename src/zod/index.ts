@@ -1,14 +1,14 @@
 import { Contact } from "lucide-react";
 import { z } from "zod";
 
+const email = z
+  .string({
+    required_error: "Username is required",
+  })
+  .min(5)
+  .endsWith("com");
 export const LoginSchema = z.object({
-  email: z
-    .string({
-      required_error: "Username is required",
-    })
-    .min(5)
-    .endsWith("com"),
-
+  email,
   password: z.string({ required_error: "Password is required" }).trim().min(5),
 });
 
@@ -36,4 +36,12 @@ export const StockSchema = z.object({
   product_code: z.string().trim().min(3),
   amphere_size: z.string().trim().min(3),
   available: z.string().trim().optional(),
+});
+
+export const UserSchema = z.object({
+  name: z.string().trim().min(3),
+  last_name: z.string().trim().min(3),
+  role: z.string().trim().min(2),
+  password: z.string().min(6).max(12),
+  email,
 });

@@ -6,6 +6,7 @@ export interface User {
   role: string;
   createdBy?: string;
   deleted?: boolean;
+  password?: string;
 }
 
 export interface Login {
@@ -198,7 +199,8 @@ export type DELETE_MODE =
   | "GST"
   | "CUSTOMER"
   | "STOCK"
-  | "STOCK_ITEM";
+  | "STOCK_ITEM"
+  | "USER";
 
 export interface RequestConfig {
   method: Request;
@@ -262,4 +264,12 @@ export type STOCK = {
   available: string;
   _id?: string;
   createdAt?: string;
+};
+
+export const userRegister: User = {
+  name: "",
+  last_name: "",
+  email: "",
+  role: "",
+  password: "",
 };
