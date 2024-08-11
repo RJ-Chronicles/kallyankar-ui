@@ -67,17 +67,26 @@ const BatteryNameTable = () => {
           subHeading="Please add records to see..."
         />
       ) : (
-        <table className="w-full text-sm text-left text-gray-700 tracking-wider shadow-lg rounded-lg">
-          <thead className="text-xs md:text-sm text-gray-800 uppercase bg-gray-200 ">
+        <table className="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden font-sans">
+          <thead className="bg-indigo-600 text-white ">
             <tr>
-              <th scope="col" className="px-3 py-3">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+              >
                 Battery Name
               </th>
-              <th scope="col" className="px-3 py-3">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+              >
                 Created At
               </th>
 
-              <th scope="col" className="px-3 py-3">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+              >
                 Action
               </th>
             </tr>
@@ -88,24 +97,26 @@ const BatteryNameTable = () => {
                 key={index}
                 className="bg-white border-b text-sm text-slate-700 font-base hover:bg-gray-50"
               >
-                <td className="px-3 py-4">{element.name}</td>
-                <td className="px-3 py-4">
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  {element.name}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                   {dateFormater(element.createdAt ?? "")}
                 </td>
-                <td className="flex items-center px-3 py-4 space-x-3">
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider flex items-center space-x-3">
                   <button
                     onClick={() => deleteButtonHandler(element._id ?? "")}
                     name={element._id}
-                    className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+                    className="text-red-600 hover:text-red-800 transition-colors duration-150"
                   >
-                    <Trash2 color="red" />
+                    <Trash2 size={20} />
                   </button>
                   <button
                     onClick={() => editRecordHandler(element._id ?? "")}
                     name={element._id}
-                    className="font-medium  hover:underline"
+                    className="text-blue-600 hover:text-blue-800 transition-colors duration-150"
                   >
-                    <Edit2 />
+                    <Edit2 size={20} />
                   </button>
                 </td>
               </tr>
