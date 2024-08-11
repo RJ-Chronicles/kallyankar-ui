@@ -5,7 +5,7 @@ import {
   CUSTOMERS,
   SETTINGS,
   BATTERIES,
-  PAYMENTS,
+  USERS,
 } from "./path";
 
 export const IconDashboard = () => {
@@ -138,7 +138,7 @@ export const NavLinkProps = [
   { path: BILLINGS, label: "Billings", icon: <IconCurrency /> },
   { path: STOCK, label: "Stocks", icon: <IconStock /> },
   { path: BATTERIES, label: "Batteris", icon: <IconBatteries /> },
-  { path: PAYMENTS, label: "Users", icon: <IconSecurePaymentFill /> },
+  { path: USERS, label: "Users", icon: <IconSecurePaymentFill /> },
   { path: SETTINGS, label: "Settings", icon: <IconSettings /> },
 ];
 

@@ -4,6 +4,7 @@ import { deleteBatteryById } from "../../backend/battery";
 import { deleteCustomerById } from "../../backend/customer";
 import { deleteGSTById } from "../../backend/gst";
 import { deleteStockById } from "../../backend/stock";
+import { deleteUserById } from "../../backend/user";
 import { useAnimation } from "../../hooks";
 
 import AppContext from "../../store/AppContext";
@@ -17,7 +18,7 @@ const DeleteModal: React.FC<{
   const { mode, title, id } = state.deleteModalProps;
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
-  // const { user } = useSession();
+
   const handleDeleteRecord = async () => {
     try {
       spinnerAnimationStart();
@@ -37,6 +38,8 @@ const DeleteModal: React.FC<{
         case "CUSTOMER":
           await deleteCustomerById(id);
           break;
+        case "USER":
+          await deleteUserById(id);
         default:
           snackbarAnimation("invailid delete type", "warning");
       }
@@ -47,6 +50,7 @@ const DeleteModal: React.FC<{
     spinnerAnimationStop();
 
     dispatch({ type: "SET_DELETE_MODAL_VISIBLE", payload: false });
+    dispatch({ type: "REFRESH_EFFECT", payload: !state.refreshEffect });
   };
 
   const handleExit = () => {

@@ -8,8 +8,13 @@ type UserLogin = {
   expiresIn: number;
 };
 
+type UserList = {
+  userList: User[];
+  message: string;
+};
+
 const postNewUser = async (user: User) => {
-  const { data } = await api.post<User>("adamin/sign-up", user);
+  const { data } = await api.post<User>("admin/sign-up", user);
   return data;
 };
 const updateUserById = async (user: User, id: string) => {
@@ -21,8 +26,8 @@ const deleteUserById = async (id: string) => {
   return data;
 };
 const getUserList = async () => {
-  const { data } = await api.get<User[]>("admin/user_list-up");
-  return data;
+  const { data } = await api.get<UserList>("admin/user_list");
+  return data.userList;
 };
 const postLogoutUser = async (token: string, email: string) => {
   const { data } = await api.post<User>("admin/logout", { email, token });

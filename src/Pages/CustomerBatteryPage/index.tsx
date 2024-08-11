@@ -6,8 +6,6 @@ import CustomerBatteryTable from "../../components/UI/Table/CustomerBatteryTable
 import useApiCall from "../../hooks/useApiCall";
 import useAppContext from "../../hooks/useAppContext";
 import { product } from "../../store/type";
-import { HiShoppingCart } from "react-icons/hi";
-import { Button } from "flowbite-react";
 import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 import useInitialFetch from "../../hooks/useInitialFetch";
 import Nothing from "../../components/UI/Nothing";
@@ -60,10 +58,10 @@ const CustomerBatteryPage = () => {
       <div className="w-full p-10">
         <div className="flex justify-end w-full items-center">
           {storedCartItems.length > 0 && (
-            <Button onClick={hideShowCartItems} className="w-40 mr-10">
-              <HiShoppingCart className="mr-2 h-5 w-5" />
-              {storedCartItems.length}
-            </Button>
+            <ButtonHeader
+              buttonClick={hideShowCartItems}
+              title={`Proceed to checkout ${storedCartItems.length} items`}
+            />
           )}
         </div>
         {showNothing ? (
