@@ -7,6 +7,7 @@ import {
 } from "../../backend/stockItem";
 import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 import StockItemTable from "../../components/UI/Table/StockItemTable";
+import TitleScreen from "../../components/UI/TitleScreen";
 import { useAnimation, useApiCall, useAppContext } from "../../hooks";
 import { ERRORS } from "../../zod/zod_error";
 
@@ -76,41 +77,46 @@ const StockItemPage = () => {
     if (!showForm) setShowForm(true);
   };
   return (
-    <div className="w-full mx-5">
-      <div className="flex justify-between items-center">
-        <div className="flex justify-start w-full md:w-1/4">
-          <ButtonHeader buttonClick={addNewItemHandler} />
-        </div>
-        <div className="flex justify-between w-full">
-          {showForm && (
-            <form
-              className=" flex justify-end space-x-10 w-full"
-              onSubmit={stockItemSubmitHandler}
-            >
-              <div className="flex justify-center items-center">
-                <input
-                  className=" px-3 py-2 w-80 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  type="number"
-                  required
-                  id="name"
-                  placeholder="Stock Quantity"
-                  onChange={(e) => setQuantity(e.target.value)}
-                  value={quantity}
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-[170px] py-2 px-10 group relative text-white flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-cyan-700 focus:ring-4 focus:ring-cyan-300 enabled:hover:bg-cyan-800 dark:bg-cyan-600 dark:focus:ring-cyan-800 dark:enabled:hover:bg-cyan-700 rounded-lg "
+    <>
+      <TitleScreen
+        onAddRecord={addNewItemHandler}
+        pageTitle="Stock entries. "
+      />
+      <div className="w-full p-10">
+        <div className="flex justify-between items-center">
+          <div className="flex justify-between w-full">
+            {showForm && (
+              <form
+                className=" flex justify-end space-x-10 w-full"
+                onSubmit={stockItemSubmitHandler}
               >
-                {operationMode === "ADD" ? "ADD" : "UPDATE"}
-              </button>
-            </form>
-          )}
+                <div className="flex justify-center items-center">
+                  <input
+                    className=" px-3 py-2 w-80 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    type="number"
+                    required
+                    id="name"
+                    placeholder="Stock Quantity"
+                    onChange={(e) => setQuantity(e.target.value)}
+                    value={quantity}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md shadow-md transition-transform transform hover:scale-105"
+                >
+                  {operationMode === "ADD" ? "ADD" : "UPDATE"}
+                </button>
+              </form>
+            )}
+          </div>
         </div>
+        {data && (
+          <StockItemTable data={data} udpateStockItem={updateStockItem} />
+        )}
       </div>
-      {data && <StockItemTable data={data} udpateStockItem={updateStockItem} />}
-    </div>
+    </>
   );
 };
 

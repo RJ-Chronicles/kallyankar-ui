@@ -22,16 +22,25 @@ const StockItemTable: React.FC<Props> = ({ data, udpateStockItem }) => {
           subHeading="Please add records to see..."
         />
       ) : (
-        <table className="w-full text-sm text-left text-gray-700 tracking-wider">
-          <thead className="text-xs md:text-sm text-gray-800 uppercase bg-gray-200 ">
+        <table className="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden font-sans">
+          <thead className="bg-indigo-600 text-white">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+              >
                 Quantity
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+              >
                 Added At
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+              >
                 Action
               </th>
             </tr>
@@ -42,16 +51,18 @@ const StockItemTable: React.FC<Props> = ({ data, udpateStockItem }) => {
                 key={index}
                 className="bg-white border-b text-sm text-slate-700 font-normal hover:bg-gray-50 "
               >
-                <td className="px-6 py-4">{row.quantity}</td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  {row.quantity}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                   {dateFormater(row.updatedAt ?? "")}
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                   {" "}
                   <button
                     id={row._id}
                     onClick={(e) => udpateStockItem(row._id ?? "")}
-                    className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+                    className="text-blue-600 hover:text-blue-800 transition-colors duration-150"
                   >
                     <Edit />
                   </button>

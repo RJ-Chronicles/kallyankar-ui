@@ -32,13 +32,13 @@ const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
           subHeading="Please add records to see..."
         />
       ) : (
-        <table className="table-auto w-full ">
-          <thead className="bg-gray-200">
+        <table className="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden font-sans">
+          <thead className="bg-indigo-600 text-white">
             <tr>
               {BILLING_STATUS_COLUMN.map((col, index) => (
                 <th
                   key={index}
-                  className="px-4 py-2 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
                 >
                   {col}
                 </th>
@@ -49,23 +49,35 @@ const BillingStatusTable: React.FC<{ data: Billing[]; status: string }> = ({
           <tbody className="bg-white divide-y divide-gray-200">
             {data.map((row: Billing, index: number) => (
               <tr key={index}>
-                <td className="px-4 py-3">
+                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
                   {row.customer?.name} {row.customer?.last_name}
                 </td>
-                <td className="px-4 py-3">{row.customer?.contact}</td>
-                <td className="px-4 py-3">{row.customer?.email}</td>
-                <td className="px-4 py-3">{row.customer?.address}</td>
-                <td className="px-4 py-3">{row.gst_amount}</td>
-                <td className="px-4 py-3">{row.total_amount}</td>
-                <td className="px-4 py-3">{row.unpaid_amount}</td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                  {row.customer?.contact}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                  {row.customer?.email}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                  {row.customer?.address}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                  {row.gst_amount}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                  {row.total_amount}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
+                  {row.unpaid_amount}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
                   {dateFormater(row.createdAt ?? "")}
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-3 text-left text-xs font-semibold  tracking-wider">
                   <button
                     onClick={() => updateUnpaidAmount(row._id ?? "")}
                     disabled={status === "Paid"}
-                    className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                    className="text-blue-600 hover:text-blue-800 transition-colors duration-150"
                   >
                     <IconSecurePaymentFill />
                   </button>

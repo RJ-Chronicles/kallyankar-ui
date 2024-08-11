@@ -11,6 +11,7 @@ import { Button } from "flowbite-react";
 import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 import useInitialFetch from "../../hooks/useInitialFetch";
 import Nothing from "../../components/UI/Nothing";
+import TitleScreen from "../../components/UI/TitleScreen";
 const CustomerBatteryPage = () => {
   const [showCart, setShowCart] = useState(false);
   const { customerId } = useParams();
@@ -50,32 +51,38 @@ const CustomerBatteryPage = () => {
   }, []);
   const showNothing = !isLoading && data && data.length === 0;
   return (
-    <div className="w-full p-10">
-      <div className="flex justify-end w-full items-center">
-        <ButtonHeader buttonClick={() => handleOpenForm()} />
-        {storedCartItems.length > 0 && (
-          <Button onClick={hideShowCartItems} className="w-40 mr-10">
-            <HiShoppingCart className="mr-2 h-5 w-5" />
-            {storedCartItems.length}
-          </Button>
+    <>
+      {" "}
+      <TitleScreen
+        onAddRecord={() => handleOpenForm()}
+        pageTitle="Customer Battery "
+      />
+      <div className="w-full p-10">
+        <div className="flex justify-end w-full items-center">
+          {storedCartItems.length > 0 && (
+            <Button onClick={hideShowCartItems} className="w-40 mr-10">
+              <HiShoppingCart className="mr-2 h-5 w-5" />
+              {storedCartItems.length}
+            </Button>
+          )}
+        </div>
+        {showNothing ? (
+          <Nothing
+            heading="No item Available"
+            subHeading="Please add items in a cart"
+          />
+        ) : (
+          <CustomerBatteryTable data={data ?? []} />
+        )}
+        {showCart && (
+          <CartItems
+            open={showCart}
+            customerId={customerId ?? ""}
+            closeCartHandler={hideShowCartItems}
+          />
         )}
       </div>
-      {showNothing ? (
-        <Nothing
-          heading="No item Available"
-          subHeading="Please add items in a cart"
-        />
-      ) : (
-        <CustomerBatteryTable data={data ?? []} />
-      )}
-      {showCart && (
-        <CartItems
-          open={showCart}
-          customerId={customerId ?? ""}
-          closeCartHandler={hideShowCartItems}
-        />
-      )}
-    </div>
+    </>
   );
 };
 

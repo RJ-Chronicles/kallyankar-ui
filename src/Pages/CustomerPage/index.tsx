@@ -7,6 +7,7 @@ import useAppContext from "../../hooks/useAppContext";
 import axios from "axios";
 import { useAnimation } from "../../hooks";
 import ButtonHeader from "../../components/UI/Button/ButtonHeader";
+import TitleScreen from "../../components/UI/TitleScreen";
 
 const CustomerPage = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -87,20 +88,14 @@ const CustomerPage = () => {
   };
   return (
     <div className="w-full bg-gray-50">
-      <div className="bg-indigo-600 p-6 md:p-10 shadow-md animate-fadeIn">
-        <div className="flex flex-col md:flex-row justify-center md:justify-between items-center space-y-4 md:space-y-0 md:space-x-6 mx-5">
-          <div>
-            <ButtonHeader title="Add New" buttonClick={addRecordFormHandler} />
-          </div>
-          <div className="text-center md:text-left">
-            <h1 className="font-sans tracking-wider text-3xl md:text-2xl font-bold text-white animate-slideIn leading-tight">
-              Kalyankar Batteries
-            </h1>
-          </div>
-        </div>
+      <TitleScreen
+        onAddRecord={() => addRecordFormHandler()}
+        pageTitle="Customer details "
+      />
+      <div className="px-6 animate-fadeIn">
         <div className="flex flex-col md:flex-row justify-end space-y-4 md:space-y-0 md:space-x-4 mt-6 animate-fadeInUp">
           <input
-            className="rounded-md w-full md:w-auto tracking-wider px-4 py-2 text-sm text-gray-700 h-12 border-2 border-gray-300 placeholder-center focus:outline-none focus:shadow-lg focus:border-indigo-400 transition-all"
+            className="rounded-md w-80 tracking-wide px-4 py-2 text-sm text-gray-700 h-12 border-2 border-gray-300 placeholder-center focus:outline-none focus:shadow-lg focus:border-indigo-400 transition-all"
             type="text"
             placeholder="Search record based on name | contact"
             required
@@ -116,7 +111,7 @@ const CustomerPage = () => {
         </div>
       </div>
 
-      <div className="p-6 md:p-10 bg-white  rounded-lg mt-6 animate-fadeIn">
+      <div className="p-6 bg-white  rounded-lg mt-6 animate-fadeIn">
         {customers && <CustomerTable data={customers} />}
         <div className="mt-4 flex justify-center">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (

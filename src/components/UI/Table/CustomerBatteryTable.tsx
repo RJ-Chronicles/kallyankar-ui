@@ -40,13 +40,13 @@ const FlowTable: React.FC<ProductTableProps> = ({ data }) => {
           subHeading="Please add records to see..."
         />
       ) : (
-        <table className="table-auto w-full">
-          <thead className="bg-gray-200">
+        <table className="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden font-sans">
+          <thead className="bg-indigo-600 text-white">
             <tr>
               {BATTERY_TABLE_COLUMN.map((col, index) => (
                 <th
                   key={index}
-                  className="px-4 py-2 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
                 >
                   {col}
                 </th>
@@ -57,17 +57,25 @@ const FlowTable: React.FC<ProductTableProps> = ({ data }) => {
           <tbody className="bg-white divide-y divide-gray-200 text-sm">
             {data.map((row: Product, index: number) => (
               <tr key={index}>
-                <td className="px-4 py-3">{row.name}</td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  {row.name}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                   {row.vehicle_name ?? ""} {row.vehicle_number ?? "-"}
                 </td>
-                <td className="px-4 py-3">{row.type}</td>
-                <td className="px-4 py-3">{row.serial_number}</td>
-                <td className="px-4 py-3">{row.price}</td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  {row.type}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  {row.serial_number}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  {row.price}
+                </td>
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                   {dateFormater(row.createdAt ?? "")}
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                   <button
                     onClick={() => editCustomerProduct(row._id ?? "")}
                     className="text-blue-500 hover:text-blue-700 focus:outline-none"

@@ -43,25 +43,43 @@ const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
             subHeading="Please add records to see..."
           />
         ) : (
-          <table className="w-full text-sm text-left text-gray-700 tracking-wider shadow-lg rounded-lg">
-            <thead className="text-xs md:text-sm text-gray-800 uppercase bg-gray-200 ">
+          <table className="table-auto w-full bg-white shadow-lg rounded-lg overflow-hidden font-sans">
+            <thead className="bg-indigo-600 text-white">
               <tr>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+                >
                   Product Code
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+                >
                   Battery Name
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+                >
                   Amphere Size
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+                >
                   Available
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+                >
                   Date
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+                >
                   Action
                 </th>
               </tr>
@@ -72,17 +90,26 @@ const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
                   key={index}
                   className="bg-white border-b text-sm text-slate-700 font-normal hover:bg-gray-50 "
                 >
-                  <Link to={`/admin/stocks/${row._id}`}>
-                    {" "}
-                    <td className="px-6 py-4">{row.product_code}</td>
-                  </Link>
-                  <td className="px-6 py-4">{row.battery_name}</td>
-                  <td className="px-6 py-4">{row.amphere_size}</td>
+                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                    <Link
+                      to={`/admin/stocks/${row._id}`}
+                      className="text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400"
+                    >
+                      {row.product_code}
+                    </Link>
+                  </td>
 
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                    {row.battery_name}
+                  </td>
+                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                    {row.amphere_size}
+                  </td>
+
+                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                     <span>{row.available}</span>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                     <span>
                       {dateFormater(row.createdAt ?? new Date().toString())}
                     </span>
@@ -91,7 +118,7 @@ const StockTable: React.FC<CustomerTableProps> = ({ data }) => {
                     <button
                       onClick={() => editStockHandler(row._id ?? "")}
                       name={row._id}
-                      className="font-medium text-blue-600 dark:text-red-500 hover:underline"
+                      className="text-blue-600 hover:text-blue-800 transition-colors duration-150"
                     >
                       <Edit2 />
                     </button>
