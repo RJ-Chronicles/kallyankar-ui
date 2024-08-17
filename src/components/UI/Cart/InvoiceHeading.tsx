@@ -7,7 +7,7 @@ const InvoiceHeading: React.FC<{ customer?: Customer }> = ({ customer }) => {
   const { dateFormater } = useDateFormater();
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <div className="p-6 bg-white dark:bg-gray-800">
       <div className="flex flex-col md:flex-row items-center md:items-start justify-between space-y-6 md:space-y-0 md:space-x-8">
         <img src={invoiceLogo} alt="Invoice logo" className="w-32 h-auto" />
         <div className="text-right">

@@ -61,7 +61,6 @@ const PayUnpaidAmount: React.FC<Props> = ({ data, show, setHide }) => {
 
   const updateCustomerPayment = async () => {
     spinnerAnimationStart();
-    hideModule();
     const pendingAmount = unpaid_amount - parseInt(inputFieldAmount);
     const bill_status =
       unpaid_amount - parseInt(inputFieldAmount) === 0 ? "Paid" : "Unpaid";
@@ -69,39 +68,50 @@ const PayUnpaidAmount: React.FC<Props> = ({ data, show, setHide }) => {
     await updateBillingById(body, _id ?? "");
     handleDownloadPDF(
       contentRef.current as HTMLDivElement,
-      `file_${customer?.name}_${customer?._id}`
+      `${customer?.name ?? ""} ${new Date()}_bill`
     );
 
     spinnerAnimationStop();
     snackbarAnimation("Record Updated successfully! ", "success");
     dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+    hideModule();
   };
   return (
     <Overlay open={show} handleClose={hideModule} widthSize="lg">
-      <div id="print" ref={contentRef} className="w-full p-20">
-        <InvoiceHeading customer={customer} />
-        <table className="w-full overflow-hidden shadow-md rounded-md">
-          <tr className="text-sm text-blue-100 text-left">
-            <th className="px-3 py-2 bg-yellow-700 ">{"Total Amount"}</th>
-            <th className="px-3 py-2 bg-yellow-700">{"Paid Amount"}</th>
-            <th className="px-3 py-2 bg-yellow-700">{"Date"}</th>
-            <th className="px-3 py-2 bg-yellow-700">{"Pending Amount"}</th>
-          </tr>
-
-          <tr className="bg-white dark:border-gray-700 dark:bg-gray-800 text-sm text-slate-900">
-            <td className="px-3 py-2">{unpaid_amount}</td>
-            <td className="px-3 py-2">
-              {inputFieldAmount === "" ? "0" : inputFieldAmount}
-            </td>
-            <td className="px-3 py-2">{new Date().toJSON().slice(0, 10)}</td>
-            <td className="px-3 py-2">
-              {" "}
-              {inputFieldAmount === ""
-                ? unpaid_amount
-                : unpaid_amount - parseInt(inputFieldAmount)}
-            </td>
-          </tr>
-        </table>
+      <div className="p-8 bg-gray-100 w-full" id="print" ref={contentRef}>
+        <div className="max-w-4xl mx-auto bg-white p-6 shadow-md rounded-md">
+          <InvoiceHeading customer={customer} />
+          <div className="w-full mt-8">
+            <table className="w-full border-collapse overflow-hidden shadow-md rounded-md text-sm text-left">
+              <thead>
+                <tr className="bg-slate-500 text-white">
+                  <th className="px-3 py-2">Total Amount</th>
+                  <th className="px-3 py-2">Paid Amount</th>
+                  <th className="px-3 py-2">Date</th>
+                  <th className="px-3 py-2">Pending Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="bg-white text-gray-800">
+                  <td className="px-3 py-2 border border-gray-300">
+                    {unpaid_amount}
+                  </td>
+                  <td className="px-3 py-2 border border-gray-300">
+                    {inputFieldAmount === "" ? "0" : inputFieldAmount}
+                  </td>
+                  <td className="px-3 py-2 border border-gray-300">
+                    {new Date().toJSON().slice(0, 10)}
+                  </td>
+                  <td className="px-3 py-2 border border-gray-300">
+                    {inputFieldAmount === ""
+                      ? unpaid_amount
+                      : unpaid_amount - parseInt(inputFieldAmount)}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       <div className="text-left flex justify-left mt-6">
