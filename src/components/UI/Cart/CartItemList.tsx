@@ -1,22 +1,24 @@
 import useAppContext from "../../../hooks/useAppContext";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { Product } from "../../../store/type";
-import { CART_ITEMS_COLUMN } from "../Table/columns";
-import { Trash2 } from "lucide-react";
 
 type CartListPs = {
-  hideDeleteColumn: boolean;
+  setTotal: React.Dispatch<
+    React.SetStateAction<{
+      total: number;
+      gst: number;
+    }>
+  >;
 };
-const CartItemsList: React.FC<CartListPs> = ({ hideDeleteColumn }) => {
-  const { state, dispatch } = useAppContext();
+const CartItemsList: React.FC<CartListPs> = ({ setTotal }) => {
+  const { state } = useAppContext();
   const { storedCartItems } = state;
-  console.log(storedCartItems);
-  const netAmount = (price: string, GST: string) => {
-    const { itemPrice } = calculateNetAmountAndGST(price, GST);
-    return itemPrice;
-  };
+  useEffect(() => {
+    const { total, GST } = calculateGSTAndTotal();
+    setTotal({ total, gst: +GST });
+  }, []);
 
-  const calculateNetAmountAndGST = (price: string, GST: string) => {
+  const calculateNetAmountAndGST = useCallback((price: string, GST: string) => {
     const itemGST =
       Math.round(
         ((parseInt(price) / (1 + (parseInt(GST) * 2) / 100)) * parseInt(GST)) /
@@ -24,80 +26,138 @@ const CartItemsList: React.FC<CartListPs> = ({ hideDeleteColumn }) => {
       ) * 2;
     const itemPrice = parseInt(price) - itemGST;
     return { itemGST, itemPrice };
-  };
+  }, []);
 
-  const handleCartRemoveItem = (serial_number: string) => {
-    const cartItems = storedCartItems.filter(
-      (item) => item.serial_number !== serial_number
-    );
-    dispatch({
-      type: "ADD_STORED_CART_ITEMS",
-      payload: [...cartItems],
-    });
-    console.log("cartItems ", cartItems);
-    if (cartItems.length === 0) {
-      console.log("inside the if block");
-      dispatch({ type: "HIDE_SHOW_FORM", payload: false });
+  const calculatePriceAndUnitPrice = useCallback(
+    (price: string, quantity: number = 1, GST: string) => {
+      const { itemGST, itemPrice } = calculateNetAmountAndGST(price, GST);
+
+      return {
+        unitPrice: itemPrice,
+        itemGST,
+        price: itemPrice * quantity,
+      };
+    },
+    [calculateNetAmountAndGST]
+  );
+  const calculateGSTAndTotal = useCallback(() => {
+    const section = { GST: 0, subTotal: 0, total: 0, gst: "" };
+    for (const item of storedCartItems) {
+      const { price: p, quantity, GST } = item;
+      const { price, itemGST } = calculatePriceAndUnitPrice(p, quantity, GST);
+      section.GST += itemGST * (item.quantity ?? 1);
+      section.subTotal += price;
+      section.gst = GST;
     }
-    console.log("end game");
-  };
+
+    return {
+      ...section,
+      total: section.GST + section.subTotal,
+    };
+  }, []);
+
   return (
-    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border">
-      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-          {CART_ITEMS_COLUMN.map((col, index) => {
-            const shouldDisplayDelete = !hideDeleteColumn ? (
-              <th key={index} className="px-6 py-3 border border-slate-900">
-                {col}
-              </th>
-            ) : null;
-
-            return col !== "Action" ? (
-              <th key={index} className="px-6 py-3 border border-slate-900">
-                {col}
-              </th>
-            ) : (
-              shouldDisplayDelete
-            );
-          })}
-        </tr>
-      </thead>
-      <tbody>
-        {storedCartItems.length > 0 &&
-          storedCartItems.map((item: Product, index: number) => (
-            <tr
-              key={index}
-              className="bg-white border-b text-sm dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-            >
-              <td className="px-6 py-2 border border-slate-900">{item.name}</td>
-              <td className="px-6 py-2 border border-slate-900">
-                {item.serial_number}
-              </td>
-              <td className="px-6 py-2 border border-slate-900">
-                {netAmount(item.price, item.GST)}
-              </td>
-              <td className="px-6 py-2 border border-slate-900">
-                {item.GST + "%"}
-              </td>
-              <td className="px-6 py-2 border border-slate-900">
-                {item.price}
-              </td>
-              <td className="px-6 py-2 border border-slate-900">{item.type}</td>
-
-              {!hideDeleteColumn && (
-                <td className="px-6 py-2 border border-slate-900">
-                  <button
-                    onClick={() => handleCartRemoveItem(item.serial_number)}
-                    className="w-full "
-                  >
-                    <Trash2 className="text-red-500" />
-                  </button>
+    <div className="w-full bg-white shadow-md rounded-md">
+      <table className="min-w-full border-collapse border border-gray-300 text-sm">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="border border-gray-300 p-3">Item#</th>
+            <th className="border border-gray-300 p-3">Company</th>
+            <th className="border border-gray-300 p-3">Model</th>
+            <th className="border border-gray-300 p-3">Serial No</th>
+            <th className="border border-gray-300 p-3">Qty</th>
+            <th className="border border-gray-300 p-3">Unit Price</th>
+            <th className="border border-gray-300 p-3">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {storedCartItems.length > 0 &&
+            storedCartItems.map((item: Product, index: number) => (
+              <tr
+                key={index}
+                className="bg-white border-b text-sm dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <td className="border border-gray-300 p-3">{index + 1}</td>
+                <td className="border border-gray-300 p-3">{item.name}</td>
+                <td className="border border-gray-300 p-3">
+                  {item.product_code}
                 </td>
-              )}
-            </tr>
-          ))}
-      </tbody>
-    </table>
+                <td className="border border-gray-300 p-3">
+                  {item.serial_number}
+                </td>
+                <td className="border border-gray-300 p-3">{item.quantity}</td>
+                <td className="border border-gray-300 p-3">
+                  {
+                    calculatePriceAndUnitPrice(
+                      item.price,
+                      item.quantity,
+                      item.GST
+                    ).unitPrice
+                  }
+                </td>
+                <td className="border border-gray-300 p-3">
+                  {
+                    calculatePriceAndUnitPrice(
+                      item.price,
+                      item.quantity,
+                      item.GST
+                    ).price
+                  }
+                </td>
+              </tr>
+            ))}
+          {/* Totals Section */}
+          <tr>
+            <td
+              className="border border-gray-300 p-3 text-left"
+              align="right"
+              colSpan={5}
+            >
+              Invoice Subtotal:
+            </td>
+            <td colSpan={5} className="border border-gray-300 p-3 ">
+              {calculateGSTAndTotal().subTotal}
+            </td>
+          </tr>
+          <tr>
+            <td
+              className="border border-gray-300 p-3 text-left"
+              align="right"
+              colSpan={5}
+            >
+              {`CGST(${calculateGSTAndTotal().gst}%)`}:
+            </td>
+            <td colSpan={5} className="border border-gray-300 p-3 ">
+              {calculateGSTAndTotal().GST / 2}
+            </td>
+          </tr>
+          <tr>
+            <td
+              className="border border-gray-300 p-3 text-left"
+              align="right"
+              colSpan={5}
+            >
+              {`SGST(${calculateGSTAndTotal().gst}%)`}:
+            </td>
+            <td colSpan={5} className="border border-gray-300 p-3 ">
+              {calculateGSTAndTotal().GST / 2}
+            </td>
+          </tr>
+          <tr className="font-bold">
+            <td
+              className="border border-gray-300 p-3 text-left"
+              align="right"
+              colSpan={5}
+            >
+              TOTAL:
+            </td>
+            <td colSpan={5} className="border border-gray-300 p-3 ">
+              {calculateGSTAndTotal().total}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 };
 

@@ -19,7 +19,7 @@ const GSTForm: React.FC = () => {
     useAnimation();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (gst <= 0) {
+    if (gst < 0) {
       snackbarAnimation("Please enter valid GST value", "error");
       return;
     }

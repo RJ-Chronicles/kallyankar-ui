@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import { useContext, useEffect, useRef, useState } from "react";
 import { updateBillingById } from "../../backend/billing";
 import ButtonClick from "../../components/UI/Button/ButtonClick";
+import ButtonHeader from "../../components/UI/Button/ButtonHeader";
 import InvoiceHeading from "../../components/UI/Cart/InvoiceHeading";
 import Overlay from "../../components/UI/Overlay";
 import { useAnimation } from "../../hooks";
@@ -77,7 +78,7 @@ const PayUnpaidAmount: React.FC<Props> = ({ data, show, setHide }) => {
   };
   return (
     <Overlay open={show} handleClose={hideModule} widthSize="lg">
-      <div id="print-area" ref={contentRef} className="w-full p-20">
+      <div id="print" ref={contentRef} className="w-full p-20">
         <InvoiceHeading customer={customer} />
         <table className="w-full overflow-hidden shadow-md rounded-md">
           <tr className="text-sm text-blue-100 text-left">
@@ -120,9 +121,9 @@ const PayUnpaidAmount: React.FC<Props> = ({ data, show, setHide }) => {
           )}
         </div>
       </div>
-      <div className="my-6 flex">
-        <ButtonClick onClick={updateCustomerPayment} title="Print" />
-        <ButtonClick onClick={hideModule} title="Close" />
+      <div className="m-6 flex justify-end space-x-10">
+        <ButtonHeader buttonClick={updateCustomerPayment} title="Print" />
+        <ButtonHeader buttonClick={hideModule} title="Close" />
       </div>
     </Overlay>
   );

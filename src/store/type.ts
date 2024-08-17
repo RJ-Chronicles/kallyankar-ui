@@ -220,6 +220,8 @@ export type Product = {
   _id?: string;
   customer?: string;
   createdAt?: string;
+  quantity?: number;
+  product_code?: string;
 };
 
 export const product: Product = {
@@ -231,6 +233,7 @@ export const product: Product = {
   price: "",
   GST: "",
   _id: "",
+  quantity: 0,
 };
 
 export type Billing = {

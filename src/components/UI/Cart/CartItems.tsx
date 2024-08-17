@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, useEffect, useState, useRef } from "react";
+import React, { Fragment, useMemo, useState, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Dialog, Transition } from "@headlessui/react";
@@ -23,54 +23,25 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
   const { state, dispatch } = useAppContext();
   const { storedCartItems, refreshEffect } = state;
   const [billStatus, setBillStatus] = useState("Paid");
-  const [inputFieldAmount, setInputAmount] = useState("");
-  const [totals, setTotals] = useState({ excludeGST: 0, GST: 0 });
   const contentRef = useRef<HTMLDivElement>(null);
-  const [hideDeleteColumn, setHideDeleteColumn] = useState(false);
   const { handleDownloadPDF } = usePdfDownloader();
-
+  const [payment, setTotalAmount] = useState({ total: 0, gst: 0 });
+  const [inputFieldAmount, setInputAmount] = useState(payment.total.toString());
   const params = useMemo(() => ({ id: customerId }), [customerId]);
   const { data: customer } = useApiCall(getCustomerById, params);
 
-  useEffect(() => {
-    let price = 0;
-    let gstAmount = 0;
-    storedCartItems.forEach((item: Product) => {
-      const { itemGST, itemPrice } = calculateNetAmountAndGST(
-        item.price,
-        item.GST
-      );
-      price += itemPrice;
-      gstAmount += itemGST;
-    });
-    setTotals({ excludeGST: price, GST: gstAmount });
-  }, [storedCartItems]);
-
-  useEffect(() => {
-    setInputAmount((totals.excludeGST + totals.GST - 1).toString());
-  }, [totals]);
-
-  const calculateNetAmountAndGST = (price: string, GST: string) => {
-    const gst = parseInt(GST);
-    const itemGST =
-      Math.round(((parseInt(price) / (1 + (gst * 2) / 100)) * gst) / 100) * 2;
-    const itemPrice = parseInt(price) - itemGST;
-    return { itemGST, itemPrice };
-  };
-
   const handleAmountValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const amount = e.target.value;
-    const maxAmount = totals.excludeGST + totals.GST - 1;
+    const maxAmount = payment.total - 1;
     setInputAmount(
       amount === "" || parseInt(amount) <= maxAmount ? amount : inputFieldAmount
     );
   };
 
   const saveAsPDFHandler = async () => {
-    setHideDeleteColumn(true);
     try {
       let amount = inputFieldAmount
-        ? totals.excludeGST + totals.GST - parseInt(inputFieldAmount)
+        ? payment.total - parseInt(inputFieldAmount)
         : 0;
       amount = billStatus === "Paid" ? 0 : amount;
 
@@ -80,8 +51,8 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
         )
       );
       await postNewBilling({
-        gst_amount: totals.GST,
-        total_amount: totals.excludeGST + totals.GST,
+        gst_amount: payment.gst,
+        total_amount: payment.total,
         unpaid_amount: amount,
         bill_status: billStatus,
         customerId: customerId,
@@ -137,35 +108,8 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
               <div className="p-4" id="print" ref={contentRef}>
                 {customer && <InvoiceHeading customer={customer} />}
                 <div className="flex w-full justify-center items-center">
-                  <CartItemsList hideDeleteColumn={hideDeleteColumn} />
+                  <CartItemsList setTotal={setTotalAmount} />
                 </div>
-
-                <ul className="mt-3 flex flex-col">
-                  <li className="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg last:rounded-b-lg">
-                    <div className="flex items-center justify-between w-full">
-                      <span>Subtotal</span>
-                      <span>{totals.excludeGST}</span>
-                    </div>
-                  </li>
-                  <li className="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg last:rounded-b-lg">
-                    <div className="flex items-center justify-between w-full">
-                      <span>CGST</span>
-                      <span>{totals.GST / 2}</span>
-                    </div>
-                  </li>
-                  <li className="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg last:rounded-b-lg">
-                    <div className="flex items-center justify-between w-full">
-                      <span>SGST</span>
-                      <span>{totals.GST / 2}</span>
-                    </div>
-                  </li>
-                  <li className="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-semibold bg-gray-50 border text-gray-800 -mt-px first:rounded-t-lg last:rounded-b-lg">
-                    <div className="flex items-center justify-between w-full">
-                      <span>Amount to be paid</span>
-                      <span>{totals.excludeGST + totals.GST}</span>
-                    </div>
-                  </li>
-                </ul>
 
                 <div className="mt-10">
                   <div className="text-sm w-full flex justify-end pb-16">
