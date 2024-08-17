@@ -22,7 +22,11 @@ const CustomerForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validate = CustomerSchema.safeParse(data as Customer);
+    const { contact } = data as Customer;
+    const validate = CustomerSchema.safeParse({
+      ...data,
+      contact: contact.toString(),
+    } as Customer);
     if (!validate.success) {
       const errors = validate.error.flatten();
       const { name, last_name, contact, email, address } = errors.fieldErrors;
