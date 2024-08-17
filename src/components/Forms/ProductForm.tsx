@@ -194,7 +194,7 @@ const ProductForm: React.FC = () => {
                     disabled={quantity == serial_numbers?.length}
                     type="button"
                     onClick={handleSerialNumbers}
-                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md shadow-lg transition-all animate-fadeInUp text-sm"
+                    className="bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded-r-md shadow-lg transition-all animate-fadeInUp text-sm"
                   >
                     +{" "}
                   </button>
