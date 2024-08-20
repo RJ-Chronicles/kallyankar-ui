@@ -1,50 +1,35 @@
 import CustomerTable from "../../components/UI/Table/CustomerTable";
 
-import { useEffect, useState } from "react";
-import { customer, CustomerApiParam, Customer } from "../../store/type";
+import { useMemo, useState } from "react";
+import { customer } from "../../store/type";
 
 import useAppContext from "../../hooks/useAppContext";
-import axios from "axios";
-import { useAnimation } from "../../hooks";
-import ButtonHeader from "../../components/UI/Button/ButtonHeader";
+import { useApiCall } from "../../hooks";
 import TitleScreen from "../../components/UI/TitleScreen";
-
+import { getCustomerList } from "../../backend/customer";
+import Pagination from "./Pagination";
 const CustomerPage = () => {
-  const [customers, setCustomers] = useState<Customer[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [val, setVal] = useState("");
+  const {
+    state: { refreshEffect },
+    dispatch,
+  } = useAppContext();
 
   const limit = 10;
-  const { spinnerAnimationStart, spinnerAnimationStop } = useAnimation();
-  useEffect(() => {
-    const fetchCustomers = async () => {
-      spinnerAnimationStart();
-      try {
-        const params: CustomerApiParam = {
-          page: currentPage,
-          limit: limit,
-          sortBy: "updatedAt",
-          sortOrder: "desc",
-          search: searchTerm,
-        };
-        const response = await axios.get(
-          "https://kallyankar-api-service.onrender.com/customer/customer-all",
-          {
-            params,
-          }
-        );
-        setCustomers(response.data.customers);
-        setTotalPages(response.data.totalPages);
-        spinnerAnimationStop();
-      } catch (error) {
-        spinnerAnimationStop();
-      }
+  const params = useMemo(() => {
+    return {
+      refreshEffect,
+      page: currentPage,
+      limit,
+      search: searchTerm,
+      sortBy: "updatedAt",
+      sortOrder: "desc",
     };
+  }, [currentPage, limit, searchTerm, refreshEffect]);
 
-    fetchCustomers();
-  }, [searchTerm, currentPage]); // Trigger useEffect when searchTerm or currentPage changes
+  const { data } = useApiCall(getCustomerList, params);
 
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -60,7 +45,6 @@ const CustomerPage = () => {
       } else {
         setSearchTerm(val);
         setCurrentPage(1);
-        console.log("else part");
       }
     }, 2000);
   };
@@ -74,7 +58,6 @@ const CustomerPage = () => {
     setCurrentPage(page);
   };
 
-  const { state, dispatch } = useAppContext();
   const addRecordFormHandler = () => {
     dispatch({
       type: "SET_FORM_PROPS",
@@ -112,22 +95,14 @@ const CustomerPage = () => {
       </div>
 
       <div className="p-6 bg-white  rounded-lg mt-6 animate-fadeIn">
-        {customers && <CustomerTable data={customers} />}
-        <div className="mt-4 flex justify-center">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`mx-1 py-2 px-4 rounded-lg transition-all ${
-                currentPage === page
-                  ? "bg-indigo-600 text-white shadow-md"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              } animate-bounce`}
-            >
-              {page}
-            </button>
-          ))}
-        </div>
+        {data?.customers && <CustomerTable data={data?.customers} />}
+        {data && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={data.totalPages}
+            handlePageChange={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,13 @@
 import api from "./api";
 
 import { Customer } from "../store/type";
+
+interface CustomerPagination {
+  customers: Customer[];
+  currentPage: number;
+  totalPages: number;
+  totalCustomers: number;
+}
 const postNewCustomer = async (customer: Customer) => {
   const { data } = await api.post<Customer>("customer/new-customer", customer);
   return data;
@@ -30,8 +37,11 @@ const getCustomerByBillingStatus = async (status: string) => {
   );
   return data;
 };
-const getCustomerList = async () => {
-  const { data } = await api.get<Customer[]>("customer/customer-all");
+const getCustomerList = async (p: any) => {
+  const { refreshEffect, ...params } = p;
+  const { data } = await api.get<CustomerPagination>("customer/customer-all", {
+    params,
+  });
   return data;
 };
 const getCustomerListToExport = async () => {

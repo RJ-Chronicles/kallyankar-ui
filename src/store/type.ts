@@ -258,6 +258,7 @@ export type CustomerApiParam = {
   sortBy: string;
   sortOrder: string;
   search: string;
+  refreshEffect?: boolean;
 };
 
 export type STOCK = {

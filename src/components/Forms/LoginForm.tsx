@@ -61,7 +61,7 @@ const LoginForm = () => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="px-6 md:px-28 py-5 text-[#333300] "
+      className="px-6 md:px-28 py-5 text-[#333300] w-[550px]"
     >
       <div className="mb-4 w-full">
         <label
@@ -71,7 +71,7 @@ const LoginForm = () => {
           Admin Email.
         </label>
         <input
-          className="w-full h-12 px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline tracking-wide"
+          className="w-full h-10 px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline tracking-wide"
           name="email"
           id="email"
           type="text"
@@ -88,7 +88,7 @@ const LoginForm = () => {
           Admin Password.
         </label>
         <input
-          className="w-full h-12 px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline tracking-wide"
+          className="w-full h-10 px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline tracking-wide"
           name="password"
           id="password"
           type="password"
