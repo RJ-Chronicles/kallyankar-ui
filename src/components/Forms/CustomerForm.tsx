@@ -8,12 +8,13 @@ import ButtonSave from "../UI/Button/ButtonSave";
 import { CustomerSchema } from "../../zod";
 import useAnimation from "../../hooks/useAnimation";
 import { ERRORS } from "../../zod/zod_error";
+import { AxiosError } from "axios";
 
 const CustomerForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
   const { refreshEffect, formProps } = state;
   const { data: _customer, title, mode } = formProps;
-  console.log(formProps);
+
   const { setValue, data } = useHandlevalueChange(_customer as Customer);
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
@@ -39,17 +40,22 @@ const CustomerForm: React.FC = () => {
     }
     try {
       spinnerAnimationStart();
-      dispatch({ type: "HIDE_SHOW_FORM", payload: false });
       if (mode === "ADD_RECORD") {
-        const response = await postNewCustomer(data as Customer);
+        await postNewCustomer(data as Customer);
       } else {
         await updateCustomerById(data as Customer, _id ?? "");
       }
       spinnerAnimationStop();
       dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
+      dispatch({ type: "HIDE_SHOW_FORM", payload: false });
     } catch (err) {
+      let key = 0;
+      if (err instanceof AxiosError) {
+        const { contact = 0 } = err.response?.data?.keyPattern;
+        key = contact;
+      }
       spinnerAnimationStop();
-      snackbarAnimation(ERRORS.FAILURE, "error");
+      snackbarAnimation(key === 0 ? ERRORS.FAILURE : ERRORS.DUPLICATE, "error");
     }
   };
 

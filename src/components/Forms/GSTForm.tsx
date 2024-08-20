@@ -7,10 +7,8 @@ import ButtonSave from "../UI/Button/ButtonSave";
 import { useAnimation } from "../../hooks";
 
 const GSTForm: React.FC = () => {
-  const {
-    state: { formProps },
-    dispatch,
-  } = useAppContext();
+  const { state, dispatch } = useAppContext();
+  const { formProps, GST } = state;
   const { data: _gst, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_gst as GSTValues);
 
@@ -21,6 +19,11 @@ const GSTForm: React.FC = () => {
     e.preventDefault();
     if (gst < 0) {
       snackbarAnimation("Please enter valid GST value", "error");
+      return;
+    }
+    const itemIndex = GST.findIndex((element) => element.gst === gst);
+    if (itemIndex !== -1) {
+      snackbarAnimation(`GST value ${gst} already exists`, "error");
       return;
     }
 

@@ -64,8 +64,8 @@ const CartItemsList: React.FC<CartListPs> = ({ setTotal }) => {
             <th className="border border-gray-300 p-3">Item#</th>
             <th className="border border-gray-300 p-3">Company</th>
             <th className="border border-gray-300 p-3">Model</th>
-            <th className="border border-gray-300 p-3">Serial No</th>
             <th className="border border-gray-300 p-3">Qty</th>
+            <th className="border border-gray-300 p-3">Serial No</th>
             <th className="border border-gray-300 p-3">Unit Price</th>
             <th className="border border-gray-300 p-3">Price</th>
           </tr>
@@ -82,10 +82,10 @@ const CartItemsList: React.FC<CartListPs> = ({ setTotal }) => {
                 <td className="border border-gray-300 p-3">
                   {item.product_code}
                 </td>
+                <td className="border border-gray-300 p-3">{item.quantity}</td>
                 <td className="border border-gray-300 p-3">
                   {item.serial_number}
                 </td>
-                <td className="border border-gray-300 p-3">{item.quantity}</td>
                 <td className="border border-gray-300 p-3">
                   {
                     calculatePriceAndUnitPrice(

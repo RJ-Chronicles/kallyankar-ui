@@ -7,47 +7,53 @@ const InvoiceHeading: React.FC<{ customer?: Customer }> = ({ customer }) => {
   const { dateFormater } = useDateFormater();
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-800">
-      <div className="flex flex-col md:flex-row items-center md:items-start justify-between space-y-6 md:space-y-0 md:space-x-8">
-        <img src={invoiceLogo} alt="Invoice logo" className="w-32 h-auto" />
+    <div className=" bg-white dark:bg-gray-800 ">
+      <div className=" p-6 flex flex-col md:flex-row items-center md:items-start justify-between space-y-6 md:space-y-0 md:space-x-8">
+        <img src={invoiceLogo} alt="Invoice logo" className="w-52 h-auto" />
         <div className="text-right">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+          <h2 className=" font-normal text-gray-900 dark:text-gray-200">
             GSTN-27ARIPK2620F1Z2
           </h2>
-          <address className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
             Shinde complex, main-road Gargoti
             <br />
             Bhudargad, Kolhapur, PIN: 416209
             <br />
             Contact: 9420007273, 7745047273
-          </address>
+          </p>
         </div>
       </div>
 
-      <div className="mt-8 grid gap-6 md:grid-cols-2">
-        <div>
+      <div className=" px-6 mt-8 grid gap-6 md:grid-cols-2 border border-gray-300 shadow-md">
+        <div className=" border-gray-300 border-r py-2">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
             Bill to:
           </h3>
           <p className="text-base font-medium text-gray-800 dark:text-gray-200">
             {customer?.name} {customer?.last_name}
           </p>
-          <address className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
             Address: {customer?.address}
             <br />
             Contact: {customer?.contact}
             <br />
-            {customer?.gst_number && `GST Number: ${customer?.gst_number}`}
-          </address>
+            GST Number: {customer?.gst_number ?? ""}
+          </p>
         </div>
 
-        <div className="text-right">
+        <div className="text-right py-2">
           <dl className="text-sm text-gray-600 dark:text-gray-400">
-            <div className="flex justify-between">
+            <div className="flex justify-start space-x-4">
               <dt className="font-semibold text-gray-800 dark:text-gray-200">
                 Billing date:
               </dt>
               <dd>{dateFormater(new Date().toString())}</dd>
+            </div>
+            <div className="flex justify-start space-x-4">
+              <dt className="font-semibold text-gray-800 dark:text-gray-200">
+                Invoice No:
+              </dt>
+              <dd>{"#1001"}</dd>
             </div>
           </dl>
         </div>

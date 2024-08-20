@@ -105,38 +105,40 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
             leaveTo="opacity-0 scale-95"
           >
             <div className="my-8 inline-block w-full max-w-3xl transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
-              <div className="p-4" id="print" ref={contentRef}>
-                {customer && <InvoiceHeading customer={customer} />}
-                <div className="flex w-full justify-center items-center">
-                  <CartItemsList setTotal={setTotalAmount} />
-                </div>
-
-                <div className="mt-10">
-                  <div className="text-sm w-full flex justify-end pb-16">
-                    <p className="font-medium text-sm px-8">
-                      For Kalyankar Batteries
-                    </p>
+              <div className="p-2" id="print" ref={contentRef}>
+                <div className="border-2 border-gray-600 p-2">
+                  {customer && <InvoiceHeading customer={customer} />}
+                  <div className="flex w-full justify-center items-center">
+                    <CartItemsList setTotal={setTotalAmount} />
                   </div>
 
-                  <div className="p-2 w-full flex justify-end">
-                    <p className="font-bold text-sm border-t-2 border-slate-700 px-8 pt-2">
-                      Authorized Signature
+                  <div className="mt-10">
+                    <div className="text-sm w-full flex justify-end pb-16">
+                      <p className="font-medium text-sm px-8">
+                        For Kalyankar Batteries
+                      </p>
+                    </div>
+
+                    <div className="p-2 w-full flex justify-end">
+                      <p className="font-bold text-sm border-t-2 border-slate-700 px-8 pt-2">
+                        Authorized Signature
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="w-full">
+                    <p className="mb-4 italic text-[10px]">
+                      <strong>Subject To Kolhapur Jurisdiction.</strong> I/We
+                      hereby certify that my/our registration certificate under
+                      the Maharashtra Value Added Tax Act 2002 is in force on
+                      the date which the sale of goods specified in the tax
+                      invoice is made by me/us and that the transaction of sale
+                      covered by this Bill/Cash has been effect by me/us and it
+                      shall be accounted for in the turnover of sales while
+                      filing of return and the due tax if any payable of the
+                      sale has been paid or shall be paid.
                     </p>
                   </div>
-                </div>
-
-                <div className="w-full">
-                  <p className="mb-4 italic text-[10px]">
-                    <strong>Subject To Kolhapur Jurisdiction.</strong> I/We
-                    hereby certify that my/our registration certificate under
-                    the Maharashtra Value Added Tax Act 2002 is in force on the
-                    date which the sale of goods specified in the tax invoice is
-                    made by me/us and that the transaction of sale covered by
-                    this Bill/Cash has been effect by me/us and it shall be
-                    accounted for in the turnover of sales while filing of
-                    return and the due tax if any payable of the sale has been
-                    paid or shall be paid.
-                  </p>
                 </div>
               </div>
 

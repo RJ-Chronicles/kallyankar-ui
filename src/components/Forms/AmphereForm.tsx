@@ -8,7 +8,7 @@ import { useAnimation } from "../../hooks";
 
 const AmphereForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
-  const { formProps } = state;
+  const { formProps, amphere } = state;
   const { data: _amphere, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_amphere as AmphareSize);
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
@@ -16,17 +16,29 @@ const AmphereForm: React.FC = () => {
   const { size, _id } = data as AmphareSize;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (size <= 0) {
+    const validSize = +size.toString().replace(/\D/g, "");
+    if (validSize <= 0) {
       snackbarAnimation("Please enter value greater than zero", "error");
+      return;
+    }
+
+    const itemIndex = amphere.findIndex(
+      (emp) => emp.size.toString() === validSize + " AH"
+    );
+    if (itemIndex !== -1) {
+      snackbarAnimation("Amphere size already exists!", "error");
       return;
     }
 
     try {
       spinnerAnimationStart();
       if (mode === "ADD_RECORD") {
-        const response = await postNewAmphere(data as AmphareSize);
+        await postNewAmphere({ size: validSize } as AmphareSize);
       } else {
-        await updateAmphereById(data as AmphareSize, _id ?? "");
+        await updateAmphereById(
+          { ...data, size: validSize } as AmphareSize,
+          _id ?? ""
+        );
       }
       snackbarAnimation("Record saved successfully!", "success");
       dispatch({ type: "HAS_INITIAL_FETCHED", payload: false });
