@@ -14,4 +14,6 @@ export const ERRORS = {
   BATTERY: "Please select a valid BATTERY",
   P_CODE: "Please enter a valid Product code",
   SUCCESS: "Record added or updated successfully",
+  DUPLICATE: "Contact number is already exists!",
+  SERIAL_NUMBER: "Serial number and QTY did not match",
 };

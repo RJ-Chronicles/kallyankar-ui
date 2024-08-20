@@ -8,7 +8,7 @@ import { useAnimation } from "../../hooks";
 
 const BatteryForm: React.FC = () => {
   const { state, dispatch } = useAppContext();
-  const { refreshEffect, formProps } = state;
+  const { formProps, batteryNames } = state;
   const { data: _battery, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(
     _battery as BatteryNameValues
@@ -21,6 +21,13 @@ const BatteryForm: React.FC = () => {
     e.preventDefault();
     if (name.length <= 2) {
       snackbarAnimation("Please enter valid battery name", "error");
+      return;
+    }
+    const itemIndex = batteryNames.findIndex(
+      (element) => element.name.toLowerCase() === name.toLowerCase()
+    );
+    if (itemIndex !== -1) {
+      snackbarAnimation("Battery name already exists", "error");
       return;
     }
 

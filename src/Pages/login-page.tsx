@@ -18,24 +18,9 @@ const styleHeading = {
 
 const LoginPage = () => {
   return (
-    <section
-      className="min-h-screen mx-0 md:mx-auto flex justify-center items-center"
-      style={styleSection}
-    >
-      <div className=" bg-white shadow-md rounded-md mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 pb-12 flex-col justify-center items-center w-100">
-        {/* <div className="pt-5 w-full">
-          <h1
-            className="text-center animate-bounce uppercase"
-            style={styleHeading}
-          >
-            Kalyankar Batteries
-          </h1>
-        </div> */}
-        <Heading heading="Kalyankar Batteries" />
-        <LoginForm />
-      </div>
-      {/* <div className="h-full">
-        <div className="g-6 flex  h-full flex-wrap items-center justify-center ">
+    <section className="min-h-screen mx-0 md:mx-auto" style={styleSection}>
+      <div className="h-full">
+        <div className="g-6 flex  h-full items-center justify-center ">
           <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12 hidden md:block">
             <img
               src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
@@ -43,10 +28,19 @@ const LoginPage = () => {
               alt="Sample image"
             />
           </div>
-
-
+          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 py-4 flex-col justify-center items-center w-100">
+            <div className="pt-5 w-full">
+              <h1
+                className="text-center animate-bounce uppercase"
+                style={styleHeading}
+              >
+                Kalyankar Batteries
+              </h1>
+            </div>
+            <LoginForm />
+          </div>
         </div>
-      </div> */}
+      </div>
     </section>
   );
 };

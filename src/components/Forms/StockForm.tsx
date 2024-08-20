@@ -14,30 +14,18 @@ import {
   postNewStock,
   updateStockById,
 } from "../../backend/stock";
-import { useEffect, useState } from "react";
 
 const StockForms: React.FC = () => {
   const { state, dispatch } = useAppContext();
-  const [isStockNotPresent, setStockNotPresent] = useState(false);
   const { refreshEffect, formProps } = state;
   const { data: _stock, title, mode } = formProps;
   const { setValue, data } = useHandlevalueChange(_stock as STOCK);
   const { snackbarAnimation, spinnerAnimationStart, spinnerAnimationStop } =
     useAnimation();
-  console.log("formProps ", formProps);
-  const { product_code, battery_name, available, amphere_size, _id } =
-    data as STOCK;
+  const { product_code, battery_name, amphere_size, _id } = data as STOCK;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isStockNotPresent) {
-      snackbarAnimation(
-        `Record already exist for ${battery_name + " and " + amphere_size}`,
-        "error"
-      );
-      return;
-    }
-
     const validate = StockSchema.safeParse(data as STOCK);
     if (!validate.success) {
       const errors = validate.error.flatten();
@@ -48,6 +36,24 @@ const StockForms: React.FC = () => {
       product_code && snackbarAnimation(ERRORS.P_CODE, "error");
       return;
     }
+
+    try {
+      const response = await postCheckStockAvailability(
+        battery_name,
+        amphere_size
+      );
+      if (response) {
+        snackbarAnimation(
+          `Record already exist for ${battery_name + " and " + amphere_size}`,
+          "error"
+        );
+        return;
+      }
+    } catch (err) {
+      snackbarAnimation("Something went wrong", "error");
+      return;
+    }
+
     spinnerAnimationStart();
     try {
       if (mode === "ADD_RECORD") {
@@ -63,33 +69,6 @@ const StockForms: React.FC = () => {
     dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
     dispatch({ type: "HIDE_SHOW_FORM", payload: false });
   };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        if (mode === "ADD_RECORD") {
-          if (amphere_size.length > 1 && battery_name.length > 1) {
-            const response = await postCheckStockAvailability(
-              battery_name,
-              amphere_size
-            );
-            if (response) {
-              snackbarAnimation(
-                `Record already exist for ${
-                  battery_name + " and " + amphere_size
-                }`,
-                "error"
-              );
-            }
-            setStockNotPresent(true);
-          }
-        }
-      } catch (err) {
-        console.log(err);
-        setStockNotPresent(false);
-      }
-    })();
-  }, [battery_name, amphere_size]);
 
   return (
     <>

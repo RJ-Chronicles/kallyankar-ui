@@ -61,7 +61,7 @@ const LoginForm = () => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="px-6 md:px-28 py-5 text-[#333300] w-[550px]"
+      className="px-6 md:px-28 py-5 text-[#333300]"
     >
       <div className="mb-4 w-full">
         <label

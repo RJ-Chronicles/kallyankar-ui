@@ -21,7 +21,7 @@ const ProductForm: React.FC = () => {
     available: 0,
     product_code: "",
   });
-  const [serial_numbers, setSerialNumbers] = useState<string[]>();
+  const [serial_numbers, setSerialNumbers] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { storedCartItems } = state;
   const { formProps } = state;
@@ -40,6 +40,7 @@ const ProductForm: React.FC = () => {
     vehicle_number,
     quantity,
   } = data as Product;
+  console.log(data, quantity, serial_numbers?.length);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,6 +67,11 @@ const ProductForm: React.FC = () => {
       GST && snackbarAnimation(ERRORS.GST, "error");
       return;
     }
+    if (quantity != serial_numbers.length) {
+      snackbarAnimation(ERRORS.SERIAL_NUMBER, "error");
+      return;
+    }
+
     console.log(productData);
     if (mode === "ADD_RECORD") {
       const customerId = window.location.href.split("/").pop() ?? null;
@@ -133,6 +139,11 @@ const ProductForm: React.FC = () => {
   const handleSerialNumbers = () => {
     const value = inputRef.current?.value;
     if (value && inputRef.current?.value) {
+      const itemIndex = serial_numbers.findIndex((serial) => serial === value);
+      if (itemIndex !== -1) {
+        snackbarAnimation("Serial number already added!-", "error");
+        return;
+      }
       setSerialNumbers((prev) => {
         if (prev) {
           return [...prev, value];
@@ -188,6 +199,7 @@ const ProductForm: React.FC = () => {
                   placeholder="Serial Number"
                   ref={inputRef}
                   name="serial_number"
+                  disabled={quantity == serial_numbers?.length}
                 />
                 <div className="-ml-10 -mt-3 flex justify-center items-center md:flex-grow">
                   <button
