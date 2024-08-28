@@ -2,12 +2,16 @@ import useDateFormater from "../../../hooks/useDateFormater";
 import { Customer } from "../../../store/type";
 import React from "react";
 import invoiceLogo from "../../svg/InvoiceLogo.svg";
+import { useApiCall } from "../../../hooks";
+import { getInvoiceNumber } from "../../../backend/invoice";
+type Props = {
+  customer: Customer;
+};
 
-const InvoiceHeading: React.FC<{ customer?: Customer; invoice: number }> = ({
-  customer,
-  invoice,
-}) => {
+const InvoiceHeading: React.FC<Props> = ({ customer }) => {
   const { dateFormater } = useDateFormater();
+
+  const { data } = useApiCall(getInvoiceNumber, null);
 
   return (
     <div className=" bg-white dark:bg-gray-800 ">
@@ -57,7 +61,7 @@ const InvoiceHeading: React.FC<{ customer?: Customer; invoice: number }> = ({
               <dt className="font-semibold text-gray-800 dark:text-gray-200">
                 Invoice No:
               </dt>
-              <dd>{`#${invoice}`}</dd>
+              <dd>{`#${(data && data.invoice_number) ?? ""}`}</dd>
             </div>
           </dl>
         </div>
