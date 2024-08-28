@@ -12,7 +12,6 @@ import useApiCall from "../../../hooks/useApiCall";
 import InvoiceHeading from "./InvoiceHeading";
 import CartItemsList from "./CartItemList";
 import { usePdfDownloader } from "../../../hooks";
-import { postIncreamentInvoiceNumber } from "../../../backend/invoice";
 
 interface Props {
   open: boolean;
@@ -63,7 +62,6 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
         contentRef.current as HTMLDivElement,
         `${customer?.name ?? ""} ${new Date()}`
       );
-      await postIncreamentInvoiceNumber();
       dispatch({ type: "ADD_STORED_CART_ITEMS", payload: [] });
       dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
       closeCartHandler();

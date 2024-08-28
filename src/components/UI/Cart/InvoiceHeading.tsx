@@ -4,11 +4,8 @@ import React from "react";
 import invoiceLogo from "../../svg/InvoiceLogo.svg";
 import { useApiCall } from "../../../hooks";
 import { getInvoiceNumber } from "../../../backend/invoice";
-type Props = {
-  customer: Customer;
-};
 
-const InvoiceHeading: React.FC<Props> = ({ customer }) => {
+const InvoiceHeading: React.FC<{ customer?: Customer }> = ({ customer }) => {
   const { dateFormater } = useDateFormater();
 
   const { data } = useApiCall(getInvoiceNumber, null);
