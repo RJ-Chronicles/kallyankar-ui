@@ -3,7 +3,10 @@ import { Customer } from "../../../store/type";
 import React from "react";
 import invoiceLogo from "../../svg/InvoiceLogo.svg";
 
-const InvoiceHeading: React.FC<{ customer?: Customer }> = ({ customer }) => {
+const InvoiceHeading: React.FC<{ customer?: Customer; invoice: number }> = ({
+  customer,
+  invoice,
+}) => {
   const { dateFormater } = useDateFormater();
 
   return (
@@ -11,14 +14,15 @@ const InvoiceHeading: React.FC<{ customer?: Customer }> = ({ customer }) => {
       <div className=" p-6 flex flex-col md:flex-row items-center md:items-start justify-between space-y-6 md:space-y-0 md:space-x-8">
         <img src={invoiceLogo} alt="Invoice logo" className="w-52 h-auto" />
         <div className="text-right">
-          <h2 className=" font-normal text-gray-900 dark:text-gray-200">
+          <h2 className=" font-normal text-red-700  dark:text-gray-200 ">
             GSTN-27ARIPK2620F1Z2
           </h2>
-          <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-xs text-gray-600 dark:text-gray-400 uppercase">
             Shinde complex, main-road Gargoti
             <br />
             Bhudargad, Kolhapur, PIN: 416209
-            <br />
+          </p>
+          <p className="mt-2 text-xs text-red-700 dark:text-gray-400 uppercase">
             Contact: 9420007273, 7745047273
           </p>
         </div>
@@ -53,7 +57,7 @@ const InvoiceHeading: React.FC<{ customer?: Customer }> = ({ customer }) => {
               <dt className="font-semibold text-gray-800 dark:text-gray-200">
                 Invoice No:
               </dt>
-              <dd>{"#1001"}</dd>
+              <dd>{`#${invoice}`}</dd>
             </div>
           </dl>
         </div>

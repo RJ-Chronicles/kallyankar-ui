@@ -12,6 +12,10 @@ import useApiCall from "../../../hooks/useApiCall";
 import InvoiceHeading from "./InvoiceHeading";
 import CartItemsList from "./CartItemList";
 import { usePdfDownloader } from "../../../hooks";
+import {
+  getInvoiceNumber,
+  postIncreamentInvoiceNumber,
+} from "../../../backend/invoice";
 
 interface Props {
   open: boolean;
@@ -30,6 +34,8 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
   const params = useMemo(() => ({ id: customerId }), [customerId]);
   const { data: customer } = useApiCall(getCustomerById, params);
 
+  const { data: invoice } = useApiCall(getInvoiceNumber, params);
+  console.log({ invoice });
   const handleAmountValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const amount = e.target.value;
     const maxAmount = payment.total - 1;
@@ -62,6 +68,7 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
         contentRef.current as HTMLDivElement,
         `${customer?.name ?? ""} ${new Date()}`
       );
+      await postIncreamentInvoiceNumber();
       dispatch({ type: "ADD_STORED_CART_ITEMS", payload: [] });
       dispatch({ type: "REFRESH_EFFECT", payload: !refreshEffect });
       closeCartHandler();
@@ -107,7 +114,12 @@ const CartItems: React.FC<Props> = ({ open, closeCartHandler, customerId }) => {
             <div className="my-8 inline-block w-full max-w-3xl transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
               <div className="p-2" id="print" ref={contentRef}>
                 <div className="border-2 border-gray-600 p-2">
-                  {customer && <InvoiceHeading customer={customer} />}
+                  {customer && invoice && (
+                    <InvoiceHeading
+                      customer={customer}
+                      invoice={invoice.invoice_number}
+                    />
+                  )}
                   <div className="flex w-full justify-center items-center">
                     <CartItemsList setTotal={setTotalAmount} />
                   </div>
