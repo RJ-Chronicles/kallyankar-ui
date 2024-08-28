@@ -79,7 +79,7 @@ const StockForms: React.FC = () => {
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="product_code"
           >
-            Serial Number
+            Product Code
           </label>
           <input
             className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
