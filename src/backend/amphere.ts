@@ -9,10 +9,10 @@ const postNewAmphere = async (amphere: AmphareSize) => {
   return data;
 };
 const updateAmphereById = async (amphere: AmphareSize, id: string) => {
-  const { data } = await api.patch<AmphareSize>(
-    "amphere/update/" + id,
-    amphere
-  );
+  const { size } = amphere;
+  const { data } = await api.patch<AmphareSize>("amphere/update/" + id, {
+    size: size + " AH",
+  });
   return data;
 };
 const deleteAmphereById = async (id: string) => {

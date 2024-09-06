@@ -34,29 +34,23 @@ const StockForms: React.FC = () => {
       battery_name && snackbarAnimation(ERRORS.BATTERY, "error");
       amphere_size && snackbarAnimation(ERRORS.AMPHERE, "error");
       product_code && snackbarAnimation(ERRORS.P_CODE, "error");
-      return;
-    }
-
-    try {
-      const response = await postCheckStockAvailability(
-        battery_name,
-        amphere_size
-      );
-      if (response) {
-        snackbarAnimation(
-          `Record already exist for ${battery_name + " and " + amphere_size}`,
-          "error"
-        );
-        return;
-      }
-    } catch (err) {
-      snackbarAnimation("Something went wrong", "error");
-      return;
+      if (mode === "ADD_RECORD") return;
     }
 
     spinnerAnimationStart();
     try {
       if (mode === "ADD_RECORD") {
+        const response = await postCheckStockAvailability(
+          battery_name,
+          amphere_size
+        );
+        if (response) {
+          snackbarAnimation(
+            `Record already exist for ${battery_name + " and " + amphere_size}`,
+            "error"
+          );
+          return;
+        }
         await postNewStock(data as STOCK);
       } else {
         await updateStockById(data as STOCK, _id ?? "");
